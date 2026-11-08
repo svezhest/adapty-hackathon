@@ -42,3 +42,19 @@
 /* поверхности и подпись секции */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card)}
 .kicker{margin:0;font-family:var(--sans);font-size:13px;font-weight:500;font-style:normal;letter-spacing:0;color:var(--ink-3)}
+
+/* штамп отправки: печать с внутренней рамкой; лежит ровно, пока нечего отправить, взведён и наклонён, когда есть */
+.gstamp{--tilt:-2deg;position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:152px;height:54px;border-radius:var(--r-card);border:1.5px solid var(--ok);background:var(--surface);color:var(--ok);cursor:pointer;transform:rotate(var(--tilt));transition:transform .15s,background .15s,color .15s,border-color .15s,box-shadow .15s}
+.gstamp::before{content:"";position:absolute;inset:2.5px;border-radius:var(--r-ctl);border:1px solid currentColor;opacity:.45}
+.gstamp .ink{font-family:var(--serif);font-size:20px;font-weight:600;line-height:1;letter-spacing:.3em;margin-right:-.3em}
+.gstamp:hover{background:var(--ok-soft);box-shadow:0 0 0 4px var(--ok-soft)}
+.gstamp:active:not(:disabled){transform:rotate(var(--tilt)) scale(.94);box-shadow:none}
+.gstamp:disabled{--tilt:0deg;border-color:var(--line);background:var(--subtle);color:var(--ink-3);cursor:not-allowed;box-shadow:none}
+.gstamp:disabled::before{border-color:var(--line);opacity:1}
+.gstamp.on{background:var(--ok);border-color:var(--ok);color:var(--surface);box-shadow:none;animation:press .32s ease-out}
+@keyframes press{0%{transform:rotate(var(--tilt)) scale(1)}35%{transform:rotate(var(--tilt)) scale(.86)}100%{transform:rotate(var(--tilt)) scale(1)}}
+@media (prefers-reduced-motion:reduce){
+.gstamp{transition:none}
+.gstamp:active:not(:disabled){transform:rotate(var(--tilt))}
+.gstamp.on{animation:none}
+}

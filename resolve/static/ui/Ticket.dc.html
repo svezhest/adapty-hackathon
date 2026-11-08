@@ -56,13 +56,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans.sel .emo{transform:scale(1.08)}
 .pct{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;letter-spacing:-0.01em;font-variant-numeric:lining-nums tabular-nums}
 .pct small{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:500;margin-left:1px;opacity:.7}
-.dial{position:relative;flex:0 0 auto;width:76px;height:76px;display:flex;align-items:center;justify-content:center;transition:filter .25s}
-.dial svg{position:absolute;inset:0}
-.dial svg line{transition:stroke .3s}
-.ans.sel .dial{filter:drop-shadow(0 6px 14px rgba(91,60,240,.18))}
-.dnum{position:absolute;left:0;right:0;top:50%;height:1em;margin-top:-.5em;transform:translateY(.1em);text-align:center;white-space:nowrap;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;letter-spacing:0;font-variant-numeric:lining-nums tabular-nums;pointer-events:none}
-.dial-xl{width:132px;height:132px}
-.dial-xl .dnum{font-size:34px}
 .found{flex:1 1 100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding:32px 40px 30px;border-radius:10px;background:var(--surface);box-shadow:none}
 .found-k{margin:0;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-3)}
 .found-h{margin:0;max-width:30em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:28px;font-weight:460;line-height:1.28;letter-spacing:-0.012em;color:var(--ink);text-wrap:balance}
@@ -71,10 +64,6 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ttl{font-size:14px;font-weight:600;color:var(--ink)}
 .pick{font-size:13px;color:var(--ink-3);font-weight:500}
 .txt{display:block;margin-top:4px;color:var(--ink-2);font-size:14px;line-height:1.55;text-wrap:pretty}
-.okstamp{align-self:center;justify-self:end;display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 8px;border:4px double var(--ok);border-radius:6px;color:var(--ok);font-size:16px;font-weight:800;letter-spacing:.14em;line-height:1.2;white-space:nowrap;transform:rotate(-11deg);opacity:0;transition:opacity .15s;-webkit-mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);-webkit-mask-size:3px 3px;mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);mask-size:3px 3px}
-.ans:hover .okstamp{opacity:.16}
-.ans.sel .okstamp{opacity:.95;animation:stampIn .3s cubic-bezier(.2,1.5,.4,1)}
-@keyframes stampIn{0%{opacity:0;transform:rotate(-26deg) scale(2.4)}70%{opacity:.95;transform:rotate(-9deg) scale(.94)}100%{opacity:.95;transform:rotate(-11deg) scale(1)}}
 .hov{position:absolute;top:13px;right:124px;height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;font-weight:500;cursor:pointer;opacity:0;transition:opacity .15s}
 .ans:hover .hov,.hov:focus-visible{opacity:1}
 .field{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-3);font-weight:500}
@@ -82,23 +71,8 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .inp:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
 .ta{width:100%;min-height:92px;padding:10px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.5;resize:vertical}
 .ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
-.gstamp{position:relative;flex:0 0 auto;width:184px;height:64px;border-radius:10px;border:2.5px solid var(--ok);background:var(--surface);color:var(--ok);cursor:pointer;transform:rotate(-4deg);display:flex;align-items:center;justify-content:center;box-shadow:none;transition:transform .15s, background .15s, color .15s, border-color .15s}
-.gstamp::before{content:"";position:absolute;inset:4px;border-radius:6px;border:1px dashed currentColor;opacity:.7}
-.gstamp .ink{display:flex;align-items:center;gap:14px;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:600;letter-spacing:.42em;margin-right:-.42em}
-.gstamp .ink::before,.gstamp .ink::after{content:"";width:18px;height:1px;background:currentColor;opacity:.55}
-.gstamp .ink::after{margin-left:-.42em}
-.gstamp:hover{transform:rotate(-4deg) scale(1.04);box-shadow:none}
-.gstamp:active{transform:rotate(-4deg) scale(.9)}
-.gstamp:disabled{border-color:var(--line);color:var(--ink-4);cursor:not-allowed;box-shadow:none;transform:rotate(-4deg)}
-.gstamp.on{background:var(--ok);color:var(--surface);animation:press .32s ease-out}
-@keyframes press{0%{transform:rotate(-4deg) scale(1)}35%{transform:rotate(-4deg) scale(.86)}100%{transform:rotate(-4deg) scale(1)}}
 .vanish{animation:vanish .34s ease-in forwards}
 @keyframes vanish{to{opacity:0;transform:translateY(14px) scale(.98)}}
-.letter{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;width:100%;padding:18px 22px;border-radius:10px;border:1px solid var(--line);background:var(--surface);box-shadow:none;cursor:pointer;text-align:left;color:var(--ink);font-size:14px;animation:fold .3s ease-out}
-.letter:hover{border-color:var(--line)}
-@keyframes fold{from{opacity:0;transform:scaleY(1.8) translateY(-24px)}to{opacity:1;transform:none}}
-.postmark{flex:0 0 auto;width:62px;height:62px;border-radius:50%;border:2px solid var(--ok);color:var(--ok);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);font-size:12px;font-weight:700;letter-spacing:.1em;line-height:1.1;opacity:.9}
-.postmark small{font-size:12px;letter-spacing:.06em;font-weight:600}
 .ballot{animation:unfold .26s ease-out;transform-origin:top center}
 @keyframes unfold{from{opacity:0;transform:scaleY(.85)}to{opacity:1;transform:none}}
 .bl{display:grid;grid-template-columns:36px minmax(0,1fr) 22px;gap:12px;align-items:start;padding:12px 4px;border-top:1px solid var(--subtle)}
@@ -111,7 +85,36 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .trl.l,.orig.l{margin-left:14px;align-self:flex-start}
 .sends{display:block;margin-top:6px;font-size:13px;font-weight:500;color:var(--accent)}
 
-/* The decision is still a stamp on a dial. The material is the system's: one green, flat paper, a soft press. */
+/* The decision is still a dial and a stamp. The material is the system's: opaque paper, a hairline, a tonal fill, one ink. */
+.ans-main{grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;padding:14px}
+.dial{position:relative;flex:0 0 auto;width:64px;height:64px}
+.dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.dial svg line{transition:stroke .3s}
+.ans-main input:focus-visible + .dial{outline:2px solid var(--accent);outline-offset:3px;border-radius:50%}
+.dial .rim{fill:var(--surface);stroke:var(--line);stroke-width:1px;vector-effect:non-scaling-stroke;transition:stroke .15s}
+.ans:hover .dial .rim{stroke:var(--accent-line)}
+.ans.sel .dial .rim{stroke:var(--accent-line)}
+.dial .mk{stroke:var(--surface);stroke-width:1.5px;paint-order:stroke;vector-effect:non-scaling-stroke}
+.dnum{--nudge:.0875em;position:absolute;left:0;right:0;top:50%;transform:translateY(calc(-50% + var(--nudge)));text-align:center;white-space:nowrap;font-family:var(--serif);font-size:20px;font-weight:500;line-height:1;letter-spacing:0;font-variant-numeric:lining-nums proportional-nums;pointer-events:none}
+.dial-xl{width:112px;height:112px}
+.dial-xl .dnum{--nudge:.109em;font-size:34px}
+.okstamp{position:absolute;top:10px;right:12px;display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 7px;border:1.5px solid var(--ok);border-radius:var(--r-ctl);background:var(--surface);color:var(--ok);font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.14em;line-height:1.2;white-space:nowrap;transform:rotate(-8deg);opacity:0;pointer-events:none;transition:opacity .15s}
+.okstamp::before{content:"";position:absolute;inset:1.5px;border-radius:3px;border:1px solid currentColor;opacity:.45}
+.ans:hover .okstamp{opacity:.26}
+.ans.sel .okstamp{opacity:1;animation:stampIn .3s cubic-bezier(.2,1.5,.4,1)}
+@keyframes stampIn{0%{opacity:0;transform:rotate(-22deg) scale(2.4)}70%{opacity:1;transform:rotate(-6deg) scale(.94)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+.letter{position:relative;display:flex;align-items:center;gap:16px;width:100%;padding:18px 20px;border-radius:var(--r-card);border:1px solid var(--line);background:var(--surface);cursor:pointer;text-align:left;color:var(--ink);font-size:14px;transition:background .15s;animation:fold .3s ease-out}
+.letter:hover{background:var(--bg)}
+.flap{position:absolute;left:0;top:0;width:100%;height:24px;border-radius:var(--r-card) var(--r-card) 0 0;overflow:hidden}
+.flap path{fill:var(--bg);stroke:var(--line);stroke-width:1px;vector-effect:non-scaling-stroke;transition:fill .15s}
+.letter:hover .flap path{fill:var(--subtle)}
+@keyframes fold{from{opacity:0;transform:scaleY(1.8) translateY(-24px)}to{opacity:1;transform:none}}
+.postmark{position:relative;flex:0 0 auto;width:72px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--ok);transform:rotate(-10deg);animation:postIn .3s cubic-bezier(.2,1.5,.4,1) .24s backwards}
+.postmark svg{position:absolute;inset:0;width:100%;height:100%}
+.postmark .rim{fill:var(--surface);stroke:var(--ok);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+.postmark b{position:relative;font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.08em;line-height:1}
+.postmark small{position:relative;font-size:12px;font-weight:500;line-height:1.1;white-space:nowrap}
+@keyframes postIn{from{opacity:0;transform:rotate(-24deg) scale(1.7)}}
 .b{border-radius:10px;font-size:14px}
 .b-u{background:var(--accent-soft);color:var(--ink);border-bottom-right-radius:12px}
 .b-a{background:var(--subtle);color:var(--ink);border-bottom-left-radius:12px}
@@ -121,14 +124,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans{border-radius:var(--r-ctl);box-shadow:inset 0 0 0 1px transparent}
 .ans:hover{background:var(--bg)}
 .ans.sel,.ans.sel:hover{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line)}
-.ans-main{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:14px}
 .ans-main > span:nth-of-type(2) > span:first-child{padding-right:88px}
-.dial{width:64px;height:64px}
-.dial svg{width:100%;height:100%}
-.dial .dnum{font-size:20px}
-.dial-xl{width:112px;height:112px}
-.dial-xl .dnum{font-size:34px}
-.ans.sel .dial{filter:none}
 .ttl{font-size:14px}
 .emo{font-size:20px}
 .pick-agent{color:var(--accent);font-weight:500}
@@ -137,15 +133,19 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .risk-medium{color:var(--warn)}
 .txt{margin-top:8px;font-size:14px;line-height:1.55;color:var(--ink-2)}
 .hov{top:10px;right:96px;border-radius:var(--r-ctl)}
-.okstamp{position:absolute;top:12px;right:14px;border:3px double var(--ok);color:var(--ok);font-size:14px}
-.gstamp{width:168px;height:58px;border:2px solid var(--ok);border-radius:var(--r-card);background:var(--surface);box-shadow:0 1px 2px rgba(15,15,15,.06)}
-.gstamp .ink{font-family:var(--serif);font-size:20px}
-.gstamp:hover{box-shadow:0 0 0 5px var(--ok-soft)}
-.gstamp:active{box-shadow:none}
-.gstamp:disabled{border-color:var(--line);color:var(--ink-4);background:var(--surface);box-shadow:none}
-.gstamp.on{background:var(--ok);color:var(--surface)}
-.letter{box-shadow:none;border-color:var(--line)}
-.postmark{border-color:var(--ok);color:var(--ok)}
+@media (max-width:640px){
+.found{flex-wrap:wrap;justify-content:center}
+.ans-main > span:nth-of-type(2){display:contents}
+.ans-main > span:nth-of-type(2) > span:first-child{grid-column:2}
+.ans-main > span:nth-of-type(2) > span:not(:first-child){grid-column:1/-1}
+.risk-high,.risk-medium{flex:0 0 calc(100% + 88px);margin:8px -88px 0 0}
+.ans > div{padding-left:14px!important}
+}
+@media (prefers-reduced-motion:reduce){
+.dial svg line,.dial .rim,.okstamp,.letter,.flap path,.emo,.ans,.hov,.linkbtn svg{transition:none}
+.ans.sel .okstamp,.letter,.postmark,.vanish,.ballot,.pop,.toast{animation:none}
+.ans:hover .emo,.ans.sel .emo{transform:none}
+}
 </style>
 </helmet>
 <div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
@@ -226,7 +226,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 </div>
 <div style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <div role="img" aria-label="{{ foundLabel }}" class="dial dial-xl">
-<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true"><circle cx="66" cy="66" r="64.5" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="66" cy="66" r="45" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="66" cy="66" r="41" fill="none" stroke="var(--accent-soft)" stroke-width=".75"></circle><sc-for list="{{ foundTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ foundMark.x }}" cy="{{ foundMark.y }}" r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle></svg>
+<svg viewBox="0 0 132 132" aria-hidden="true"><circle class="rim" cx="66" cy="66" r="65"></circle><circle cx="66" cy="66" r="54" fill="none" stroke="{{ foundSoft }}" stroke-width="10" pathLength="60" stroke-dasharray="{{ foundArc }}" transform="rotate(-90 66 66)"></circle><sc-for list="{{ foundTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" cx="{{ foundMark.x }}" cy="{{ foundMark.y }}" r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle><path d="{{ foundDash }}" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round"></path></svg>
 <span class="dnum" style="color: {{ foundTone }}">{{ foundNum }}</span>
 </div>
 </div>
@@ -272,7 +272,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <label class="ans-main">
 <input type="radio" name="answer" class="sr" checked="{{ a.selected }}" onChange="{{ a.pick }}">
 <span class="dial">
-<svg width="76" height="76" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="37.25" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="38" cy="38" r="25.5" fill="none" stroke="var(--line)" stroke-width=".75"></circle><sc-for list="{{ a.ticks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ a.mx }}" cy="{{ a.my }}" r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path d="{{ a.inf }}" fill="none" stroke="var(--ink-3)" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+<svg viewBox="0 0 76 76" aria-hidden="true"><circle class="rim" cx="38" cy="38" r="37"></circle><circle cx="38" cy="38" r="31" fill="none" stroke="{{ a.soft }}" stroke-width="6" pathLength="60" stroke-dasharray="{{ a.arc }}" transform="rotate(-90 38 38)"></circle><sc-for list="{{ a.ticks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" cx="{{ a.mx }}" cy="{{ a.my }}" r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path d="{{ a.inf }}" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 <span class="dnum" style="color: {{ a.tone }}">{{ a.confText }}</span>
 <sc-if value="{{ a.hasConf }}"><span class="sr">{{ a.conf }}% confidence</span></sc-if>
 </span>
@@ -287,7 +287,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <sc-if value="{{ a.hasLang }}"><span class="sends">{{ a.sendsWord }} · <button type="button" class="quiet" style="font-size:13px" onClick="{{ a.toggleOrig }}">{{ a.origWord }}</button></span></sc-if>
 <sc-if value="{{ a.showOrig }}"><span class="orig" style="display: block; max-width: 100%; margin-top: 4px">{{ a.origText }}</span></sc-if>
 </span>
-<span class="okstamp" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>OK</span>
+<span class="okstamp" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>OK</span>
 </label>
 <sc-if value="{{ a.showEditBtn }}"><button type="button" class="hov" onClick="{{ a.edit }}">Edit</button></sc-if>
 <sc-if value="{{ a.showScratchBtn }}"><button type="button" class="hov" onClick="{{ a.pick }}">Write from scratch</button></sc-if>
@@ -376,13 +376,13 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <a href="{{ reopenHref }}" style="font-weight: 500">Reopen</a>
 </p>
 <button type="button" class="letter" aria-expanded="{{ ballot }}" onClick="{{ toggleBallot }}">
-<svg aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0; width: 100%; height: 26px"><path d="M0 0 L50 18 L100 0" fill="none" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"></path></svg>
+<svg class="flap" aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M-1 -1 L50 19 L101 -1 Z"></path></svg>
 <span aria-hidden="true" style="font-size:28px; line-height: 1">{{ chosenEmoji }}</span>
 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 6px">
 <span style="font-size:13px; color: var(--ink-3)">Sent to {{ user }} · {{ sentTime }}</span>
 <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-weight: 500">{{ firstLine }}</span>
 </span>
-<span class="postmark" aria-hidden="true">SENT<small>{{ postmark }}</small></span>
+<span class="postmark" aria-hidden="true"><svg viewBox="0 0 76 76"><circle class="rim" cx="38" cy="38" r="37"></circle><sc-for list="{{ postTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for></svg><b>SENT</b><small>{{ postmark }}</small></span>
 </button>
 <sc-if value="{{ sentLang }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-label="What was sent" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 10px">
@@ -459,6 +459,8 @@ var ORDER = ['reply', 'steps', 'grant'];
 var CONF = { reply: 85, steps: 64, grant: 38 };
 var CIRC = 2 * Math.PI * 25.5;
 function toneOf(c) { return c >= 75 ? 'var(--ok)' : (c >= 55 ? 'var(--warn)' : 'var(--bad)'); }
+function softOf(c) { return c >= 75 ? 'var(--ok-soft)' : (c >= 55 ? 'var(--warn-soft)' : 'var(--bad-soft)'); }
+function arcOf(c) { return ((c || 0) / 100 * 60).toFixed(2) + ' 60'; }
 function dashOf(c) { return (c / 100 * CIRC).toFixed(1) + ' ' + CIRC.toFixed(1); }
 function ticksFor(conf, c, rMaj, rMin, rOut, tone) {
   var lit = Math.round((conf || 0) / 100 * 60), out = [];
@@ -467,13 +469,14 @@ function ticksFor(conf, c, rMaj, rMin, rOut, tone) {
     out.push({
       x1: (c + r1 * Math.cos(a)).toFixed(2), y1: (c + r1 * Math.sin(a)).toFixed(2),
       x2: (c + rOut * Math.cos(a)).toFixed(2), y2: (c + rOut * Math.sin(a)).toFixed(2),
-      c: i < lit ? tone : (major ? 'var(--accent-line)' : 'var(--line)'), w: major ? 1.3 : 0.8
+      c: i < lit ? tone : (major ? 'var(--ink-4)' : 'var(--line)'), w: major ? 1.3 : 0.8
     });
   }
   return out;
 }
 function markAt(conf, c, r) { var a = (-90 + (conf || 0) / 100 * 360) * Math.PI / 180; return { x: (c + r * Math.cos(a)).toFixed(2), y: (c + r * Math.sin(a)).toFixed(2) }; }
 var EMPTY = 'var(--ink-4)';
+var DASH = 'M31 38H45';
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var MOCK = {
   base: BASE, order: ORDER, conf: CONF, user: USER, phase: null, closed: null, actionError: null, action: null,
@@ -806,12 +809,12 @@ class Component extends DCLogic {
       var isGrant = v.action === 'grant';
       var risk = riskOf(base[id], v);
       // No per-option confidence (older tickets): an unlit dial and a dash, no number.
-      var c = confs[id], has = c != null, tone = has ? toneOf(c) : EMPTY, mark = markAt(has ? c : 0, 38, 37.25);
+      var c = confs[id], has = c != null, tone = has ? toneOf(c) : EMPTY, mark = markAt(has ? c : 0, 38, 37);
       return {
         cls: selected === id ? 'ans sel' : 'ans',
         selected: selected === id,
         emoji: v.emoji,
-        conf: has ? c : '', confText: has ? c : '—', hasConf: has, tone: tone, ticks: ticksFor(has ? c : 0, 38, 28, 30.5, 34, tone), mx: mark.x, my: mark.y, mr: has ? 2.3 : 0, inf: '',
+        conf: has ? c : '', confText: has ? c : '', hasConf: has, tone: tone, soft: has ? softOf(c) : 'none', arc: arcOf(has ? c : 0), ticks: ticksFor(has ? c : 0, 38, 28, 30.5, 34, tone), mx: mark.x, my: mark.y, mr: has ? 2.6 : 0, inf: has ? '' : DASH,
         title: titleOf(v),
         isPick: i === 0,
         edited: isEdited(base, id, edits),
@@ -854,7 +857,7 @@ class Component extends DCLogic {
       cls: selected === 'own' ? 'ans sel' : 'ans',
       selected: selected === 'own',
       emoji: '🧠', title: 'Write your own',
-      conf: '', confText: '', hasConf: false, tone: 'var(--ink-4)', ticks: ticksFor(0, 38, 28, 30.5, 34, 'var(--ink-4)'), mx: 38, my: 0.75, mr: 0, inf: 'M38 38 C35.4 34.4 30.2 34.2 30.2 38 C30.2 41.8 35.4 41.6 38 38 C40.6 34.4 45.8 34.2 45.8 38 C45.8 41.8 40.6 41.6 38 38 Z',
+      conf: '', confText: '', hasConf: false, tone: 'var(--ink-4)', soft: 'none', arc: arcOf(0), ticks: ticksFor(0, 38, 28, 30.5, 34, 'var(--ink-4)'), mx: 38, my: 1, mr: 0, inf: 'M38 38 C35.4 34.4 30.2 34.2 30.2 38 C30.2 41.8 35.4 41.6 38 38 C40.6 34.4 45.8 34.2 45.8 38 C45.8 41.8 40.6 41.6 38 38 Z',
       isPick: false, edited: false, hasRisk: false, risk: '', riskCls: '',
       showText: false, reply: '', editing: false, hasLang: false, showOrig: false, direct: false,
       showEditBtn: false,
@@ -881,7 +884,7 @@ class Component extends DCLogic {
     var error = 'error' in s ? s.error : (m && phase === 'open' ? m.actionError : null);
     var menu = !!s.menu;
     var found = m ? m.confidence : null, hasFound = found != null;
-    var foundTone = hasFound ? toneOf(found) : EMPTY, foundMark = markAt(hasFound ? found : 0, 66, 64.5);
+    var foundTone = hasFound ? toneOf(found) : EMPTY, foundMark = markAt(hasFound ? found : 0, 66, 65);
     return {
       live: LIVE,
       title: m ? m.title : (s.loadError ? 'Could not open the ticket' : ''),
@@ -902,9 +905,10 @@ class Component extends DCLogic {
       hasTriage: m && m.hasTriage, foundSummary: m ? m.foundSummary : '', foundCause: m ? m.foundCause : '',
       category: m ? m.category : '', evidenceRows: m ? m.evidenceRows : [],
       hasCategory: !!(m && m.category), hasCause: !!(m && m.foundCause), hasEvidence: !!(m && m.evidenceRows.length),
-      foundNum: hasFound ? found : '—', foundTone: foundTone, foundLabel: hasFound ? found + '% confidence' : 'No confidence yet',
+      foundNum: hasFound ? found : '', foundDash: hasFound ? '' : 'M54 66H78', foundSoft: hasFound ? softOf(found) : 'none', foundArc: arcOf(hasFound ? found : 0), foundTone: foundTone, foundLabel: hasFound ? found + '% confidence' : 'No confidence yet',
       foundTicks: ticksFor(hasFound ? found : 0, 66, 49, 53, 59, foundTone),
-      foundMark: { x: foundMark.x, y: foundMark.y, r: hasFound ? 3 : 0 },
+      foundMark: { x: foundMark.x, y: foundMark.y, r: hasFound ? 3.4 : 0 },
+      postTicks: ticksFor(100, 38, 29.5, 31.5, 33.5, 'var(--ok)'),
       acc1: m ? m.acc1 : '', acc2: m ? m.acc2 : '', acc3: m ? m.acc3 : '', accountRows: m ? m.accountRows : [],
       user: user, closedAt: m ? m.closedAt : '', sentTime: m ? m.sentTime : '', postmark: m ? m.postmark : '', reopenHref: m ? m.reopenHref : '',
       isOpen: phase === 'open', isClosed: phase === 'closed', isDismissed: phase === 'dismissed',

@@ -21,10 +21,9 @@ body{margin:0;background:var(--bg)}
 .sk{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--subtle) 0%,var(--bg) 40%,var(--subtle) 80%);background-size:200% 100%;animation:sh 1.4s linear infinite}
 @keyframes sh{from{background-position:100% 0}to{background-position:-100% 0}}
 .skrow{display:grid;grid-template-columns:10px 160px minmax(0,1fr) 40px;gap:18px;align-items:center;height:50px;padding:0 24px;border-top:1px solid var(--subtle)}
-.stamp{position:relative;width:104px;height:104px;border-radius:50%;background:var(--bad);color:var(--surface);transform:rotate(-8deg);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;letter-spacing:.14em;box-shadow:none}
-.stamp::before{content:"";position:absolute;inset:8px;border-radius:50%;border:2px dashed rgba(255,255,255,.62)}
 .m{display:grid;grid-template-columns:minmax(0,1fr) 80px minmax(0,1.4fr);gap:16px;padding:11px 0;border-top:1px solid var(--subtle);font-size:14px;align-items:baseline}
 .m:first-of-type{border-top:0}
+span.gstamp{pointer-events:none}
 </style>
 </helmet>
 <div style="width: 1440px; height: 1560px; box-sizing: border-box; padding: 56px 64px; background:var(--surface); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; gap: 28px">
@@ -72,7 +71,7 @@ body{margin:0;background:var(--bg)}
 <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 12px">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px">
 <div style="display: flex; align-items: center; gap: 22px">
-<span aria-hidden="true" style="position: relative; flex: 0 0 auto; width: 184px; height: 64px; border-radius:10px; border: 2.5px solid var(--ok); color: var(--ok); transform: rotate(-4deg); display: flex; align-items: center; justify-content: center; gap: 14px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 600; letter-spacing: .42em"><span style="position: absolute; inset: 4px; border-radius:6px; border: 1px dashed var(--ok); opacity: .7"></span><span style="width: 18px; height: 1px; background: var(--ok); opacity: .55"></span><span style="margin-right: -.42em">SEND</span><span style="width: 18px; height: 1px; background: var(--ok); opacity: .55"></span></span>
+<span class="gstamp" aria-hidden="true"><span class="ink">SEND</span></span>
 <span style="display: flex; flex-direction: column"><span style="font-size:14px; font-weight: 600">Grant 7 days of access</span><span style="font-size:14px; color: var(--ink-3)">to lumen_443814_02380</span></span>
 </div>
 <span style="font-size:14px; color: var(--ink-3); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px">Close without a reply</span>
@@ -119,12 +118,14 @@ body{margin:0;background:var(--bg)}
 <div>
 <p class="cap">Motion</p>
 <div class="card" style="padding: 12px 24px">
-<div class="m"><span style="font-weight: 500">OK stamp lands on a pick</span><span style="color: var(--ink-3)">300 ms</span><span style="color: var(--ink-2)">Drops from 2.4×, slight overshoot, settles at −11°</span></div>
-<div class="m"><span style="font-weight: 500">SEND stamp press</span><span style="color: var(--ink-3)">320 ms</span><span style="color: var(--ink-2)">Squashes to 0.84 and fills with green ink</span></div>
+<div class="m"><span style="font-weight: 500">OK stamp lands on a pick</span><span style="color: var(--ink-3)">300 ms</span><span style="color: var(--ink-2)">Drops from 2.4×, slight overshoot, settles at −8°; a pale print on hover</span></div>
+<div class="m"><span style="font-weight: 500">SEND stamp press</span><span style="color: var(--ink-3)">320 ms</span><span style="color: var(--ink-2)">Squashes to 0.86 and fills with green ink; lies level while disabled</span></div>
 <div class="m"><span style="font-weight: 500">Ticket drops into Closed</span><span style="color: var(--ink-3)">340 ms</span><span style="color: var(--ink-2)">Fades and sinks 14 px, then the closed line and letter</span></div>
+<div class="m"><span style="font-weight: 500">Postmark lands on the letter</span><span style="color: var(--ink-3)">300 ms</span><span style="color: var(--ink-2)">Drops from 1.7× after the letter folds, settles at −10°</span></div>
 <div class="m"><span style="font-weight: 500">Letter unfolds the ballot</span><span style="color: var(--ink-3)">260 ms</span><span style="color: var(--ink-2)">Grows down from the letter, fades in</span></div>
 <div class="m"><span style="font-weight: 500">Toast</span><span style="color: var(--ink-3)">220 ms</span><span style="color: var(--ink-2)">Rises 8 px, stays 2.6 s</span></div>
 <div class="m"><span style="font-weight: 500">Screens menu, save bar</span><span style="color: var(--ink-3)">180 ms</span><span style="color: var(--ink-2)">Drops 6 px and fades in</span></div>
+<div class="m"><span style="font-weight: 500">Reduced motion</span><span style="color: var(--ink-3)">0 ms</span><span style="color: var(--ink-2)">Stamps and the postmark appear in place, nothing scales or moves</span></div>
 </div>
 </div>
 
