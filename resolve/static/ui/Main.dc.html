@@ -23,71 +23,70 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 input::placeholder{color:var(--ink-3)}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.tab{position:relative;height:36px;background:none;border:0;padding:0;color:var(--ink-3);font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:color .15s}
-.tab:hover{color:var(--ink)}
-.tab.on{color:var(--ink);font-weight:600}
-.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--accent)}
-.cnt-red{color:var(--bad);font-weight:600;font-variant-numeric:tabular-nums}
-.cnt-green{color:var(--ok);font-weight:600;font-variant-numeric:tabular-nums}
-.find{display:flex;align-items:center;gap:10px;width:300px;max-width:100%;height:40px;padding:0 6px 0 13px;border-radius:6px;background:var(--surface);border:1px solid var(--line);color:var(--ink-3);transition:width .22s ease, border-color .15s, box-shadow .15s}
-.find:focus-within{width:420px;border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-ring);color:var(--accent)}
-.row{display:grid;grid-template-columns:10px minmax(120px,200px) minmax(0,1fr) 44px;align-items:center;column-gap:18px;height:50px;padding:0 24px;border-top:1px solid var(--subtle);color:var(--ink-2);font-size:14px;font-weight:400;transition:background .12s}
-.row:hover{background:var(--subtle);color:var(--ink-2)}
-.row.bold{color:var(--ink);font-weight:600}
-.row .subj{color:var(--ink)}
-.row.bold .subj{color:var(--ink)}
-.row .age{font-size:13px;color:var(--ink-3);font-weight:500;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.row.bold .age{color:var(--ink);font-weight:600}
-.row .cont{color:var(--ink-3);font-weight:400}
-.row .src{color:var(--ink-4);display:flex}
-.cell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-.dot-ready{background:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
-.dot-triage{border:1.5px solid var(--ink-4)}
-.dot-closed{background:var(--ok)}
-.dot-dismissed{background:var(--ink-4)}
-mark{background:var(--accent-soft);color:var(--accent-2);border-radius:6px;padding:0 2px}
+mark{background:var(--accent-soft);color:var(--accent-2);border-radius:var(--r-ctl);padding:0 2px}
 .linkbtn{background:none;border:0;padding:0;color:var(--accent);font-size:14px;font-weight:500;cursor:pointer}
 .linkbtn:hover{color:var(--accent-2)}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.sk{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--subtle) 0%,var(--bg) 40%,var(--subtle) 80%);background-size:200% 100%;animation:sh 1.4s linear infinite}
+.sk{height:10px;border-radius:var(--r-ctl);background:linear-gradient(90deg,var(--subtle) 0%,var(--bg) 40%,var(--subtle) 80%);background-size:200% 100%;animation:sh 1.4s linear infinite}
 @keyframes sh{from{background-position:100% 0}to{background-position:-100% 0}}
-.skrow{display:grid;grid-template-columns:10px 160px minmax(0,1fr) 40px;gap:18px;align-items:center;height:50px;padding:0 24px;border-top:1px solid var(--subtle)}
 
-/* сетка строки: состояние, подзаголовок-клиент, суть, следующий шаг, возраст. Жирным только суть. */
-.cnt{color:var(--ink-3);font-weight:500;font-variant-numeric:tabular-nums}
-.row{grid-template-columns:8px 32px minmax(0,1fr) minmax(0,376px) 88px 48px;column-gap:14px;height:54px;padding:0 var(--gutter);border-top:1px solid var(--subtle);color:var(--ink-3);font-size:14px;font-weight:400}
-.row:hover{color:var(--ink-3)}
-.row.bold{color:var(--ink-3);font-weight:400}
-.row .subj,.row.bold .subj{color:var(--ink);font-weight:500}
-.row.bold .age,.row .age{color:var(--ink-3);font-size:13px;font-weight:400}
-.dot-ready{box-shadow:none}
-.dot-closed{background:var(--ok)}
-.row:hover{background:var(--accent-soft)}
-@media (max-width:820px){
-.row{grid-template-columns:32px 8px minmax(0,1fr) auto;column-gap:10px;row-gap:3px;height:auto;padding:12px var(--gutter)}
-.row > .mdial{grid-area:1/1/4/2;align-self:start;margin-right:2px}
-.row > .subj{grid-area:1/2/2/4;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-.row > .age{grid-area:1/4;align-self:start;margin-top:2px}
-.row > .cont{grid-area:2/2/3/5}
-.row > :nth-child(1){grid-area:3/2;align-self:center}
-.row > .who{grid-area:3/3/4/5;font-size:13px}
-.row .cont{flex-wrap:wrap;gap:4px 8px}
-.row .ct{white-space:normal}
-}
-.find{width:280px;height:36px}
-.mdial{position:relative;display:block;width:32px;height:32px;flex:0 0 auto}
-.mdial svg{position:absolute;inset:0;width:100%;height:100%}
-.mdial path{fill:none;stroke-width:1.5;stroke-linecap:round}
-.mdial path.off{stroke:var(--line)}
-.mnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:13px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
-.row .cont{display:flex;align-items:center;gap:8px;min-width:0;color:var(--ink-2);font-weight:400}
-.row .ct{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rk{flex:0 0 auto;padding:2px 7px;border-radius:var(--r-ctl);font-size:12px;font-weight:500;line-height:1.35;white-space:nowrap}
+/* the whole page under the header is the feed; the tabs and the search fly over it, as in Chat */
+:root{--hdr:64px;--tb:36px;--edge:max(var(--gutter),calc(50% - var(--page) / 2 + var(--gutter)))}
+.top::before{animation:none!important;border-bottom-color:transparent!important;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
+.fullfeed{position:fixed;inset:0;margin:0;padding:0}
+.feed{position:absolute;inset:0;overflow-y:auto;padding:calc(var(--hdr) + var(--tb) + 30px) var(--gutter) 128px;scroll-padding-top:calc(var(--hdr) + var(--tb) + 30px)}
+.column{max-width:720px;margin:0 auto}
+.feedlist{display:flex;flex-direction:column;gap:clamp(40px,6vh,60px)}
+
+/* one ticket: the subject speaks, the agent's next step follows, the rest stays small */
+.row{display:block;color:var(--ink-2);content-visibility:auto;contain-intrinsic-size:auto 104px}
+.row:hover{color:var(--ink-2)}
+.subj{display:block;font-family:var(--serif);font-size:27px;font-weight:460;line-height:1.2;letter-spacing:-.014em;color:var(--ink);text-wrap:pretty;overflow-wrap:anywhere;transition:color .15s}
+.row:hover .subj{color:var(--accent)}
+.next{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:9px;font-size:15px;line-height:1.4}
+.act{min-width:0;font-weight:500;color:var(--accent)}
+.row.quiet .act{font-weight:400;color:var(--ink-2)}
+.who{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rk{flex:0 0 auto;padding:2px 8px;border-radius:var(--r-ctl);font-size:12px;font-weight:600;line-height:1.35;white-space:nowrap}
 .rk-high{background:var(--bad-soft);color:var(--bad)}
 .rk-medium{background:var(--warn-soft);color:var(--warn)}
-.row .who{font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.find:focus-within{width:280px}
+.dot{display:inline-block;flex:0 0 auto;width:8px;height:8px;border-radius:50%}
+.dot-ready{background:var(--accent)}
+.dot-triage{border:1.5px solid var(--ink-4)}
+.dot-closed{background:var(--ok)}
+.dot-dismissed{background:var(--ink-4)}
+@media (prefers-reduced-motion:no-preference){
+.row{animation:settle .4s ease-out}
+@supports (animation-timeline:view()){.row{animation:settle linear both;animation-timeline:view();animation-range:entry 0% entry 90%}}
+}
+@keyframes settle{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.skrow{display:flex;flex-direction:column;gap:13px}
+
+/* the tabs: a piece of glass in the corner under the logo */
+.feedtabs{position:absolute;top:calc(var(--hdr) + 6px);left:var(--edge);z-index:3;display:inline-flex;align-items:center;gap:2px;height:36px;padding:3px;border-radius:var(--r-ctl);background:var(--glass-strong);-webkit-backdrop-filter:var(--glass-strong-filter);backdrop-filter:var(--glass-strong-filter);box-shadow:var(--shadow-float)}
+.tab{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:0;border-radius:4px;background:none;color:var(--ink-2);font-size:14px;font-weight:500;cursor:pointer;transition:background .15s,color .15s}
+.tab:hover{color:var(--ink)}
+.tab.on{background:var(--accent-soft);color:var(--accent)}
+.cnt{font-weight:500;font-variant-numeric:tabular-nums;opacity:.72}
+
+/* the search: where the chat keeps its composer */
+.findwrap{position:absolute;left:var(--gutter);right:var(--gutter);bottom:max(16px,env(safe-area-inset-bottom));z-index:3;margin:0;display:flex;justify-content:center;pointer-events:none}
+.find{pointer-events:auto;display:flex;align-items:center;gap:10px;width:440px;max-width:100%;height:50px;padding:0 8px 0 18px;border-radius:999px;background:var(--glass-strong);-webkit-backdrop-filter:var(--glass-strong-filter);backdrop-filter:var(--glass-strong-filter);box-shadow:var(--shadow-float);color:var(--accent);transition:width .25s ease,box-shadow .15s}
+.find:focus-within,.find.has{width:720px}
+.find:focus-within{box-shadow:0 0 0 4px var(--accent-ring),var(--shadow-float)}
+.find input{flex:1;min-width:0;height:100%;background:transparent;border:0;outline:none;color:var(--ink);font-size:15px}
+.find input::placeholder{color:var(--ink-2)}
+.clearq{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:0;background:var(--subtle);color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+@media (prefers-reduced-motion:reduce){.find{transition:none}}
+@media (prefers-reduced-transparency:reduce){.feedtabs,.find{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (max-width:640px){
+.feed{padding-bottom:104px}
+.feedlist{gap:38px}
+.subj{font-size:23px}
+.next{margin-top:7px}
+.who{margin-left:0;flex:1 1 100%}
+.find input{font-size:16px}
+}
 </style>
 </helmet>
 <div style="min-height: 100vh; background:var(--haze); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
@@ -139,85 +138,75 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:6px;paddi
 </sc-if>
 </header>
 
-<main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px">
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 32px">
+<main class="fullfeed">
 <h1 class="sr">Incoming</h1>
-<div role="tablist" aria-label="Ticket status" style="display: flex; align-items: center; gap: 22px">
-<button type="button" role="tab" aria-selected="{{ openSel }}" class="{{ openCls }}" onClick="{{ toOpen }}">Open <span class="cnt">{{ openCount }}</span></button>
-<button type="button" role="tab" aria-selected="{{ closedSel }}" class="{{ closedCls }}" onClick="{{ toClosed }}">Closed <span class="cnt">{{ closedCount }}</span></button>
-</div>
-</div>
-<form role="search" class="find" onSubmit="{{ noSubmit }}">
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
-<label for="q" class="sr">Search tickets and chats</label>
-<input id="q" type="text" autocomplete="off" placeholder="Search tickets and chats" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" style="flex: 1; min-width: 0; height: 100%; background: transparent; border: 0; outline: none; color: var(--ink); font-size:14px">
-<sc-if value="{{ hasQ }}" hint-placeholder-val="{{ false }}">
-<button type="button" aria-label="Clear search" onClick="{{ clearQ }}" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius:6px; border: 0; background: var(--subtle); color: var(--ink-2); cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
-</sc-if>
-</form>
-</div>
-
-<section aria-label="Tickets" style="background: var(--surface); border: 1px solid var(--line); border-radius:10px; box-shadow: 0 1px 2px rgba(15,15,15,.04); overflow: hidden">
+<section class="feed" aria-label="Tickets">
+<div class="column">
 <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-<p role="alert" style="margin: 0; padding: 18px 24px; font-size:14px; font-weight: 500; color: var(--bad)">{{ error }}</p>
+<p role="alert" style="margin: 0 0 28px; font-size:14px; font-weight: 500; color: var(--bad)">{{ error }}</p>
 </sc-if>
 <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
-<div aria-busy="true" style="padding-top: 8px">
-<div style="padding: 10px 24px"><div class="sk" style="width: 120px"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 130px"></div><div class="sk" style="width: 78%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 110px"></div><div class="sk" style="width: 64%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 140px"></div><div class="sk" style="width: 86%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 100px"></div><div class="sk" style="width: 58%"></div><div class="sk"></div></div>
+<div class="feedlist" aria-busy="true">
+<div class="skrow"><div class="sk" style="width: 72%; height: 22px"></div><div class="sk" style="width: 34%"></div></div>
+<div class="skrow"><div class="sk" style="width: 58%; height: 22px"></div><div class="sk" style="width: 28%"></div></div>
+<div class="skrow"><div class="sk" style="width: 84%; height: 22px"></div><div class="sk" style="width: 38%"></div></div>
+<div class="skrow"><div class="sk" style="width: 46%; height: 22px"></div><div class="sk" style="width: 30%"></div></div>
+<div class="skrow"><div class="sk" style="width: 66%; height: 22px"></div><div class="sk" style="width: 26%"></div></div>
 </div>
 </sc-if>
-<sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
-<div style="display: flex; flex-direction: column">
-<div role="list" style="display: flex; flex-direction: column">
-<sc-for list="{{ g.rows }}" as="t" hint-placeholder-count="4">
+<div role="list" class="feedlist">
+<sc-for list="{{ rows }}" as="t" hint-placeholder-count="6">
 <a href="{{ t.href }}" role="listitem" class="{{ t.cls }}">
-<span class="{{ t.dotCls }}"><span class="sr">{{ t.stateWord }}</span></span>
-<span class="mdial" title="{{ t.confWord }}"><svg viewBox="0 0 32 32" aria-hidden="true"><path class="off" sc-d="{{ t.dOff }}"></path><path sc-d="{{ t.dOn }}" stroke="{{ t.tone }}"></path></svg><span class="mnum" aria-hidden="true" style="color: {{ t.tone }}">{{ t.confText }}</span><span class="sr">{{ t.confWord }}</span></span>
-<span class="cell subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="cont"><span class="ct"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><sc-if value="{{ t.hasRisk }}"><span class="{{ t.riskCls }}">{{ t.riskWord }}</span></sc-if></span>
-<span class="cell who" title="{{ t.userFull }}">{{ t.user }}</span>
-<span class="age">{{ t.age }}</span>
+<span class="subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span>
+<span class="next"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><sc-if value="{{ t.hasRisk }}"><span class="{{ t.riskCls }}">{{ t.riskWord }}</span></sc-if><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
 </a>
 </sc-for>
 </div>
-</div>
-</sc-for>
-
 <sc-if value="{{ emptyOpen }}" hint-placeholder-val="{{ false }}">
-<div style="padding: 80px 24px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Nothing waiting.</p>
-</div>
+<p style="margin: 18vh 0 0; text-align: center; font-family: var(--serif); font-size:24px; font-weight: 500">Nothing waiting.</p>
 </sc-if>
 <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
-<div style="padding: 72px 24px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">No tickets match “{{ q }}”</p>
+<div style="margin-top: 18vh; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+<p style="margin: 0; font-family: var(--serif); font-size:24px; font-weight: 500; overflow-wrap: anywhere">No tickets match “{{ q }}”</p>
 <button type="button" class="linkbtn" onClick="{{ clearQ }}">Clear search</button>
 </div>
 </sc-if>
+</div>
 </section>
+<div role="tablist" aria-label="Ticket status" class="feedtabs">
+<button type="button" role="tab" aria-selected="{{ openSel }}" class="{{ openCls }}" onClick="{{ toOpen }}">Open <span class="cnt">{{ openCount }}</span></button>
+<button type="button" role="tab" aria-selected="{{ closedSel }}" class="{{ closedCls }}" onClick="{{ toClosed }}">Closed <span class="cnt">{{ closedCount }}</span></button>
+</div>
+<form role="search" class="findwrap" onSubmit="{{ noSubmit }}">
+<div class="{{ findCls }}">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
+<label for="q" class="sr">Search tickets and chats</label>
+<input id="q" type="text" autocomplete="off" placeholder="Search tickets and chats" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}">
+<sc-if value="{{ hasQ }}" hint-placeholder-val="{{ false }}">
+<button type="button" class="clearq" aria-label="Clear search" onClick="{{ clearQ }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</sc-if>
+</div>
+</form>
 </main>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
 var TICKETS = [
-  { id: 'f-0019', status: 'triaging', source: 'chat', user: 'lumen_771204_33018', subject: 'Charged after free trial', action: 'Agent is looking into it', age: '1m', text: 'I never wanted the weekly plan, the trial just charged me this morning without asking.' },
-  { id: 'f-0018', status: 'triaging', source: 'chat', user: 'lumen_588102_17733', subject: 'Restore purchases does nothing', action: 'Agent is looking into it', age: '2m', text: 'New phone, pressed restore, still the free version. Same Google account as before.' },
-  { id: 'f-0013', conf: 82, risk: 'low', status: 'ready', source: 'chat', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', action: 'Reply, no action', age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
-  { id: 'f-0017', status: 'triaging', source: 'email', user: 'dusan.p@example.com', subject: 'Lifetime but workouts broken', action: 'Agent is looking into it', age: '6m', text: 'Bought lifetime last year, now the strength workouts say Premium only.' },
-  { id: 'f-0016', status: 'triaging', source: 'form', user: 'lumen_209331_50127', subject: 'Trial did not start on iPad', action: 'Agent is looking into it', age: '9m', text: 'It asked me to pay right away, there was no 7 day trial on my iPad.' },
-  { id: 'f-0012', conf: 74, risk: 'high', status: 'ready', source: 'email', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', action: 'Send App Store refund steps', age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
-  { id: 'f-0011', conf: 91, risk: 'medium', status: 'ready', source: 'chat', user: 'lumen_120977_44410', subject: 'Paid but still locked', action: 'Grant 3 days while the store syncs', age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
-  { id: 'f-0010', conf: 58, risk: 'low', status: 'ready', source: 'form', user: 'unknown user', subject: 'Where is my money', action: 'Ask for the store receipt', age: '1h', text: 'You took money from my card and I do not even know what for.' },
-  { id: 'f-0008', conf: 88, risk: 'low', status: 'closed', source: 'chat', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', action: 'Sent cancel steps · App Store, in Serbian', age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
-  { id: 'f-0007', conf: 64, risk: 'low', status: 'dismissed', source: 'form', user: 'unknown user', subject: 'Test from the feedback form', action: 'Closed without a reply', age: 'Nov 6', text: 'test test 123' }
+  { id: 'f-0019', status: 'triaging', user: 'lumen_771204_33018', subject: 'Charged after free trial', action: 'Agent is looking into it', age: '1m', text: 'I never wanted the weekly plan, the trial just charged me this morning without asking.' },
+  { id: 'f-0018', status: 'triaging', user: 'lumen_588102_17733', subject: 'Restore purchases does nothing', action: 'Agent is looking into it', age: '2m', text: 'New phone, pressed restore, still the free version. Same Google account as before.' },
+  { id: 'f-0013', risk: 'low', status: 'ready', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', action: "We've generated 3 responses", age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
+  { id: 'f-0017', status: 'triaging', user: 'dusan.p@example.com', subject: 'Lifetime but workouts broken', action: 'Agent is looking into it', age: '6m', text: 'Bought lifetime last year, now the strength workouts say Premium only.' },
+  { id: 'f-0016', status: 'triaging', user: 'lumen_209331_50127', subject: 'Trial did not start on iPad', action: 'Agent is looking into it', age: '9m', text: 'It asked me to pay right away, there was no 7 day trial on my iPad.' },
+  { id: 'f-0012', risk: 'high', status: 'ready', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', action: 'This one is looking tough', age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
+  { id: 'f-0011', risk: 'medium', status: 'ready', user: 'lumen_120977_44410', subject: 'Paid but still locked', action: "We've generated 2 responses", age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
+  { id: 'f-0010', risk: 'low', status: 'ready', user: 'unknown user', subject: 'Where is my money', action: "We've generated 3 responses", age: '1h', text: 'You took money from my card and I do not even know what for.' },
+  { id: 'f-0008', risk: 'low', status: 'closed', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', action: "You've chosen an option", age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
+  { id: 'f-0007', risk: 'low', status: 'dismissed', user: 'unknown user', subject: 'Test from the feedback form', action: "You've closed it without a reply", age: 'Nov 6', text: 'test test 123' }
 ];
 var WORD = { ready: 'Waiting for a person', triaging: 'Agent is triaging', closed: 'Closed', dismissed: 'Dismissed' };
 var DOT = { ready: 'dot dot-ready', triaging: 'dot dot-triage', closed: 'dot dot-closed', dismissed: 'dot dot-dismissed' };
-var SRC = { chat: 'Chat handoff', email: 'Email', form: 'Form' };
+var BATCH = 30, AHEAD_PX = 1400, POLL_MS = 30000, SEARCH_WAIT_MS = 160;
+var KEPT = 'incoming-feed';
 
 function plain(s) { return [{ t: s, hit: false, miss: true }]; }
 function mark(s, q, around) {
@@ -233,47 +222,8 @@ function mark(s, q, around) {
   return out;
 }
 
-// --- Live mode: GET /api/tickets?q= mapped to the TICKETS shape above ---------------------------------
+// --- Live mode: GET /api/tickets?q= mapped to the TICKETS shape above. The summary carries everything a row shows. ---
 var LIVE_STATUS = { new: 'triaging', proposed: 'ready', done: 'closed', dismissed: 'dismissed' };
-var LIVE_SOURCE = { chat_handoff: 'chat', email: 'email', form: 'form' };
-var STORE = { app_store: 'App Store', play_store: 'Google Play' };
-var KIND = { restore: 'Restore', cancel: 'Cancel', refund_request: 'Refund' };
-
-// The agent's first option as the row's grey continuation ('Grant 7 days of access', 'Refund steps · App Store').
-function optionTitle(o) {
-  var p = (o && o.params) || {};
-  var store = p.store ? ' · ' + (STORE[p.store] || p.store) : '';
-  switch (o && o.action) {
-    case 'grant_access': return p.days ? 'Grant ' + p.days + ' days of access' : 'Grant access';
-    case 'store_instructions': return (KIND[p.kind] || 'Store') + ' steps' + store;
-    case 'refund_to_human': return 'Pass the refund to a person' + store;
-    case 'ask_user': return 'Ask the user';
-    case 'reply_only': return 'Reply, no action';
-    case 'no_reply': return 'Close without a reply';
-  }
-  return '';
-}
-
-// What was done on a closed ticket, from its decision and the action that ran.
-function outcomeOf(full) {
-  var d = full.decision || {}, a = full.action || {};
-  if (d.rejected) return d.reply ? 'Sent your own reply' : 'Closed without a reply';
-  var opts = (full.triage && full.triage.options) || [];
-  var f = a.final || (d.option != null ? opts[d.option] : null);
-  if (!f) return full.status === 'dismissed' ? 'Closed without a reply' : 'Closed';
-  var p = f.params || {};
-  switch (f.action) {
-    case 'grant_access':
-      var days = a.days || p.days;
-      return (days ? 'Granted ' + days + ' days' : 'Granted access') + (a.expires_at ? ', until ' + API.day(a.expires_at) : '');
-    case 'store_instructions': return 'Sent ' + (KIND[p.kind] || 'store').toLowerCase() + ' steps' + (p.store ? ' · ' + (STORE[p.store] || p.store) : '');
-    case 'refund_to_human': return 'Passed the refund to a person';
-    case 'ask_user': return 'Asked the user';
-    case 'reply_only': return 'Replied, no action';
-    case 'no_reply': return 'Closed without a reply';
-  }
-  return 'Closed';
-}
 
 // `lumen_443814_00076` reads as its last part; the shared prefix says nothing. The full id stays in the tooltip and in search.
 function shortUser(u) {
@@ -282,84 +232,124 @@ function shortUser(u) {
   return m ? '…' + m[1] : u;
 }
 
-function toneOf(c) { return c >= 75 ? 'var(--ok)' : (c >= 55 ? 'var(--warn)' : 'var(--bad)'); }
-
-// The row's small dial: 30 ticks, the same reading as the ticket's 60.
-var MINI = {};
-function miniTicks(conf) {
-  var key = conf == null ? 'none' : conf;
-  if (MINI[key]) return MINI[key];
-  var lit = conf == null ? 0 : Math.round(conf / 100 * 30), on = '', off = '';
-  for (var i = 0; i < 30; i++) {
-    var a = (-90 + i * 12) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
-    var d = 'M' + (16 + 13 * c).toFixed(2) + ' ' + (16 + 13 * s).toFixed(2) + 'L' + (16 + 15.5 * c).toFixed(2) + ' ' + (16 + 15.5 * s).toFixed(2);
-    if (i < lit) on += d; else off += d;
-  }
-  return MINI[key] = { on: on, off: off };
+// The server words this line. Without it, only a ticket that is still new may be described: anything else already has its result.
+function actionLine(t) {
+  if (t.action_title) return t.action_title;
+  if (t.status !== 'new' || t.top_action) return '';
+  return t.triage_error ? 'Triage failed' : 'Agent is looking into it';
 }
 
-// Summary (+ the full ticket when fetched) → the design's ticket shape.
-function liveTicket(t, full) {
-  var status = LIVE_STATUS[t.status];
-  var action = t.triage_error ? 'Triage failed' : 'Agent is looking into it';
-  if (status === 'ready') action = optionTitle(full && full.triage ? full.triage.options[0] : { action: t.top_action });
-  if (status === 'closed' || status === 'dismissed') action = full ? outcomeOf(full) : (status === 'closed' ? 'Closed' : 'Closed without a reply');
+function liveTicket(t) {
   return {
-    id: t.id, status: status, source: LIVE_SOURCE[t.source],
+    id: t.id, status: LIVE_STATUS[t.status],
     user: t.customer_user_id || t.email || 'unknown user',
-    subject: t.title, action: action, age: API.ago(t.created_at),
-    snippet: t.snippet || '', category: t.category || '',
-    conf: typeof t.confidence === 'number' ? Math.round(t.confidence * 100) : null,
-    risk: full && full.triage && full.triage.options[0] ? full.triage.options[0].risk : null
+    subject: t.title, action: actionLine(t), age: API.ago(t.created_at),
+    snippet: t.snippet || '', category: t.category || '', risk: t.top_risk
   };
 }
 
 // The API's search snippet with the match marked; a match in the subject or the user is already on the row.
 function snippetMarks(t, q) {
   var core = t.snippet.replace(/^…/, '').replace(/…$/, '');
-  if (!core || t.subject.indexOf(core) >= 0 || core === t.user || core === t.category) return plain(t.action);
+  if (!core || /^Chat: \w+$/.test(core) || t.subject.indexOf(core) >= 0 || core === t.user || core === t.category) return plain(t.action);
   return mark(t.snippet, q, true) || mark(t.snippet, q.split(/\s+/)[0], true) || plain(t.snippet);
 }
 
+function isOpen(t) { return t.status === 'ready' || t.status === 'triaging'; }
+
 class Component extends DCLogic {
-  componentDidMount() {
-    if (API.mock) return;
-    var self = this;
-    this.seq = 0;
-    this.full = {};
-    this.load();
-    this.timer = setInterval(function () { if (!self.busy) self.load(); }, 5000);
+  componentWillUnmount() {
+    if (this.fitter) this.fitter.disconnect();
+    if (this.poll) clearInterval(this.poll);
+    if (this.typed) clearTimeout(this.typed);
   }
-  // The list for the current search; the full ticket only for rows that need more than the summary
-  // (the first option's days/store, what was done on a closed one), refetched when updated_at changes.
+  componentDidMount() {
+    var self = this;
+    // The feed runs under the header and the tabs, so its padding follows their real height.
+    var head = document.querySelector('.top'), bar = document.querySelector('.feedtabs'), css = document.documentElement.style;
+    var fit = function () { css.setProperty('--hdr', head.offsetHeight + 'px'); css.setProperty('--tb', bar.offsetHeight + 'px'); };
+    fit();
+    if (window.ResizeObserver) { this.fitter = new ResizeObserver(fit); this.fitter.observe(head); this.fitter.observe(bar); }
+    this.scroller = document.querySelector('.feed');
+    var queued = false;
+    this.scroller.addEventListener('scroll', function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; self.grow(); });
+    }, { passive: true });
+    this.restoreOnBack();
+    window.addEventListener('pagehide', function () { self.keep(); });
+    if (API.mock) { requestAnimationFrame(function () { self.afterRender(); }); return; }
+    this.seq = 0;
+    this.load();
+    this.poll = setInterval(function () { if (document.visibilityState === 'visible') self.load(); }, POLL_MS);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') self.load(); });
+  }
+  // Back from a ticket: the same tab, search and place in the feed. Any other arrival starts at the top.
+  restoreOnBack() {
+    try {
+      var nav = performance.getEntriesByType('navigation')[0];
+      var kept = nav && nav.type === 'back_forward' ? JSON.parse(sessionStorage.getItem(KEPT) || 'null') : null;
+      if (kept) { this.pendingTop = kept.top; this.anchor = kept.anchor; this.frames = 12; this.setState({ tab: kept.tab, q: kept.q, limit: kept.limit }); }
+    } catch (e) { /* no storage: the feed simply starts at the top */ }
+  }
+  keep() {
+    try {
+      var s = this.state || {};
+      var el = this.scroller, row = el && Array.prototype.find.call(el.querySelectorAll('.row'), function (r) { return r.getBoundingClientRect().bottom > el.clientHeight / 3; });
+      sessionStorage.setItem(KEPT, JSON.stringify({ tab: s.tab || 'open', q: s.q || '', limit: s.limit || BATCH, top: el ? el.scrollTop : 0, anchor: row ? { href: row.getAttribute('href'), y: row.getBoundingClientRect().top } : null }));
+    } catch (e) { /* nothing to keep then */ }
+  }
   load() {
     var self = this;
     var q = (this.state.q || '').trim();
     var seq = ++this.seq;
-    this.busy = true;
     API.get('/api/tickets' + (q ? '?q=' + encodeURIComponent(q) : '')).then(function (list) {
-      var need = list.filter(function (t) {
-        var c = self.full[t.id];
-        return t.status !== 'new' && !(c && c.key === t.status + t.updated_at);
-      });
-      return Promise.all(need.map(function (t) {
-        return API.get('/api/tickets/' + encodeURIComponent(t.id)).then(function (full) {
-          self.full[t.id] = { key: t.status + t.updated_at, full: full };
-        }, function () { return null; });
-      })).then(function () { return list; });
-    }).then(function (list) {
       if (seq !== self.seq) return;
-      self.busy = false;
-      var rows = list.map(function (t) {
-        var c = self.full[t.id];
-        return liveTicket(t, c && c.key === t.status + t.updated_at ? c.full : null);
-      });
-      self.setState({ rows: rows, rowsQ: q, loaded: true, error: null });
+      var key = q + '\n' + JSON.stringify(list);
+      if (key === self.lastKey && self.state.loaded && !self.state.error) return;
+      self.lastKey = key;
+      self.setState({ rows: list.map(liveTicket), rowsQ: q, loaded: true, error: null });
+      requestAnimationFrame(function () { self.afterRender(); });
     }).catch(function (e) {
       if (seq !== self.seq) return;
-      self.busy = false;
       self.setState({ error: 'Tickets did not load: ' + e.message + '. Trying again.' });
     });
+  }
+  afterRender() {
+    if (this.pendingTop != null && this.state.loaded) {
+      var self = this, el = this.scroller, row = this.anchor && el.querySelector('.row[href="' + this.anchor.href + '"]');
+      if (!row && this.frames-- > 0) { requestAnimationFrame(function () { self.afterRender(); }); return; }
+      // The rows above have only an estimated height until drawn, so the row itself is the mark, not the pixel.
+      el.scrollTop = this.pendingTop;
+      if (row) el.scrollTop += row.getBoundingClientRect().top - this.anchor.y;
+      if (this.frames-- > 0) { requestAnimationFrame(function () { self.afterRender(); }); return; }
+      this.pendingTop = null;
+    }
+    this.grow();
+  }
+  // Rows come in batches as the end of the feed gets near.
+  grow() {
+    var el = this.scroller, limit = (this.state || {}).limit || BATCH;
+    if (!el || limit >= (this.total || 0)) return;
+    if (el.scrollHeight - el.scrollTop - el.clientHeight > AHEAD_PX) return;
+    var self = this;
+    this.setState({ limit: limit + BATCH });
+    requestAnimationFrame(function () { self.grow(); });
+  }
+  // The feed starts over: another tab or another search.
+  fresh(patch) {
+    if (this.scroller) this.scroller.scrollTop = 0;
+    this.setState(Object.assign({ limit: BATCH }, patch));
+  }
+  search(value, now) {
+    var self = this;
+    this.fresh({ q: value });
+    if (!API.mock) {
+      if (this.typed) clearTimeout(this.typed);
+      if (now) this.load();
+      else this.typed = setTimeout(function () { self.load(); }, SEARCH_WAIT_MS);
+    } else requestAnimationFrame(function () { self.grow(); });
   }
   renderVals() {
     var s = this.state || {};
@@ -367,7 +357,6 @@ class Component extends DCLogic {
     var live = !API.mock;
     var tab = s.tab || 'open';
     var q = (s.q || '').trim();
-    var isOpen = function (t) { return t.status === 'ready' || t.status === 'triaging'; };
     var matches = function (t) {
       if (!q || live) return true;
       return (t.subject + ' ' + t.user + ' ' + t.text + ' ' + t.action).toLowerCase().indexOf(q.toLowerCase()) >= 0;
@@ -378,58 +367,48 @@ class Component extends DCLogic {
       if (q) cont = live ? snippetMarks(t, q) : mark(t.text, q, true) || mark(t.action, q, false) || plain(t.action);
       return {
         href: live ? 'Ticket.dc.html?id=' + encodeURIComponent(t.id) : 'Ticket.dc.html',
-        cls: t.status === 'ready' ? 'row bold' : 'row',
+        cls: t.status === 'ready' ? 'row' : 'row quiet',
+        showDot: !!q,
         dotCls: DOT[t.status],
         stateWord: WORD[t.status],
         user: shortUser(t.user), userFull: t.user, subj: subj, cont: cont, age: t.age,
-        confText: t.conf != null ? t.conf : '', confWord: t.conf != null ? 'Confidence ' + t.conf + '%' : '', tone: t.conf != null ? toneOf(t.conf) : 'var(--ink-4)',
-        dOn: miniTicks(t.conf).on, dOff: miniTicks(t.conf).off,
-        hasRisk: t.status === 'ready' && (t.risk === 'high' || t.risk === 'medium'), riskCls: 'rk rk-' + t.risk, riskWord: t.risk === 'high' ? 'High risk' : 'Medium risk',
-        isChat: t.source === 'chat', isEmail: t.source === 'email', isForm: t.source === 'form',
-        srcWord: SRC[t.source]
+        hasRisk: t.status === 'ready' && (t.risk === 'high' || t.risk === 'medium'), riskCls: 'rk rk-' + t.risk, riskWord: t.risk === 'high' ? 'High risk' : 'Medium risk'
       };
     };
     var all = live ? s.rows || [] : TICKETS;
     // Live: the empty and no-match messages wait until the list for this very search has arrived.
     var settled = !live || (!!s.loaded && s.rowsQ === q);
-    var openList = all.filter(function (t) { return isOpen(t) && matches(t); });
-    var closedList = all.filter(function (t) { return !isOpen(t) && matches(t); });
-    var groups = [];
-    if (tab === 'open') {
-      var waiting = openList.filter(function (t) { return t.status === 'ready'; }).map(shape);
-      var triaging = openList.filter(function (t) { return t.status === 'triaging'; }).map(shape);
-      if (waiting.length) groups.push({ rows: waiting });
-      if (triaging.length) groups.push({ rows: triaging });
-    } else if (closedList.length) {
-      groups.push({ rows: closedList.map(shape) });
-    }
-    var shown = tab === 'open' ? openList.length : closedList.length;
+    var openList = [], closedList = [];
+    all.forEach(function (t) { if (matches(t)) (isOpen(t) ? openList : closedList).push(t); });
+    var list = tab === 'open' ? openList : closedList;
+    this.total = list.length;
     var menu = !!s.menu;
     return {
       q: s.q || '',
       hasQ: !!q,
-      groups: groups,
+      findCls: s.q ? 'find has' : 'find',
+      rows: list.slice(0, s.limit || BATCH).map(shape),
       openCount: live && !s.loaded ? '' : openList.length,
       closedCount: live && !s.loaded ? '' : closedList.length,
       openSel: tab === 'open',
       closedSel: tab === 'closed',
       openCls: tab === 'open' ? 'tab on' : 'tab',
       closedCls: tab === 'closed' ? 'tab on' : 'tab',
-      emptyOpen: settled && !q && tab === 'open' && shown === 0,
-      noResults: settled && !!q && shown === 0,
+      emptyOpen: settled && !q && tab === 'open' && list.length === 0,
+      noResults: settled && !!q && list.length === 0,
       loading: live && !s.loaded && !s.error,
       hasError: !!s.error,
       error: s.error || '',
       menu: menu,
       menuCls: menu ? 'nl open' : 'nl',
-      onQ: function (e) { self.setState({ q: e.target.value }); if (live) self.load(); },
-      onKey: function (e) { if (e.key === 'Escape') { self.setState({ q: '' }); if (live) self.load(); } },
-      clearQ: function () { self.setState({ q: '' }); if (live) self.load(); },
+      onQ: function (e) { self.search(e.target.value); },
+      onKey: function (e) { if (e.key === 'Escape') self.search('', true); },
+      clearQ: function () { self.search('', true); },
       noSubmit: function (e) { e.preventDefault(); },
       toggleMenu: function () { self.setState({ menu: !menu }); },
       closeMenu: function () { self.setState({ menu: false }); },
-      toOpen: function () { self.setState({ tab: 'open' }); },
-      toClosed: function () { self.setState({ tab: 'closed' }); }
+      toOpen: function () { self.fresh({ tab: 'open' }); },
+      toClosed: function () { self.fresh({ tab: 'closed' }); }
     };
   }
 }

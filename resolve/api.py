@@ -42,7 +42,7 @@ E409 = {409: {"model": ErrorDetail, "description": "Wrong ticket status for this
 E409_RUN = {409: {"model": ErrorDetail, "description": "A hypothesis run is already in flight"}}
 E409_DRAFT = {409: {"model": ErrorDetail, "description": "Demo mode or no Adapty CLI: nothing is created"}}
 E502 = {502: {"model": ErrorDetail, "description": "The person's English could not be translated to the user's language; nothing was sent"}}
-from resolve.tickets import CATEGORIES, ticket_title
+from resolve.tickets import CATEGORIES, GENERATED, action_line, ticket_title
 
 ACCEPT_STATUSES = ("proposed",)
 REJECT_STATUSES = ("new", "triaged", "proposed")
@@ -85,9 +85,10 @@ def _triage_view(ticket: dict) -> tuple[dict | None, bool]:
 def ticket_summary(ticket: dict) -> dict:
     view, _ = _triage_view(ticket)
     options = (view or {}).get("options") or []
+    status = DB_TO_API_STATUS[ticket["status"]]
     return {
         "id": ticket["id"],
-        "status": DB_TO_API_STATUS[ticket["status"]],
+        "status": status,
         "source": ticket["source"],
         "category": ticket["category"],
         "customer_user_id": ticket["customer_user_id"],
@@ -98,6 +99,8 @@ def ticket_summary(ticket: dict) -> dict:
         "updated_at": ticket["updated_at"],
         "confidence": view.get("confidence") if view else None,
         "top_action": options[0]["action"] if options else None,
+        "top_risk": options[0].get("risk") if options else None,
+        "action_title": action_line(ticket, status, view, options),
         "triage_error": ticket["triage_error"],
     }
 
@@ -336,15 +339,15 @@ def build_router(services, live: insights_live.Live | None = None, ab_runner=lam
         range_: Literal["today", "7d", "30d"] = Query("today", alias="range", description="period: today (hourly) / 7d / 30d (daily)"),
         tz: int = Query(0, ge=-840, le=840, description="the viewer's offset from UTC in minutes (JS: -getTimezoneOffset()); sets local midnight and hours"),
     ):
-        return analytics.compute(conn, range_, tz, now=services.frozen_now)
+        return analytics.compute(conn, range_, tz)
 
     @router.get("/api/users", response_model=list[UserItem], tags=["mobile"], summary="Seeded demo users for a user picker")
     def users():
-        ids = {r[0] for r in conn.execute("SELECT customer_user_id FROM tickets WHERE customer_user_id != ''")}
+        ids = {r[0] for r in conn.execute("SELECT customer_user_id FROM tickets WHERE customer_user_id != '' AND rule != ?", (GENERATED,))}
         ids |= {r[0] for r in conn.execute("SELECT customer_user_id FROM conversations WHERE customer_user_id != ''")}
         profiles = {}  # latest cached profile per user (later rows overwrite earlier ones)
         for r in conn.execute(
-            "SELECT customer_user_id, profile_json FROM tickets WHERE profile_json IS NOT NULL ORDER BY profile_fetched_at, updated_at"
+            "SELECT customer_user_id, profile_json FROM tickets WHERE profile_json IS NOT NULL AND rule != ? ORDER BY profile_fetched_at, updated_at", (GENERATED,)
         ):
             profiles[r[0]] = json.loads(r[1])
         now = datetime.now(timezone.utc)

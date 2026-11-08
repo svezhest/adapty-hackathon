@@ -6,11 +6,11 @@ Most support questions in a subscription app are about money: "charged after the
 
 [Watch the 2-minute demo](https://www.youtube.com/watch?v=tm1e8iPP_tg)
 
-![Incoming: tickets waiting for a person, each with how sure the agent is, the action it suggests and the risk](docs/screenshots/incoming.png)
+![Incoming: a long feed of tickets, each saying how many responses are ready and, where it matters, the risk](docs/screenshots/incoming.png)
 
 ## The screens
 
-Screenshots of the running app. The chats and tickets are test data; the replies, options and scores come from the agents.
+Screenshots of the running app. The chats and tickets are test data; the replies, options and scores of the 31 tickets on top come from the agents, and the long tail of the demo feed is assembled from templates by code, no model.
 
 **Ticket.** The cause, the evidence and how sure the agent is, then answers that take different actions. The person sends one, edits it or writes their own. Nothing runs before that click.
 

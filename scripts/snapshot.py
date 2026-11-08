@@ -9,8 +9,10 @@ would contradict it.
 
 The copy is then curated, because the repo is public and a visitor clicks at random: developers'
 throwaway chats (DROP_SESSIONS) and tickets without a Level 1 triage go, with everything that hangs
-on them. Nothing is edited or rewritten. In demo mode the Analyze clock stops at the last event in
-the snapshot (resolve/web.py), so its periods don't empty out as the file ages.
+on them. Nothing is edited or rewritten. In demo mode each start moves the runtime copy forward so its
+newest event is now (resolve/demo_clock.py), so the periods don't empty out as the file ages.
+
+Then `python scripts/generate_feed.py` adds the long tail of the demo's Incoming on top of this file.
 """
 
 from __future__ import annotations

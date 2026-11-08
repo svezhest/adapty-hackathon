@@ -846,7 +846,7 @@ def legacy_to_ticket(proposal: dict) -> dict:
         "category": proposal["category"],
         "evidence": list(proposal.get("evidence") or []),
         "root_cause": proposal.get("root_cause", ""),
-        "confidence": proposal.get("confidence", 0),
+        "confidence": proposal.get("confidence"),
         "options": [
             {
                 "action": action,

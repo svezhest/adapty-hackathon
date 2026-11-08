@@ -326,6 +326,10 @@ def _weighted_sample(pool: list[dict], count: int, rng: random.Random) -> list[d
         picked.append(choice)
     return picked
 
+GENERATED = "generated"  # `rule` of the demo feed's long tail (scripts/generate_feed.py): shown in Incoming, counted nowhere
+TOUGH_BELOW = 0.65  # the triage's confidence under which Incoming says "This one is looking tough"
+CANCELLED_HANDOFF = "user cancelled the handoff"  # the start of the note on a ticket the user withdrew in chat
+
 CATEGORY_LABELS = {
     "charged_after_trial": "Charged after trial",
     "no_access_after_purchase": "No access after purchase",
@@ -376,3 +380,33 @@ def ticket_title(subject: str, body: str, summary: str | None) -> str:
     if chat:
         return CHAT_REASON_TITLE.get(chat.group(1), CHAT_REASON_TITLE["other"])
     return subject or "(no text)"
+
+
+# --- The line under the title in Incoming (docs/agents.md, "Ticket summary") ---------------------------
+
+def action_line(ticket: dict, status: str, view: dict | None, options: list[dict]) -> str | None:
+    """The line under the title in Incoming, from what the triage really produced."""
+    if status in ("done", "dismissed"):
+        return closed_line(ticket, options)
+    if options:
+        confidence = view.get("confidence")
+        if confidence is not None and confidence < TOUGH_BELOW:
+            return "This one is looking tough"
+        return f"We've generated {len(options)} response{'' if len(options) == 1 else 's'}"
+    if ticket.get("triage_error"):
+        return "Triage failed"
+    return None if view else "Agent is looking into it"
+
+
+def closed_line(ticket: dict, options: list[dict]) -> str:
+    """A closed ticket's line, from its stored decision. "You've" only when a person decided."""
+    decision = ticket.get("decision") or {}
+    if decision.get("rejected"):
+        if str(decision.get("note") or "").startswith(CANCELLED_HANDOFF):
+            return "The user withdrew the request"
+        return "You've written your own reply" if decision.get("reply") else "You've closed it without a reply"
+    index = decision.get("option")
+    if index is None:
+        return "Closed without a reply" if ticket.get("status") == "dismissed" else "Closed"
+    final = (ticket.get("action") or {}).get("final") or (options[index] if index < len(options) else {})
+    return "You've closed it without a reply" if final.get("action") == "no_reply" else "You've chosen an option"

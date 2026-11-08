@@ -15,7 +15,7 @@ from collections import deque
 from datetime import datetime, timezone
 
 from resolve import config, db, insights, triage
-from resolve.tickets import CATEGORY_LABELS
+from resolve.tickets import CATEGORY_LABELS, GENERATED
 
 AUTO_DEBOUNCE_S = 3.0  # the grouping must stay identical this long after a material change
 AUTO_MIN_GAP_S = 20.0  # between two auto starts
@@ -142,7 +142,7 @@ class Live:
     # --- reads ---------------------------------------------------------------------------------------
 
     def groups(self) -> dict:
-        return insights.group_tickets(db.list_tickets(self.services.conn))
+        return insights.group_tickets([t for t in db.list_tickets(self.services.conn) if t["rule"] != GENERATED])
 
     def auto_on(self) -> bool:
         return self.auto_enabled and not self.services.demo and self.services.llm is not None

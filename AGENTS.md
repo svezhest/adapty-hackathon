@@ -13,6 +13,7 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 | `resolve/llm.py`, `llm_openai.py`, `llm_anthropic.py`, `llm_schema.py` | `LLM.step(system, messages, tools) -> Step`; providers only translate formats; strict tool schemas from pydantic; `FakeLLM` for tests |
 | `resolve/models.py` | Shared contract: AgentConfig, TriageTicket, Decision, ChatResult, API response models |
 | `resolve/jira.py` | The only client of Jira Cloud; `export`: one issue per ticket |
+| `resolve/demo_clock.py` | `shift_to_now`: the demo's runtime copy moves forward at startup so its newest event is now |
 | `resolve/policy.py` | Grant limits as pure code (`check_grant`), config loading |
 | `resolve/actions.py` | `execute(...)`: the only place an action writes to Adapty; grants recorded in `grants` |
 | `resolve/frontline.py` | Level 2 chat loop: enabled tools only, every call checked and logged, handoff in code after a blocked grant, after-handoff mode, `cancel_handoff` |
@@ -22,7 +23,7 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 | `resolve/db.py` | SQLite schema + migrations (tickets, conversations, messages, l2_events, grants, agent_config, email_index) |
 | `resolve/web.py` | App factory, redirects to the screens, `/healthz` |
 | `resolve/static/ui/` | The web screens (`*.dc.html`, `tokens.css`, `support.js`, `api.js`), JSON API only; colours, scale and the shared header come from `tokens.css`, not from a screen; `?mock=1` for sample data |
-| `scripts/` | `seed_demo_profiles.py` (copy the demo users into another Adapty app), `import_feedback.py`, `seed_emails.py`, `eval.py` (paid), `export_openapi.py`, `generate_tickets.py`, `snapshot.py` |
+| `scripts/` | `seed_demo_profiles.py` (copy the demo users into another Adapty app), `import_feedback.py`, `seed_emails.py`, `eval.py` (paid), `export_openapi.py`, `generate_tickets.py`, `snapshot.py`, `generate_feed.py` (the demo feed's long tail, no model) |
 | `mobile-mock/` | Backup Android app: chat + debug buttons over `POST /chat` |
 | `tests/` | pytest, no network, no keys; `tests/fakes_v2.py` has the scripted LLM steps and profiles |
 
