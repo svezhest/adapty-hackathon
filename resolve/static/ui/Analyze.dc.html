@@ -83,7 +83,6 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 .o-no{color:var(--bad);font-weight:700}
 
 .glass{border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none}
-.kpi-l,.kpi-s{font-size:13px;color:var(--ink-3)}
 .delta{height:auto;padding:0;background:none;font-size:13px;font-weight:500;color:var(--ink-2)}
 .delta:empty{display:none}
 .side{display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--surface);min-width:0}
@@ -171,29 +170,6 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </div>
 </div>
 <p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size:14px; color: var(--ink-3)"><span class="delta">{{ hero.delta }}</span>{{ hero.line }}</p>
-</div>
-
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
-<div class="glass" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span class="kpi-l">Chats with the agent</span>
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.chats }}</span>
-<span class="kpi-s">{{ kpi.chatsSub }}</span>
-</div>
-<div class="glass" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span class="kpi-l">Median first reply</span>
-<span style="display: flex; align-items: center; gap: 10px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.first }}</span><span class="delta">{{ kpi.firstDelta }}</span></span>
-<span class="kpi-s">People: {{ kpi.people }}</span>
-</div>
-<div class="glass" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span class="kpi-l">Free days granted</span>
-<span style="display: flex; align-items: flex-end; gap: 12px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.days }}</span></span>
-<span class="kpi-s">{{ kpi.daysSub }}</span>
-</div>
-<div class="glass" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span class="kpi-l">Waiting for a person</span>
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.waiting }}</span>
-<span class="kpi-s">Oldest {{ kpi.oldest }} · <a href="Main.dc.html" style="font-weight: 500">Open Incoming</a></span>
-</div>
 </div>
 </div>
 </section>
@@ -467,7 +443,6 @@ function mockView(range, tick) {
     agent: AGENT, handed: HANDED, closed: CLOSED, feedback: FEEDBACK, ymax: YMAX, step: 1, totals: [19, 7, 5, 4],
     rangeNote: RANGES.filter(function (r) { return r.id === range; })[0].note,
     hero: { aBg: 'var(--accent)', bBg: 'var(--ink-2)', fg: 'var(--surface)', w: 73, machines: '73%', humans: '27%', aria: 'Of 26 closed chats, machines closed 73% and humans 27%', delta: '▲ 6 pts for the machines', line: 'vs Nov 6 · 19 of 26 closed chats ended without a human, 7 needed one' },
-    kpi: { chats: 31, chatsSub: '26 closed · 5 still open', first: '3.8 s', firstDelta: '▼ 0.6 s', people: '18 min', days: 52, daysSub: '7 grants · 11 blocked by limits', waiting: 4, oldest: '1h 04m' },
     grants: GRANTS,
     chartTitle: 'Conversations by hour', bucketHead: 'Hour',
     chartAria: 'Stacked area chart of chats per hour from 11:00 to 23:00: 19 kept by the agent, 7 handed to people, 5 closed by people, 4 other feedback.',
@@ -499,13 +474,10 @@ function liveView(data, range, elapsed, updated, error) {
   var closedChats = ch.resolved + ch.handed_off;
   var share = cur.machine_share, prevShare = prev.machine_share;
   var dShare = share !== null && prevShare !== null ? Math.round((share - prevShare) * 100) : null;
-  var dFirst = m.first_reply_median_s !== null && prev.machines.first_reply_median_s !== null ? m.first_reply_median_s - prev.machines.first_reply_median_s : null;
   var blockedTotal = sum(Object.keys(cur.blocked).map(function (k) { return cur.blocked[k]; }));
   var reasonsTotal = sum(Object.keys(cur.handoff_reasons).map(function (k) { return cur.handoff_reasons[k]; }));
   var d = cur.decisions;
   var tasks = data.open_tasks || [], counts = data.open_counts || { chat: 0, triage: 0, review: 0 };
-  var waiting = tasks.filter(function (t) { return t.kind === 'review'; });
-  var oldest = waiting.length ? Math.max.apply(null, waiting.map(function (t) { return t.age_s || 0; })) + elapsed : null;
   var prevLabel = range === 'today' ? API.day(p.prev_start) : PREV_LABEL[range];
   var note = '';
   if (p.start) {
@@ -536,14 +508,6 @@ function liveView(data, range, elapsed, updated, error) {
       delta: dShare === null ? '' : (dShare > 0 ? '▲ ' : dShare < 0 ? '▼ ' : '± ') + Math.abs(dShare) + ' pts for the machines',
       line: closedChats ? ch.resolved + ' of ' + closedChats + ' closed chats ended without a human, ' + ch.handed_off + ' needed one' : 'No closed chats in this period',
       aBg: share === null ? 'var(--subtle)' : 'var(--accent)', bBg: share === null ? 'var(--subtle)' : 'var(--ink-2)', fg: share === null ? 'var(--ink-3)' : 'var(--surface)'
-    },
-    kpi: {
-      chats: ch.total, chatsSub: closedChats + ' closed · ' + ch.open + ' still open',
-      first: dur(m.first_reply_median_s),
-      firstDelta: dFirst === null ? '' : (dFirst < 0 ? '▼ ' : dFirst > 0 ? '▲ ' : '± ') + dur(Math.abs(dFirst)),
-      people: dur(h.first_reply_median_s),
-      days: cur.grants.days, daysSub: plural(cur.grants.count, 'grant') + ' · ' + blockedTotal + ' blocked by limits',
-      waiting: counts.review, oldest: oldest === null ? '—' : fmtAge(oldest)
     },
     grants: cur.grants.days_each.slice(-7),
     chartTitle: hourly ? 'Conversations by hour' : 'Conversations by day', bucketHead: hourly ? 'Hour' : 'Day',
@@ -642,7 +606,7 @@ class Component extends DCLogic {
       rangeNote: v.rangeNote,
       ranges: RANGES.map(function (r) { return { label: r.label, on: r.id === range, cls: r.id === range ? 'on' : '', pick: function () { if (r.id === range) return; self.setState({ range: r.id, hover: null }); if (!API.mock) self.load(r.id); } }; }),
       grantBars: (function () { var gmax = Math.max.apply(null, [1].concat(v.grants)); return v.grants.map(function (g) { return { h: Math.round(6 + g / gmax * 18) }; }); })(),
-      hero: v.hero, kpi: v.kpi,
+      hero: v.hero,
       chartTitle: v.chartTitle, chartAria: v.chartAria, bucketHead: v.bucketHead,
       agentReplies: v.agentReplies, peopleReplies: v.peopleReplies,
       donutTotal: v.donutTotal, donutPct: v.donutPct, donutAria: v.donutAria,
