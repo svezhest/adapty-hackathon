@@ -34,6 +34,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ctl.bad{border-color:var(--bad);box-shadow:0 0 0 3px rgba(214,58,63,.10)}
 .num{width:84px;text-align:right;font-variant-numeric:tabular-nums}
+.intro{margin:0;padding:16px 24px;font-size:14px;line-height:1.5;color:var(--ink-2)}
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .plan{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px 13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--ink);transition:border-color .15s, box-shadow .15s}
 .plan:hover{border-color:var(--accent-line)}
@@ -183,26 +184,6 @@ select.ctl{padding-left:6px}
 <span class="nm"><span id="l-rp">Repeat complaint after a grant → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-rp" aria-checked="{{ v.hRepeat }}" class="{{ sw.hRepeat }}" onClick="{{ tg.hRepeat }}"></button>
 </div>
-<p class="sum">{{ jiraStatus }}</p>
-<div class="set">
-<span class="nm"><span id="l-jauto">Create Jira issues automatically</span><span class="hint">Off: a person creates each issue from the ticket</span></span>
-<button type="button" role="switch" aria-labelledby="l-jauto" aria-checked="{{ v.jiraAuto }}" class="{{ sw.jiraAuto }}" onClick="{{ tg.jiraAuto }}"></button>
-</div>
-<div class="set">
-<label for="jmax" class="nm"><span>Most automatic Jira issues a day</span><span class="hint">Then new reports wait for a person</span></label>
-<input id="jmax" class="{{ cls.jiraMax }}" type="number" min="0" max="500" value="{{ v.jiraMax }}" onChange="{{ on.jiraMax }}">
-<sc-if value="{{ err.jiraMax }}"><p class="err">From 0 to 500.</p></sc-if>
-</div>
-<sc-for list="{{ teamRows }}" as="t">
-<div class="set" style="align-items: flex-end">
-<label style="display: flex; flex-direction: column; gap: 4px; flex: 1 1 130px; font-size:13px; color: var(--ink-3)">Team<input class="ctl" type="text" value="{{ t.name }}" onChange="{{ t.onName }}" style="width: 100%"></label>
-<label style="display: flex; flex-direction: column; gap: 4px; flex: 0 1 110px; font-size:13px; color: var(--ink-3)">Project key<input class="ctl" type="text" value="{{ t.project_key }}" onChange="{{ t.onKey }}" style="width: 100%"></label>
-<label style="display: flex; flex-direction: column; gap: 4px; flex: 3 1 280px; font-size:13px; color: var(--ink-3)">What it fixes<input class="ctl" type="text" value="{{ t.handles }}" onChange="{{ t.onHandles }}" style="width: 100%"></label>
-<button type="button" onClick="{{ t.remove }}" style="height: 34px; padding: 0 4px; border: 0; background: none; color: var(--ink-3); font-size:14px; cursor: pointer; text-decoration: underline">Remove</button>
-</div>
-</sc-for>
-<sc-if value="{{ err.jiraTeams }}"><p class="err" style="padding: 8px 24px 0">Each team needs its own name and a project key in capitals, such as FIT.</p></sc-if>
-<div class="set"><button type="button" onClick="{{ addTeam }}" style="padding: 0; border: 0; background: none; color: var(--accent); font-size:14px; font-weight: 500; cursor: pointer">Add a Jira team</button></div>
 <div class="set">
 <label for="prov" class="nm"><span>Provider</span><span class="hint">Running now: {{ running }}</span></label>
 <select id="prov" class="ctl" value="{{ v.provider }}" onChange="{{ on.provider }}">
@@ -232,6 +213,30 @@ select.ctl{padding-left:6px}
 <input id="maxm" class="{{ cls.maxMessages }}" type="number" min="5" max="50" value="{{ v.maxMessages }}" onChange="{{ on.maxMessages }}">
 <sc-if value="{{ err.maxMessages }}"><p class="err">Choose 5 to 50 messages.</p></sc-if>
 </div>
+</section>
+
+<h2 class="bigh" id="h-jira">Bug reports to Jira</h2>
+<section class="card" aria-labelledby="h-jira" style="overflow: hidden">
+<p class="intro">{{ jiraStatus }}</p>
+<div class="set">
+<span class="nm"><span id="l-jauto">Create issues automatically</span><span class="hint">Off: a person creates each issue from the ticket</span></span>
+<button type="button" role="switch" aria-labelledby="l-jauto" aria-checked="{{ v.jiraAuto }}" class="{{ sw.jiraAuto }}" onClick="{{ tg.jiraAuto }}"></button>
+</div>
+<div class="set">
+<label for="jmax" class="nm"><span>Most automatic issues a day</span><span class="hint">Then new reports wait for a person</span></label>
+<input id="jmax" class="{{ cls.jiraMax }}" type="number" min="0" max="500" value="{{ v.jiraMax }}" onChange="{{ on.jiraMax }}">
+<sc-if value="{{ err.jiraMax }}"><p class="err">From 0 to 500.</p></sc-if>
+</div>
+<sc-for list="{{ teamRows }}" as="t">
+<div class="set" style="align-items: flex-end">
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 1 1 130px; font-size:13px; color: var(--ink-3)">Team<input class="ctl" type="text" value="{{ t.name }}" onChange="{{ t.onName }}" style="width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 0 1 110px; font-size:13px; color: var(--ink-3)">Project key<input class="ctl" type="text" value="{{ t.project_key }}" onChange="{{ t.onKey }}" style="width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 3 1 280px; font-size:13px; color: var(--ink-3)">What it fixes<input class="ctl" type="text" value="{{ t.handles }}" onChange="{{ t.onHandles }}" style="width: 100%"></label>
+<button type="button" onClick="{{ t.remove }}" style="height: 34px; padding: 0 4px; border: 0; background: none; color: var(--ink-3); font-size:14px; cursor: pointer; text-decoration: underline">Remove</button>
+</div>
+</sc-for>
+<sc-if value="{{ err.jiraTeams }}"><p class="err" style="padding: 8px 24px 0">Each team needs its own name and a project key in capitals, such as FIT.</p></sc-if>
+<div class="set"><button type="button" onClick="{{ addTeam }}" style="padding: 0; border: 0; background: none; color: var(--accent); font-size:14px; font-weight: 500; cursor: pointer">Add a team</button></div>
 </section>
 
 <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}">
@@ -425,7 +430,7 @@ class Component extends DCLogic {
       plans: plans, worst: worst, usedLine: usedLine,
       teamRows: teamRows,
       addTeam: function () { putTeams(teamList.concat([{ name: '', project_key: '', handles: '', issue_type: 'Bug' }])); },
-      jiraStatus: !LIVE ? 'Jira: connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Jira: connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Jira: demo mode, no issue is created.' : 'Jira: not connected. Set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
+      jiraStatus: !LIVE ? 'Connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Demo mode: no issue is created.' : 'Not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
       v: v, on: on, tg: tg, sw: sw, err: err, cls: cls,
       running: LIVE ? runningNow(s.llm) : 'openai · deepseek-flash',
       prov: LIVE ? {
