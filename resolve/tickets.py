@@ -327,7 +327,8 @@ def _weighted_sample(pool: list[dict], count: int, rng: random.Random) -> list[d
     return picked
 
 GENERATED = "generated"  # `rule` of the demo feed's long tail (scripts/generate_feed.py): shown in Incoming, counted nowhere
-TOUGH_BELOW = 0.65  # the triage's confidence under which Incoming says "This one is looking tough"
+TOUGH_AT_MOST = 0.7  # the best option's confidence at or under which Incoming says the agent isn't sure of any response
+TOUGH_LINE = "A tough one: the agent isn't sure of any response. You've got this."
 CANCELLED_HANDOFF = "user cancelled the handoff"  # the start of the note on a ticket the user withdrew in chat
 
 CATEGORY_LABELS = {
@@ -384,18 +385,30 @@ def ticket_title(subject: str, body: str, summary: str | None) -> str:
 
 # --- The line under the title in Incoming (docs/agents.md, "Ticket summary") ---------------------------
 
-def action_line(ticket: dict, status: str, view: dict | None, options: list[dict]) -> str | None:
-    """The line under the title in Incoming, from what the triage really produced."""
+def best_confidence(view: dict, options: list[dict]) -> float | None:
+    """How sure the agent is of its strongest option; the triage's own number when options carry none."""
+    scores = [o["confidence"] for o in options if o.get("confidence") is not None]
+    return max(scores) if scores else view.get("confidence")
+
+
+def action_state(ticket: dict, status: str, view: dict | None, options: list[dict]) -> tuple[str | None, str | None]:
+    """(kind, line) under the title in Incoming, from what the triage really produced."""
     if status in ("done", "dismissed"):
-        return closed_line(ticket, options)
+        line = closed_line(ticket, options)
+        return ("finished" if line.startswith("You've") else "closed"), line
     if options:
-        confidence = view.get("confidence")
-        if confidence is not None and confidence < TOUGH_BELOW:
-            return "This one is looking tough"
-        return f"We've generated {len(options)} response{'' if len(options) == 1 else 's'}"
+        best = best_confidence(view, options)
+        if best is not None and best <= TOUGH_AT_MOST:
+            return "tough", TOUGH_LINE
+        count = len(options)
+        return "generated", "We've generated 1 response, take a look" if count == 1 else f"We've generated {count} responses, pick one"
     if ticket.get("triage_error"):
-        return "Triage failed"
-    return None if view else "Agent is looking into it"
+        return "failed", "Triage failed"
+    return (None, None) if view else ("generating", "Still generating, please wait")
+
+
+def action_line(ticket: dict, status: str, view: dict | None, options: list[dict]) -> str | None:
+    return action_state(ticket, status, view, options)[1]
 
 
 def closed_line(ticket: dict, options: list[dict]) -> str:

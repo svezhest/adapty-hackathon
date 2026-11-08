@@ -14,7 +14,7 @@ from fastapi.testclient import TestClient
 from resolve import analytics, config
 from resolve.api import ticket_summary
 from resolve.models import TriageTicket
-from resolve.tickets import CANCELLED_HANDOFF, GENERATED, TOUGH_BELOW, action_line
+from resolve.tickets import CANCELLED_HANDOFF, GENERATED, TOUGH_AT_MOST, TOUGH_LINE, action_state, action_line
 from resolve.web import create_app
 from scripts import generate_feed
 
@@ -191,24 +191,41 @@ def line(status="proposed", options=2, confidence=0.9, error=None, triaged=True)
     return action_line({"triage_error": error}, status, view, (view or {}).get("options") or [])
 
 
-def test_a_waiting_ticket_says_how_many_responses_there_are():
-    assert line(options=3) == "We've generated 3 responses"
-    assert line(options=2) == "We've generated 2 responses"
-    assert line(options=1) == "We've generated 1 response"
+def test_a_waiting_ticket_invites_and_says_how_many_responses_there_are():
+    assert line(options=3) == "We've generated 3 responses, pick one"
+    assert line(options=2) == "We've generated 2 responses, pick one"
+    assert line(options=1) == "We've generated 1 response, take a look"
 
 
-def test_a_low_confidence_reads_as_tough_and_a_missing_one_is_not_invented():
-    assert line(confidence=TOUGH_BELOW - 0.01) == "This one is looking tough"
-    assert line(confidence=0) == "This one is looking tough"
-    assert line(confidence=TOUGH_BELOW) == "We've generated 2 responses"
-    assert line(confidence=None) == "We've generated 2 responses"
+def test_tough_means_no_option_is_sure():
+    scored = lambda *scores: [dict(OPTION, confidence=c) for c in scores]
+    state = lambda view_conf, *scores: action_state({}, "proposed", {"confidence": view_conf, "options": scored(*scores)}, scored(*scores))
+    assert state(0.9, 0.7, 0.5) == ("tough", TOUGH_LINE)
+    assert state(0.62, 0.71, 0.5)[0] == "generated", "one option the agent is fairly sure of, so the claim would be false"
+    assert state(None, 0.2)[0] == "tough"
+
+
+def test_without_option_scores_the_triage_confidence_decides_and_a_missing_one_is_not_invented():
+    assert line(confidence=TOUGH_AT_MOST) == TOUGH_LINE
+    assert line(confidence=0) == TOUGH_LINE
+    assert line(confidence=TOUGH_AT_MOST + 0.01) == "We've generated 2 responses, pick one"
+    assert line(confidence=None) == "We've generated 2 responses, pick one"
+
+
+def test_the_kinds():
+    assert action_state({}, "new", None, []) == ("generating", "Still generating, please wait")
+    assert action_state({"triage_error": "no key"}, "new", None, [])[0] == "failed"
+    assert action_state({"decision": {"option": 0, "edits": {}}}, "done", {"options": [OPTION]}, [OPTION])[0] == "finished"
+    assert action_state({"decision": {"rejected": True, "reply": "Hi"}}, "done", None, [])[0] == "finished"
+    withdrawn = {"decision": {"rejected": True, "reply": None, "note": f"{CANCELLED_HANDOFF}: changed my mind"}}
+    assert action_state(withdrawn, "done", None, [])[0] == "closed"
 
 
 def test_the_agent_is_at_work_only_until_a_result_or_an_error_exists():
-    assert line("new", triaged=False) == "Agent is looking into it"
+    assert line("new", triaged=False) == "Still generating, please wait"
     assert line("new", triaged=False, error="LLM is not configured") == "Triage failed"
-    assert line("new", options=3) == "We've generated 3 responses"
-    assert line("new", options=3, error="the rerun failed") == "We've generated 3 responses"
+    assert line("new", options=3) == "We've generated 3 responses, pick one"
+    assert line("new", options=3, error="the rerun failed") == "We've generated 3 responses, pick one"
 
 
 def test_a_legacy_proposal_without_a_confidence_is_not_tough():
@@ -218,18 +235,19 @@ def test_a_legacy_proposal_without_a_confidence_is_not_tough():
         "proposal": {"action": "explain", "category": "other", "reply": "Hi", "root_cause": "s"},
     }
     summary = ticket_summary(ticket)
-    assert summary["confidence"] is None and summary["action_title"] == "We've generated 1 response"
+    assert summary["confidence"] is None and summary["action_title"] == "We've generated 1 response, take a look"
 
 
 def test_both_waiting_lines_occur_and_tough_stays_occasional(client):
     tickets = client.get("/api/tickets").json()
     waiting = [t for t in tickets if t["status"] == "proposed"]
-    tough = [t for t in waiting if t["action_title"] == "This one is looking tough"]
-    assert all(t["action_title"] == "This one is looking tough" or re.fullmatch(r"We've generated [23] responses", t["action_title"]) for t in waiting)
+    tough = [t for t in waiting if t["action_kind"] == "tough"]
+    assert all(t["action_title"] == TOUGH_LINE or re.fullmatch(r"We've generated [23] responses, pick one", t["action_title"]) for t in waiting)
     assert 0.05 < len(tough) / len(waiting) < 0.2
     assert any(not t["id"].startswith("g-") for t in tough), "the real tickets at the top of the feed show it too"
-    assert any(t["action_title"] == "We've generated 2 responses" for t in waiting) and any(t["action_title"] == "We've generated 3 responses" for t in waiting)
-    assert not any(t["action_title"] == "Agent is looking into it" for t in tickets)
+    assert {"We've generated 2 responses, pick one", "We've generated 3 responses, pick one"} <= {t["action_title"] for t in waiting}
+    assert not any(t["action_kind"] == "generating" for t in tickets)
+
 
 
 def closed(decision, status="done", action=None, options=(OPTION, OPTION)):

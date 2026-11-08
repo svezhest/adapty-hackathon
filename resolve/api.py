@@ -42,7 +42,7 @@ E409 = {409: {"model": ErrorDetail, "description": "Wrong ticket status for this
 E409_RUN = {409: {"model": ErrorDetail, "description": "A hypothesis run is already in flight"}}
 E409_DRAFT = {409: {"model": ErrorDetail, "description": "Demo mode or no Adapty CLI: nothing is created"}}
 E502 = {502: {"model": ErrorDetail, "description": "The person's English could not be translated to the user's language; nothing was sent"}}
-from resolve.tickets import CATEGORIES, GENERATED, action_line, ticket_title
+from resolve.tickets import CATEGORIES, GENERATED, action_state, ticket_title
 
 ACCEPT_STATUSES = ("proposed",)
 REJECT_STATUSES = ("new", "triaged", "proposed")
@@ -86,6 +86,7 @@ def ticket_summary(ticket: dict) -> dict:
     view, _ = _triage_view(ticket)
     options = (view or {}).get("options") or []
     status = DB_TO_API_STATUS[ticket["status"]]
+    kind, line = action_state(ticket, status, view, options)
     return {
         "id": ticket["id"],
         "status": status,
@@ -100,7 +101,8 @@ def ticket_summary(ticket: dict) -> dict:
         "confidence": view.get("confidence") if view else None,
         "top_action": options[0]["action"] if options else None,
         "top_risk": options[0].get("risk") if options else None,
-        "action_title": action_line(ticket, status, view, options),
+        "action_kind": kind,
+        "action_title": line,
         "triage_error": ticket["triage_error"],
     }
 

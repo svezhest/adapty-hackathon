@@ -235,7 +235,8 @@ class TicketSummary(BaseModel):
     confidence: float | None = None
     top_action: Literal[*ACTIONS] | None = None
     top_risk: Literal["low", "medium", "high"] | None = Field(None, description="The risk of the agent's first option")
-    action_title: str | None = Field(None, description="The line under the title in Incoming: 'We've generated 3 responses' while it waits for a person, 'This one is looking tough' when the triage's confidence is low, 'Agent is looking into it' only until a triage result or error exists, on a closed ticket the person's stored decision ('You've chosen an option'); null while new")
+    action_kind: Literal["generating", "generated", "tough", "finished", "failed", "closed"] | None = Field(None, description="The category of action_title; it sets the line's tone on screen")
+    action_title: str | None = Field(None, description="The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, a warning that the agent isn't sure of any response when the best option's confidence is low, on a closed ticket the person's stored decision ('You've chosen an option'); null while new")
     triage_error: str | None = Field(None, description="Why Level 1 triage failed; the ticket stays new")
     snippet: str | None = Field(None, description="Only with ?q=: the text around the first match")
 

@@ -47,6 +47,20 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 .next{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:9px;font-size:15px;line-height:1.4}
 .act{min-width:0;font-weight:500;color:var(--accent)}
 .row.quiet .act{font-weight:400;color:var(--ink-2)}
+/* the line's four tones: wait, come in, you've got this, done */
+.k-generated .act{color:var(--accent)}
+.k-generated .act::after{content:"";display:inline-block;width:15px;height:15px;margin-left:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-arrow) center/contain no-repeat;mask:var(--ic-arrow) center/contain no-repeat;transition:transform .2s cubic-bezier(.22,.9,.3,1)}
+.row:hover .k-generated .act::after{transform:translateX(4px)}
+.k-tough .act,.k-generating .act{color:var(--warn)}
+.k-failed .act{color:var(--bad)}
+.k-finished .act{font-weight:400;color:var(--ink-2)}
+.k-closed .act{font-weight:400;color:var(--ink-3)}
+.k-tough .act::before,.k-failed .act::before,.k-finished .act::before{content:"";display:inline-block;width:15px;height:15px;margin-right:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-warn) center/contain no-repeat;mask:var(--ic-warn) center/contain no-repeat}
+.k-finished .act::before{background:var(--ok);-webkit-mask-image:var(--ic-check);mask-image:var(--ic-check)}
+.k-generating .act::before{content:"";display:inline-block;width:8px;height:8px;margin:0 9px 0 4px;vertical-align:1px;border-radius:50%;background:currentColor;animation:waiting 1.2s ease-in-out infinite}
+@keyframes waiting{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@media (prefers-reduced-motion:reduce){.k-generating .act::before{animation:none}.k-generated .act::after{transition:none}}
+.feedlist{--ic-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");--ic-warn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4 3 20h18zM12 10v4M12 17v.01'/%3E%3C/svg%3E");--ic-check:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.2 4.2L19 7'/%3E%3C/svg%3E")}
 .who{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
 .dot{display:inline-block;flex:0 0 auto;width:8px;height:8px;border-radius:50%}
 .dot-ready{background:var(--accent)}
@@ -156,7 +170,7 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 <sc-for list="{{ rows }}" as="t" hint-placeholder-count="6">
 <a href="{{ t.href }}" role="listitem" class="{{ t.cls }}">
 <span class="subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span>
-<span class="next"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
+<span class="{{ t.nextCls }}"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
 </a>
 </sc-for>
 </div>
@@ -190,16 +204,16 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
 var TICKETS = [
-  { id: 'f-0019', status: 'triaging', user: 'lumen_771204_33018', subject: 'Charged after free trial', action: 'Agent is looking into it', age: '1m', text: 'I never wanted the weekly plan, the trial just charged me this morning without asking.' },
-  { id: 'f-0018', status: 'triaging', user: 'lumen_588102_17733', subject: 'Restore purchases does nothing', action: 'Agent is looking into it', age: '2m', text: 'New phone, pressed restore, still the free version. Same Google account as before.' },
-  { id: 'f-0013', status: 'ready', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', action: "We've generated 3 responses", age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
-  { id: 'f-0017', status: 'triaging', user: 'dusan.p@example.com', subject: 'Lifetime but workouts broken', action: 'Agent is looking into it', age: '6m', text: 'Bought lifetime last year, now the strength workouts say Premium only.' },
-  { id: 'f-0016', status: 'triaging', user: 'lumen_209331_50127', subject: 'Trial did not start on iPad', action: 'Agent is looking into it', age: '9m', text: 'It asked me to pay right away, there was no 7 day trial on my iPad.' },
-  { id: 'f-0012', status: 'ready', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', action: 'This one is looking tough', age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
-  { id: 'f-0011', status: 'ready', user: 'lumen_120977_44410', subject: 'Paid but still locked', action: "We've generated 2 responses", age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
-  { id: 'f-0010', status: 'ready', user: 'unknown user', subject: 'Where is my money', action: "We've generated 3 responses", age: '1h', text: 'You took money from my card and I do not even know what for.' },
-  { id: 'f-0008', status: 'closed', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', action: "You've chosen an option and edited it", age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
-  { id: 'f-0007', status: 'dismissed', user: 'unknown user', subject: 'Test from the feedback form', action: "You've closed it without a reply", age: 'Nov 6', text: 'test test 123' }
+  { id: 'f-0019', status: 'triaging', user: 'lumen_771204_33018', subject: 'Charged after free trial', kind: 'generating', action: 'Still generating, please wait', age: '1m', text: 'I never wanted the weekly plan, the trial just charged me this morning without asking.' },
+  { id: 'f-0018', status: 'triaging', user: 'lumen_588102_17733', subject: 'Restore purchases does nothing', kind: 'generating', action: 'Still generating, please wait', age: '2m', text: 'New phone, pressed restore, still the free version. Same Google account as before.' },
+  { id: 'f-0013', status: 'ready', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', kind: 'generated', action: "We've generated 3 responses, pick one", age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
+  { id: 'f-0017', status: 'triaging', user: 'dusan.p@example.com', subject: 'Lifetime but workouts broken', kind: 'generating', action: 'Still generating, please wait', age: '6m', text: 'Bought lifetime last year, now the strength workouts say Premium only.' },
+  { id: 'f-0016', status: 'triaging', user: 'lumen_209331_50127', subject: 'Trial did not start on iPad', kind: 'generating', action: 'Still generating, please wait', age: '9m', text: 'It asked me to pay right away, there was no 7 day trial on my iPad.' },
+  { id: 'f-0012', status: 'ready', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', kind: 'tough', action: "A tough one: the agent isn't sure of any response. You've got this.", age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
+  { id: 'f-0011', status: 'ready', user: 'lumen_120977_44410', subject: 'Paid but still locked', kind: 'generated', action: "We've generated 2 responses, pick one", age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
+  { id: 'f-0010', status: 'ready', user: 'unknown user', subject: 'Where is my money', kind: 'generated', action: "We've generated 3 responses, pick one", age: '1h', text: 'You took money from my card and I do not even know what for.' },
+  { id: 'f-0008', status: 'closed', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', kind: 'finished', action: "You've chosen an option and edited it", age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
+  { id: 'f-0007', status: 'dismissed', user: 'unknown user', subject: 'Test from the feedback form', kind: 'finished', action: "You've closed it without a reply", age: 'Nov 6', text: 'test test 123' }
 ];
 var WORD = { ready: 'Waiting for a person', triaging: 'Agent is triaging', closed: 'Closed', dismissed: 'Dismissed' };
 var DOT = { ready: 'dot dot-ready', triaging: 'dot dot-triage', closed: 'dot dot-closed', dismissed: 'dot dot-dismissed' };
@@ -234,7 +248,7 @@ function shortUser(u) {
 function actionLine(t) {
   if (t.action_title) return t.action_title;
   if (t.status !== 'new' || t.top_action) return '';
-  return t.triage_error ? 'Triage failed' : 'Agent is looking into it';
+  return t.triage_error ? 'Triage failed' : 'Still generating, please wait';
 }
 
 function liveTicket(t) {
@@ -242,6 +256,7 @@ function liveTicket(t) {
     id: t.id, status: LIVE_STATUS[t.status],
     user: t.customer_user_id || t.email || 'unknown user',
     subject: t.title, action: actionLine(t), age: API.ago(t.created_at),
+    kind: t.action_kind || (t.status === 'new' && !t.top_action ? (t.triage_error ? 'failed' : 'generating') : ''),
     snippet: t.snippet || '', category: t.category || ''
   };
 }
@@ -365,7 +380,8 @@ class Component extends DCLogic {
       if (q) cont = live ? snippetMarks(t, q) : mark(t.text, q, true) || mark(t.action, q, false) || plain(t.action);
       return {
         href: live ? 'Ticket.dc.html?id=' + encodeURIComponent(t.id) : 'Ticket.dc.html',
-        cls: t.status === 'ready' ? 'row' : 'row quiet',
+        cls: q && t.status !== 'ready' ? 'row quiet' : 'row',
+        nextCls: !q && t.kind ? 'next k-' + t.kind : 'next',
         showDot: !!q,
         dotCls: DOT[t.status],
         stateWord: WORD[t.status],
