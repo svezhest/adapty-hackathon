@@ -203,7 +203,6 @@ input::placeholder{color:var(--ink-3)}
 </dl>
 </div>
 <div style="display: flex; flex-direction: column">
-<p class="kicker" style="margin-bottom: 6px">Tool calls</p>
 <sc-if value="{{ noLog }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; color: var(--ink-3)">No calls yet.</p></sc-if>
 <sc-for list="{{ log }}" as="l" hint-placeholder-count="3">
 <div>
@@ -217,7 +216,6 @@ input::placeholder{color:var(--ink-3)}
 </sc-for>
 </div>
 <div style="display: flex; flex-direction: column; gap: 8px">
-<p class="kicker">Try</p>
 <sc-for list="{{ tries }}" as="t" hint-placeholder-count="5">
 <button type="button" class="linkbtn" onClick="{{ t.go }}">{{ t.text }}</button>
 </sc-for>
