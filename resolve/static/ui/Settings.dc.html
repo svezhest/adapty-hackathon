@@ -188,29 +188,28 @@ select.ctl{padding-left:6px}
 </div>
 <p class="sum">{{ worst }}<sc-if value="{{ usedLine }}"> {{ usedLine }}</sc-if></p>
 
-<p class="kicker grp" style="padding-top: 22px">Always passed to a person</p>
 <div class="set">
-<span class="nm"><span id="l-ref">Refund request</span></span>
+<span class="nm"><span id="l-ref">Refund request → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-ref" aria-checked="{{ v.hRefund }}" class="{{ sw.hRefund }}" onClick="{{ tg.hRefund }}"></button>
 </div>
 <div class="set">
-<span class="nm"><span id="l-cb">Chargeback or bank dispute</span></span>
+<span class="nm"><span id="l-cb">Chargeback or bank dispute → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-cb" aria-checked="{{ v.hChargeback }}" class="{{ sw.hChargeback }}" onClick="{{ tg.hChargeback }}"></button>
 </div>
 <div class="set">
-<span class="nm"><span id="l-th">Threats</span></span>
+<span class="nm"><span id="l-th">Threats → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-th" aria-checked="{{ v.hThreat }}" class="{{ sw.hThreat }}" onClick="{{ tg.hThreat }}"></button>
 </div>
 <div class="set">
-<span class="nm"><span id="l-hu">Asks for a human</span></span>
+<span class="nm"><span id="l-hu">Asks for a human → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-hu" aria-checked="{{ v.hHuman }}" class="{{ sw.hHuman }}" onClick="{{ tg.hHuman }}"></button>
 </div>
 <div class="set">
-<span class="nm"><span id="l-pm">Profile does not match</span><span class="hint">The user id from the app is not found in the subscription service</span></span>
+<span class="nm"><span id="l-pm">Profile does not match → person</span><span class="hint">The user id from the app is not found in the subscription service</span></span>
 <button type="button" role="switch" aria-labelledby="l-pm" aria-checked="{{ v.hMismatch }}" class="{{ sw.hMismatch }}" onClick="{{ tg.hMismatch }}"></button>
 </div>
 <div class="set">
-<span class="nm"><span id="l-rp">Repeat complaint after a grant</span></span>
+<span class="nm"><span id="l-rp">Repeat complaint after a grant → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-rp" aria-checked="{{ v.hRepeat }}" class="{{ sw.hRepeat }}" onClick="{{ tg.hRepeat }}"></button>
 </div>
 
