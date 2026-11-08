@@ -1,0 +1,642 @@
+[
+ {
+  "genre": "Photo & Video",
+  "tier": "top",
+  "rank": 4,
+  "id": "1500855883",
+  "name": "CapCut: Photo & Video Editor",
+  "publisher": "Bytedance Pte. Ltd"
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "top",
+  "rank": 6,
+  "id": "897446215",
+  "name": "Canva AI Photo & Video Editor",
+  "publisher": "Canva"
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "top",
+  "rank": 7,
+  "id": "1149994032",
+  "name": "Facetune: Photo & Video Editor",
+  "publisher": "Lightricks Ltd."
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "top",
+  "rank": 9,
+  "id": "1180884341",
+  "name": "FaceApp: Perfect Face Editor",
+  "publisher": "FaceApp Technology Limited"
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "top",
+  "rank": 10,
+  "id": "587366035",
+  "name": "Picsart AI Photo Editor, Video",
+  "publisher": "PicsArt, Inc."
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "mid",
+  "rank": 41,
+  "id": "1037784828",
+  "name": "Photo Scan App by Photomyne",
+  "publisher": "Photomyne LTD"
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "mid",
+  "rank": 42,
+  "id": "1585824635",
+  "name": "Video Up! Video Editor & Maker",
+  "publisher": "Video editor & maker app"
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "mid",
+  "rank": 43,
+  "id": "6756965785",
+  "name": "AI Video Generator - Vixel",
+  "publisher": "FENIX MOBILE YAZILIM A.S."
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "mid",
+  "rank": 44,
+  "id": "6457366208",
+  "name": "Esti: Aesthetic Photo Editor",
+  "publisher": "Prequel Inc."
+ },
+ {
+  "genre": "Photo & Video",
+  "tier": "mid",
+  "rank": 45,
+  "id": "576649830",
+  "name": "InstaSize: AI Photo Editor",
+  "publisher": "Instasize Inc."
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "top",
+  "rank": 1,
+  "id": "341232718",
+  "name": "MyFitnessPal: Calorie Counter",
+  "publisher": "MyFitnessPal, Inc."
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "top",
+  "rank": 2,
+  "id": "1502936453",
+  "name": "LADDER Strength Training Plans",
+  "publisher": "Ladder Technologies, Inc."
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "top",
+  "rank": 3,
+  "id": "1038369065",
+  "name": "Flo Cycle & Period Tracker",
+  "publisher": "FLO HEALTH UK LIMITED"
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "top",
+  "rank": 4,
+  "id": "426826309",
+  "name": "Strava: Run, Bike, Walk",
+  "publisher": "Strava, Inc."
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "top",
+  "rank": 5,
+  "id": "571800810",
+  "name": "Calm",
+  "publisher": "Calm.com"
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "mid",
+  "rank": 41,
+  "id": "634598719",
+  "name": "Noom Weight Loss, Food Tracker",
+  "publisher": "Noom, Inc."
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "mid",
+  "rank": 42,
+  "id": "1031660123",
+  "name": "BODi Fitness: Home Workouts",
+  "publisher": "Beachbody, LLC"
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "mid",
+  "rank": 43,
+  "id": "320606217",
+  "name": "Sleep Cycle - Tracker & Sounds",
+  "publisher": "Sleep Cycle AB"
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1488020055",
+  "name": "Alive by Whitney Simmons",
+  "publisher": "Whitney Simmons App, LLC"
+ },
+ {
+  "genre": "Health & Fitness",
+  "tier": "mid",
+  "rank": 45,
+  "id": "1274601042",
+  "name": "iFIT Workouts",
+  "publisher": "ICON Health & Fitness, Inc."
+ },
+ {
+  "genre": "Education",
+  "tier": "top",
+  "rank": 1,
+  "id": "570060128",
+  "name": "Duolingo: Learn Languages",
+  "publisher": "Duolingo"
+ },
+ {
+  "genre": "Education",
+  "tier": "top",
+  "rank": 2,
+  "id": "6478287397",
+  "name": "Learna: Speak & Learn English",
+  "publisher": "DEEP FLOW SOFTWARE SERVICES"
+ },
+ {
+  "genre": "Education",
+  "tier": "top",
+  "rank": 3,
+  "id": "1252497129",
+  "name": "PictureThis - Plant Identifier",
+  "publisher": "Glority Global Group Ltd."
+ },
+ {
+  "genre": "Education",
+  "tier": "top",
+  "rank": 4,
+  "id": "552602056",
+  "name": "ClassDojo",
+  "publisher": "ClassDojo, Inc."
+ },
+ {
+  "genre": "Education",
+  "tier": "top",
+  "rank": 5,
+  "id": "546473125",
+  "name": "Quizlet: More than Flashcards",
+  "publisher": "Quizlet Inc"
+ },
+ {
+  "genre": "Education",
+  "tier": "mid",
+  "rank": 41,
+  "id": "1546796934",
+  "name": "Rock Identifier: Stone ID",
+  "publisher": "Next Vision Limited"
+ },
+ {
+  "genre": "Education",
+  "tier": "mid",
+  "rank": 42,
+  "id": "6449486871",
+  "name": "Question.AI-Math Calculator",
+  "publisher": "3HOUSE"
+ },
+ {
+  "genre": "Education",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1624701477",
+  "name": "Praktika – AI Language Tutor",
+  "publisher": "Praktika.ai Company"
+ },
+ {
+  "genre": "Education",
+  "tier": "mid",
+  "rank": 45,
+  "id": "1474248135",
+  "name": "Bebi: Baby Games for Preschool",
+  "publisher": "Bebi Family Games"
+ },
+ {
+  "genre": "Education",
+  "tier": "mid",
+  "rank": 46,
+  "id": "1557446434",
+  "name": "Botan: Plant Care, Identifier",
+  "publisher": "Botan App Limited LLC"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "top",
+  "rank": 1,
+  "id": "6448311069",
+  "name": "ChatGPT",
+  "publisher": "OpenAI OpCo, LLC"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "top",
+  "rank": 2,
+  "id": "6473753684",
+  "name": "Claude by Anthropic",
+  "publisher": "Anthropic PBC"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "top",
+  "rank": 4,
+  "id": "6670324846",
+  "name": "Grok",
+  "publisher": "X Corp."
+ },
+ {
+  "genre": "Productivity",
+  "tier": "top",
+  "rank": 5,
+  "id": "327630330",
+  "name": "Dropbox: Cloud Storage Backup",
+  "publisher": "Dropbox, Inc."
+ },
+ {
+  "genre": "Productivity",
+  "tier": "top",
+  "rank": 6,
+  "id": "1668000334",
+  "name": "Perplexity: AI Agent & Search",
+  "publisher": "Perplexity AI, Inc."
+ },
+ {
+  "genre": "Productivity",
+  "tier": "mid",
+  "rank": 41,
+  "id": "1667518571",
+  "name": "AI Chat Assistant – ChatNow",
+  "publisher": "tappz"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "mid",
+  "rank": 42,
+  "id": "517914548",
+  "name": "Dashlane Password Manager",
+  "publisher": "Dashlane"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "mid",
+  "rank": 43,
+  "id": "1391782046",
+  "name": "Surfshark VPN: Fast & Private",
+  "publisher": "SURFSHARK LTD"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "mid",
+  "rank": 45,
+  "id": "1559479889",
+  "name": "Chat Smith: AI Chatbot & Agent",
+  "publisher": "Chat Smith OpCo"
+ },
+ {
+  "genre": "Productivity",
+  "tier": "mid",
+  "rank": 46,
+  "id": "6740909540",
+  "name": "Manus - AI Agent & Automation",
+  "publisher": "BUTTERFLY EFFECT PTE. LTD."
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "top",
+  "rank": 1,
+  "id": "547702041",
+  "name": "Tinder Dating App: Date & Chat",
+  "publisher": "Tinder LLC"
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "top",
+  "rank": 2,
+  "id": "595287172",
+  "name": "Hinge Dating App: Match & Date",
+  "publisher": "Hinge, Inc."
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "top",
+  "rank": 3,
+  "id": "930441707",
+  "name": "Bumble Dating App: Meet & Date",
+  "publisher": "Bumble Holding Limited"
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "top",
+  "rank": 4,
+  "id": "1288415553",
+  "name": "The Official Wyze App",
+  "publisher": "Wyze Labs"
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "top",
+  "rank": 5,
+  "id": "887914690",
+  "name": "Feeld: Open & Curious Dating",
+  "publisher": "Feeld Ltd"
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "mid",
+  "rank": 41,
+  "id": "1034035493",
+  "name": "Kasa Smart",
+  "publisher": "TP-Link Systems Inc."
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "mid",
+  "rank": 42,
+  "id": "335318146",
+  "name": "Victory Shield",
+  "publisher": "Covenant Eyes, Inc."
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "mid",
+  "rank": 43,
+  "id": "1523344686",
+  "name": "Lox Club - Jewish Dating App",
+  "publisher": "The Lox Club Inc"
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1567636697",
+  "name": "ATLAS:EARTH: Collect Places",
+  "publisher": "Atlas Reality, Inc."
+ },
+ {
+  "genre": "Lifestyle",
+  "tier": "mid",
+  "rank": 45,
+  "id": "6738537088",
+  "name": "YarnPal - Crochet & Patterns",
+  "publisher": "PIXELCELL.LIMITED"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "top",
+  "rank": 9,
+  "id": "6445905219",
+  "name": "DramaBox - Stream Drama Shorts",
+  "publisher": "STORYMATRIX PTE. LTD."
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "top",
+  "rank": 10,
+  "id": "6670430706",
+  "name": "DramaWave - Dramas & Reels",
+  "publisher": "SKYWORK AI PTE LTD"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "top",
+  "rank": 11,
+  "id": "1636235979",
+  "name": "ReelShort - Stream Drama & TV",
+  "publisher": "NewLeaf Publishing"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "top",
+  "rank": 12,
+  "id": "1399446592",
+  "name": "The Zeus Network",
+  "publisher": "The Zeus Networks"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "top",
+  "rank": 13,
+  "id": "6504849169",
+  "name": "NetShort - Popular Dramas & TV",
+  "publisher": "NETSTORY PTE. LTD."
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "mid",
+  "rank": 42,
+  "id": "6498713494",
+  "name": "My Drama - Stream Short Dramas",
+  "publisher": "Holy Water Limited"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "mid",
+  "rank": 43,
+  "id": "879915134",
+  "name": "MBC Shahid",
+  "publisher": "MBC Group"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1671705818",
+  "name": "Character AI: Chat, Talk, Text",
+  "publisher": "Character.AI"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "mid",
+  "rank": 45,
+  "id": "6741501595",
+  "name": "iDrama – Short Dramas & Reels",
+  "publisher": "HK Good Drama Technology Limited"
+ },
+ {
+  "genre": "Entertainment",
+  "tier": "mid",
+  "rank": 46,
+  "id": "472567577",
+  "name": "Hallmark+",
+  "publisher": "Hallmark Labs, LLC"
+ },
+ {
+  "genre": "Music",
+  "tier": "top",
+  "rank": 4,
+  "id": "336353151",
+  "name": "SoundCloud: Discover New Music",
+  "publisher": "SoundCloud Global Limited & Co KG"
+ },
+ {
+  "genre": "Music",
+  "tier": "top",
+  "rank": 5,
+  "id": "6480136315",
+  "name": "Suno - AI Songs, Music, Lyrics",
+  "publisher": "Suno, Inc."
+ },
+ {
+  "genre": "Music",
+  "tier": "top",
+  "rank": 6,
+  "id": "913943275",
+  "name": "TIDAL Music: HiFi Sound",
+  "publisher": "TIDAL Music AS"
+ },
+ {
+  "genre": "Music",
+  "tier": "top",
+  "rank": 7,
+  "id": "357828853",
+  "name": "Ultimate Guitar: Chords & Tabs",
+  "publisher": "Ultimate Guitar"
+ },
+ {
+  "genre": "Music",
+  "tier": "top",
+  "rank": 10,
+  "id": "968585775",
+  "name": "BandLab – Music Maker & Beats",
+  "publisher": "BandLab Singapore Pte Ltd"
+ },
+ {
+  "genre": "Music",
+  "tier": "mid",
+  "rank": 41,
+  "id": "6777936893",
+  "name": "Music Creator - Make Songs",
+  "publisher": "韩兵 马"
+ },
+ {
+  "genre": "Music",
+  "tier": "mid",
+  "rank": 42,
+  "id": "440844625",
+  "name": "Fit Radio: Train Inspired",
+  "publisher": "Social Study Media, LLC."
+ },
+ {
+  "genre": "Music",
+  "tier": "mid",
+  "rank": 43,
+  "id": "6444570129",
+  "name": "Garage Ringtones for iPhone",
+  "publisher": "APPFLOW SOFTWARE - FZCO"
+ },
+ {
+  "genre": "Music",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1476399789",
+  "name": "Rap Fame - Rap Music Studio",
+  "publisher": "Rap Tech Studios"
+ },
+ {
+  "genre": "Music",
+  "tier": "mid",
+  "rank": 45,
+  "id": "1612024321",
+  "name": "Speaker & Headphones Connect",
+  "publisher": "Maple Labs Co., Ltd"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "top",
+  "rank": 1,
+  "id": "1510944943",
+  "name": "Cleanup: Phone Storage Cleaner",
+  "publisher": "DEEP FLOW SOFTWARE SERVICES"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "top",
+  "rank": 2,
+  "id": "1013961111",
+  "name": "Blink Home Monitor",
+  "publisher": "Immedia Semiconductor"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "top",
+  "rank": 3,
+  "id": "1539090879",
+  "name": "TV Remote - Universal Control",
+  "publisher": "EVOLLY.APP"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "top",
+  "rank": 4,
+  "id": "1476380919",
+  "name": "Cleaner Guru: Clean Up Storage",
+  "publisher": "GM UniverseApps Limited"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "top",
+  "rank": 5,
+  "id": "905953485",
+  "name": "NordVPN: VPN Fast & Secure",
+  "publisher": "Nordvpn S.A."
+ },
+ {
+  "genre": "Utilities",
+  "tier": "mid",
+  "rank": 41,
+  "id": "1439422220",
+  "name": "Universal TV Remote ·",
+  "publisher": "KRAFTWERK 9 LTD"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "mid",
+  "rank": 42,
+  "id": "1327105431",
+  "name": "Malwarebytes - Mobile Security",
+  "publisher": "Malwarebytes"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "mid",
+  "rank": 43,
+  "id": "6560107458",
+  "name": "Lens Scan: Identify Anything",
+  "publisher": "EvenEdge"
+ },
+ {
+  "genre": "Utilities",
+  "tier": "mid",
+  "rank": 44,
+  "id": "1525921773",
+  "name": "GO Raid Party",
+  "publisher": "Tiny Whale Pte. Ltd."
+ },
+ {
+  "genre": "Utilities",
+  "tier": "mid",
+  "rank": 45,
+  "id": "6467252904",
+  "name": "Universal Remote・TV Control",
+  "publisher": "Ozuna Limited"
+ }
+]

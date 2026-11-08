@@ -2,7 +2,7 @@
 
 Resolve: AI support for a subscription app on Adapty (FitBuddy, a fitness app, the same as `appy/`; it runs on the organisers' seeded dataset, so ids stay `lumen_443814_*`). Level 2 is the first-line agent inside the app (`POST /chat`): it reads the user's live Adapty profile, explains, gives store steps and grants free access within limits; everything risky goes to Level 1 as a ticket. Level 1 is the triage agent for the support person: it builds each ticket with tools and proposes 2–3 ranked options; a person accepts, edits or rejects; only then anything runs in Adapty. Built at the Adapty Hackathon Belgrade, 7–8 Nov 2026. `README.md` is the user documentation; `docs/agents.md` is the binding spec; `docs/openapi.json` the API contract.
 
-Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface for two LLM providers (Anthropic, or any OpenAI-compatible API such as DeepSeek). Adapty server-side API v2 for profiles and grants. The web UI is static HTML/CSS/JS in `resolve/static/ui-alex/` over the JSON API.
+Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface for two LLM providers (Anthropic, or any OpenAI-compatible API such as DeepSeek). Adapty server-side API v2 for profiles and grants. The web UI is static HTML/CSS/JS in `resolve/static/ui/` over the JSON API.
 
 ## Layout
 
@@ -19,7 +19,8 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 | `resolve/workflow.py` | accept / reject / reopen, idempotent status transitions |
 | `resolve/api.py`, `resolve/analytics.py` | JSON API (CORS for the phone apps), full-text search, analytics (timeline, open tasks) |
 | `resolve/db.py` | SQLite schema + migrations (tickets, conversations, messages, l2_events, grants, agent_config, email_index) |
-| `resolve/web.py` | App factory; v1 HTML pages kept for reference |
+| `resolve/web.py` | App factory, redirects to the screens, `/healthz` |
+| `resolve/static/ui/` | The web screens (`*.dc.html`, `support.js`, `api.js`), JSON API only; `?mock=1` for sample data |
 | `scripts/` | `seed_demo_profiles.py` (copy the demo users into another Adapty app), `import_feedback.py`, `seed_emails.py`, `eval.py` (paid), `export_openapi.py`, `generate_tickets.py`, `snapshot.py` |
 | `mobile-mock/` | Backup Android app: chat + debug buttons over `POST /chat` |
 | `tests/` | pytest, no network, no keys; `tests/fakes_v2.py` has the scripted LLM steps and profiles |
@@ -27,8 +28,9 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 ## Commands
 
 ```bash
-python -m resolve --port 8010            # http://127.0.0.1:8010/static/ui-alex/index.html
+python -m resolve --port 8010            # http://127.0.0.1:8010/ui
 python -m pytest
+DEMO_MODE=1 python -m resolve --port 8010  # no keys, no model, no Adapty writes
 python scripts/export_openapi.py         # after any API change
 python scripts/eval.py --yes [--l2]      # paid: ask the owner first
 ```
@@ -52,4 +54,4 @@ python scripts/eval.py --yes [--l2]      # paid: ask the owner first
 
 ## AI log
 
-Append to `AI_LOG.md` as things happen: tool, what for, one thing it got wrong and how it was caught. Not at the end.
+Append to `docs/history/AI_LOG.md` as things happen: tool, what for, one thing it got wrong and how it was caught. Not at the end.

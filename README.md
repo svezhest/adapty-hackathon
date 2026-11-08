@@ -1,153 +1,174 @@
-# Resolve: AI support for subscription apps, on Adapty
+# Resolve
 
-Adapty Hackathon Belgrade, 7–8 November 2026. Team 12.
+**AI support for subscription apps, built on Adapty.** One agent talks to the app's users and fixes what is safe to fix. Another turns everything else into a ready ticket, so a person only has to pick an answer.
 
-## What it does
+Most support questions in a subscription app are about money: "charged after the trial", "paid but still locked", "how do I cancel". Adapty already knows the truth about every purchase. Resolve reads it and acts on it, inside limits the app owner sets.
 
-Two agents that work on the user's live Adapty profile.
+[Watch the 2-minute demo](https://www.youtube.com/watch?v=tm1e8iPP_tg)
 
-- **Level 2 · first-line agent (in the app).** The app's user opens support chat (`POST /chat`). Code loads their Adapty profile into the prompt before the model runs (usually one model call per message); the agent explains charges, plans and dates, gives store steps (restore, cancel, refund request) and can **grant free access in Adapty** within limits the app owner sets. Limits are checked in code, not in the prompt: max days, one grant per user per 30 days, only users paying now (an active paid subscription; not past payers or free trials), never for lifetime; when no grant is possible the model is not even offered the tool. Refunds, chargebacks, threats, "I want a human", a blocked grant or a profile that contradicts the user always go to a person, as a ticket. After a handoff the agent keeps answering questions but takes no account actions, and the user can withdraw the handoff.
-- **Level 1 · triage agent (for the support person).** Every handoff and every other piece of feedback (`POST /feedback`) becomes a ticket. Code resolves the user (an email-only sender is marked unverified) and loads the profile, history and config, so triage is usually one model call. The agent finds the cause and proposes **2–3 options with different actions**, each with an emoji, a ready reply, a risk and the evidence it used; evidence lines are checked against the loaded facts in the eval. The support person accepts one, edits it (any action, days, reply) or rejects all and writes their own. Only then does anything run in Adapty. Closed tickets can be reopened; full-text search covers the ticket, the triage and the chat.
-- **Agent settings** decide what Level 2 may do: tools on/off, grant limits, handoff rules, tone, and which LLM runs both agents (Anthropic or any OpenAI-compatible API; we demo on DeepSeek).
+![Incoming: tickets waiting for a person, each with the action the agent suggests](docs/screenshots/incoming.png)
 
-## Who it is for
+## The screens
 
-The owner or support person of a small subscription app with no support tooling, where most tickets are about purchases: "charged after the trial", "paid but still locked", "how do I cancel", "refund". Adapty already holds the truth about every purchase; RevenueCat's Customer Center sends the same question to a human by email. Here an agent answers it from Adapty and fixes what is safe to fix.
+Screenshots of the running app. The chats and tickets are test data; the replies, options and scores come from the agents.
 
-## How to run
+**Ticket.** The cause, the evidence and how sure the agent is, then answers that take different actions. The person sends one, edits it or writes their own. Nothing runs in Adapty before that click.
 
-Python 3.11+.
+![Ticket: what the agent found and three answers to choose from](docs/screenshots/ticket.png)
+
+**Analyze.** The agent and people compared on the same measures: who closed each chat, how fast the first reply came, how many free days went out.
+
+![Analyze: machines vs humans](docs/screenshots/analyze.png)
+
+**Insights.** Complaints grouped by the paywall the user saw, turned into one A/B test to try. It can create a draft in Adapty; nothing starts on its own.
+
+![Insights: complaint categories and a hypothesis](docs/screenshots/insights.png)
+
+| Chat | Agent settings |
+|---|---|
+| ![The in-app chat as seen by support, with the agent granting free days](docs/screenshots/chat.png) | ![Agent settings: model, tone and how many free days the agent may give](docs/screenshots/settings.png) |
+| **What the agent said and did.** A debug switch shows every tool call and whether the code allowed it. | **What the agent may do.** The owner picks the model, the tone and the limits. |
+
+Also in the app: [Impact](docs/screenshots/impact.png), the numbers behind the problem with every source linked.
+
+## Try it in a minute
+
+No keys needed. This serves a saved snapshot, calls no model and writes nothing to Adapty. Requires Python 3.11+.
 
 ```bash
+git clone https://github.com/svezhest/adapty-hackathon.git && cd adapty-hackathon
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env          # fill in the keys (see the comments in the file)
-python -m resolve --port 8010 # http://127.0.0.1:8010/ui · closing screen: /impact
+DEMO_MODE=1 python -m resolve --port 8010
 ```
 
-`.env`: `ADAPTY_SECRET_KEY` (the demo app, seeded from the organisers' Lumen dataset), and either `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` + `OPENAI_MODEL` (+ `OPENAI_BASE_URL`, e.g. DeepSeek `https://api.deepseek.com` with `OPENAI_EXTRA_BODY={"thinking": {"type": "disabled"}}`). `LLM_PROVIDER=auto` picks the provider whose keys are set; the Agent settings page can switch it.
+Open <http://127.0.0.1:8010/ui>. Agents don't run in this mode, so see the demo video for live replies.
 
-Demo users: tickets and test cases use the team's seeded demo users (`lumen_443814_…`). To use another teammate's Adapty app, copy exactly those users into it (same ids, dates and purchases, with the organisers' seeder code): `python scripts/seed_demo_profiles.py --yes` (`--one` first to check). Then `python scripts/import_feedback.py` adds our 12 hard cases.
+## How it works
 
-The phone app and the mock APK (`mobile-mock/`) call `POST /chat` on `http://<laptop-LAN-IP>:8010`: start the server with `--host 0.0.0.0` only for the demo, the API has no auth. Keyless: `DEMO_MODE=1 python -m resolve` serves a snapshot and calls nothing. `RESOLVE_DB=path` runs on another SQLite file (we demo on a copy without the untriaged seed tickets).
+```mermaid
+flowchart LR
+    U[App user] -->|chat| L2[Level 2<br>first-line agent]
+    F[Email or form] -->|feedback| L1
+    L2 -->|can't or shouldn't solve it| L1[Level 1<br>triage agent]
+    L1 -->|ticket with options| P[Support person]
+    P -->|accepted answer| L2C[Reply in the chat]
+    L2 -->|grant within limits| A[(Adapty)]
+    P -->|grant on click| A
+    A -->|profile| L2
+    A -->|profile| L1
+```
 
-Tests (no network, no keys): `python -m pytest`. Contract: `docs/openapi.json` (generated by `scripts/export_openapi.py`) and `docs/agents.md`.
+- **Level 2, in the app.** Code loads the user's Adapty profile before the model runs. The agent explains charges, plans and dates, gives the store's steps to restore, cancel or ask for a refund, and can grant free days.
+- **Level 1, for the support person.** Every handoff and every other piece of feedback becomes a ticket. The agent finds the cause and proposes 2–3 answers with different actions, each with a ready reply and a risk. The user can write in any language; the person reads and decides in English.
+- **Insights.** Code groups the triaged tickets and owns the numbers; the model writes the hypothesis, and code checks every cell and number it cites.
 
-Insights (`static/ui/Insights.dc.html`, the Insights tab between Analyze and Impact): triaged complaints by category, product and the paywall the user saw, a hypothesis from the model and a draft A/B test in Adapty (a draft only; nothing starts). It updates live: the screen polls `GET /api/insights` every 2.5 s, and when the top issue, the top paywall or a share (5 points) moves, the hypothesis re-runs on its own after 3 s of quiet, at most one run at a time, 20 s apart and 10 an hour; the old one stays under "Before". Each run is a paid model call: `INSIGHTS_AUTO=0` turns the auto runs off, Run stays. Drafts are only ever made by the Draft button. Keyless: `?mock=1` (design sample data), `?mock=1&sim=1` (new tickets every 3 s, canned hypothesis).
+### What the model cannot decide
 
-`/impact` is the last screen of the demo: how big the problem is (2026 review studies and benchmark reports), the FitBuddy numbers from the organisers' dataset, what Resolve changes and what Adapty gets, with every source linked and the assumptions stated. Static, numbers baked in, works keyless: shown inside the support UI's shell (`static/ui/Impact.dc.html`, same layout and text, our colours; the Impact tab); Milos's standalone original stays at `/static/impact.html`.
+The limits live in code, not in the prompt, so the user can say anything and the answer doesn't change:
 
-## What is real and what is mocked
+- Free days only for users paying now, within the owner's maximum, once per user per 30 days, and never for lifetime purchases.
+- When a grant isn't possible, the model isn't offered the tool. If it calls it anyway, the code blocks the call and hands the chat to a person.
+- Agents never refund. Only the store does, so a refund request always reaches a person.
+- Refund demands, chargebacks, threats, "I want a human" and profiles that contradict the user go to a person.
 
-- **Real:** Adapty profiles read with `getProfile`; grants with `grantAccessLevel` and the `last_support_ticket` stamp with `updateProfile`, both on seeded demo users; the LLM calls of both agents; the limits and the handoff rules (code).
-- **Synthetic:** all tickets and chat messages (generated from the organisers' dataset or hand-written; no real end-user text); "reply sent" is a status, nothing is emailed.
-- **Not built:** email or App Store review inboxes; the email → user index is filled by a script (in production it would come from Adapty webhooks, which carry `email`).
+## How accurate it is
 
-## Architecture
+Measured on DeepSeek `deepseek-flash`, on synthetic cases. Treat these as a first read, not a benchmark.
 
-- `resolve/frontline.py` Level 2 chat loop · `resolve/triage.py` Level 1 tool loop · `resolve/policy.py` limits (pure) · `resolve/actions.py` the only Adapty writes · `resolve/workflow.py` accept / reject / reopen (idempotent) · `resolve/api.py` JSON API · `resolve/llm.py` + `llm_anthropic.py` / `llm_openai.py` one tool-calling interface for both providers · `resolve/static/ui/` the web UI: the Claude Design hand-off files as exported (Incoming, Ticket, Chat, Agent settings, Analyze, Insights, Impact), rendered by a small runtime (`support.js`) and fed by the JSON API; `?mock=1` shows the design's own sample data. `/api/analytics?range=today|7d|30d` compares the agent and people reply by reply.
-- Adapty server-side API finds a profile only by `customer_user_id` or `profile_id`. The dashboard can search by email and transaction id, the API cannot; we keep our own email index and say so.
-
-## Agent accuracy
-
-- v1 (single-call agent, Claude Opus 5.5, 20 hand-labelled tickets): category 18/20, action 16/20. Two of the four "misses" were label errors (t-017 was already refunded); relabelled with notes in `data/eval.json`.
-- v2 (this design): `scripts/eval.py --yes` scores Level 1 on 32 cases (20 + 12 hard ones: lifetime, already refunded, profile mismatch, unknown user, email-only, prompt injection, chargeback threat, other languages) and Level 2 on 8 scripted chats. Result on DeepSeek `deepseek-flash` (Sun morning, one run, ~5 min, no Adapty writes): **category 31/32, first-option action 28/32, evidence grounded 230/238, Level 2 7/8.** The Level 2 miss is l2-happy: the cached profile's weekly plan expired that morning, so under the paying-now rule no grant was correct and the agent said the week had run out. Action misses: t-017 (already refunded, chose refund to a person), t-019 and t-012 (a defensible second strategy first), x-005 (store steps before asking which device).
-- v3 live on DeepSeek (`deepseek-flash`, Sun night, a handful of runs, not an eval): Level 2 answers in one model call per message (1.5–3.6 s), Level 1 triages a ticket in one call (about 10 s); a chat handoff became a triaged ticket and the accepted reply reached the chat; prompt injection in chat and in a ticket was refused.
-
-## What we would do next
-
-- Email and App Store review inboxes into Level 1; auto-accept low-risk options above a confidence threshold once the eval is large.
-- A real retention offer instead of free days (store promo codes), per-product compensation.
-- Ask Adapty for profile search by email / transaction id in the server API, and a "support" scope for API keys.
-
-## Team
-
-- Alex Kryukov: Level 1 and Level 2 agents, contract and API, LLM providers, web UI, mock APK, market research.
-- Milos Blagojevic: v1 inbox and Adapty client, Gate 1, ticket generator, v1 eval, insights and A/B draft, pitch.
-- Dzhamal Abdulbasirov: mobile showcase app.
-
-## Pre-existing material (rule 1 disclosure)
-
-The pre-event README below and `.gitignore`; the scope document (text only, no code) written before the event; the organisers' seed data (`adapty-seed-data-hack`). No code existed before kickoff.
-
----
-
-# Pre-event notes
-
-Team repo. Created empty before the event, as the rules ask; all code is written during the hackathon.
-
-- Event page and agenda: https://adapty-hackathon.netlify.app/ (Haos, Kraljice Natalije 11, 2nd floor)
-- Guidelines and rules: https://app.notion.com/p/adapty/Adapty-Hackathon-Belgrade-Before-you-start-4101ca4355c381e2ae2df84ce84b37fc
-- Demo data (the organisers' seeder, not vendored here): https://github.com/kpotehin/adapty-seed-data-hack
-- Team check-in form (once per team): https://docs.google.com/forms/d/e/1FAIpQLSdVWJmF_5uBFtEioTUzXunFvP7WFPkpVENxcWgtL2vMUDW05A/viewform
-
-## Before Saturday (the organisers' checklist)
-
-1. Account at https://app.adapty.io. **One of us seeds, then invites the other two** from the
-   dashboard's team settings, so we all see the same data (FAQ allows this). Seed in the evening,
-   not Saturday morning: the run takes ~15 min and charts take up to 30 min more.
-   ```bash
-   npm install -g adapty@latest && adapty auth login
-   git clone https://github.com/kpotehin/adapty-seed-data-hack.git && cd adapty-seed-data-hack
-   python3 seed_adapty.py --dry-run     # see what it creates
-   python3 seed_adapty.py               # once; asks for the new Lumen app's secret key (App settings → General)
-   ```
-   Then check Flows, Profiles and A/B tests are filled in. Seed each app **once**; to start over, use
-   a new app, never re-run into the old one days later.
-2. Node 18+, Python 3.9+. Mobile tooling is optional: the FAQ says most ideas need only the
-   APIs, CLI and MCP.
-3. AI tooling: `npx adapty skills install --yes` (Adapty skills + MCP server for Claude Code /
-   Codex), then in Claude Code `/mcp` → `plugin:adapty-skills:adapty` → Authenticate. Without the
-   plugin: `claude mcp add --transport http --scope user adapty https://mcp.adapty.io/mcp`.
-   The MCP server acts with your account's rights: started A/B tests and placement changes are real.
-4. Think about problems. Write no code before kickoff.
-
-## Rules that bite
-
-- Core of the project written during the event; anything pre-existing disclosed in this README.
-- Use Adapty meaningfully. "Generic AI app with an Adapty logo" scores badly; a project competing
-  with Adapty scores worse than one that uses it.
-- Demo or synthetic data only. No real end-user data from any company.
-- No committed secrets: `.env` is ignored. No load tests, no scraping.
-- Any AI tools allowed; be ready to explain how we used them.
-
-## What the judges will ask (answer these in the demo)
-
-1. Who exactly is this for, and what do they do today without it?
-2. What changes for them: money, time or risk?
-3. Why does it need Adapty? If it uses AI, why does it need AI?
-4. What is the smallest version that proves the idea by Sunday 15:00?
-
-Where the organisers suggest looking: the people around Adapty (SDK developers, growth people
-running experiments, analysts reading charts, support answering purchase questions); the data
-(what could someone know earlier or decide better); AI as an interface over an Adapty account
-(what should software do alone, where does a human stay in the loop); and the rough edges we hit
-ourselves in the dashboard, CLI and API on Saturday morning.
-
-## Demo data in one paragraph
-
-Fictional app **Lumen — AI Photo Editor**: 6 products, 2 onboardings + 5 paywalls, 5 placements,
-3 segments, 4 A/B tests, 5,000 profiles with custom attributes, ~2,900 transactions over 4 months,
-plus ~1,000 "today" users whose flow views and day-one purchases fill A/B tests and placement
-metrics (the 4-month history shows "No Data" there). `data/offline/` in the seed repo has the same
-population at 50,000 users / ~30,000 transactions as CSV, with `placement`, `flow` and `ab_test`
-per user, for analysis and ML without the API. Store product IDs are fictional, so real device
-purchases need sandbox products of our own.
-
-## Schedule
-
-| When | What |
+| Level 1: 38 cases, one run | Result |
 |---|---|
-| Sat 10:10 | Brief + 15-min Adapty walkthrough, then Q&A and team check |
-| Sat 11:00 | Hacking starts. First hour: decide, write the demo script, then build only that path |
-| Sat 22:00 | Venue closes. Target: demo path runs end-to-end, however ugly |
-| Sun 09:30 | Doors open. Polish what the judges will see |
-| Sun 12:00 | Our feature freeze. Rehearse ×3, record a backup video, fill the submission form |
-| Sun 15:00 | Code freeze: repo + submission form |
-| Sun 15:30 | Demos: 5 min + 3 min Q&A per team |
+| The first option has the right action | 29 (76%) |
+| The right action is among the options | 37 (97%) |
+| All options wrong | 1 (3%), and that case's label is debatable |
+| Options with a forbidden action | 0 |
+| Category correct | 37/38 |
+| Evidence lines grounded in the loaded facts | 387/390 |
 
-## Working agreement
+| Level 2: 23 scenarios, 2 runs each | Result |
+|---|---|
+| Passed all checks | 35/46 (76%) |
+| Passed the code checks (right grant, handoff, store steps) | 40/46 |
+| Reply claimed an action that didn't happen | 3/46 |
 
-- `main` is always demoable. Small commits, push often, pull before you start.
-- Hardcode anything not on the demo path. Seed data, fake users, mocked integrations are fine.
-- Every hour: "if code froze now, what would we show?"
+What to keep in mind:
+
+- **The false claims are a known gap.** In one run the agent said it had added 7 days without making the call; in two it promised a handoff that didn't happen. The code checks the actions, not what the reply says about them. None of the Level 2 failures gave away money or access.
+- **The cases aren't independent of the build.** Some were used for tuning, and Level 1 is scored on the action type, not on the reply text.
+- **Level 2 has changed since this run** and wasn't measured again.
+- **Raw results.** The Level 2 run is in `data/eval_l2_results.json`. The per-case file of the 38-case Level 1 run wasn't kept, so those totals can't be recomputed from this repo; `data/eval_results.json` is the earlier 32-case run.
+
+## Why this problem
+
+We read 21,825 App Store reviews of 74 top-grossing subscription apps. One in six negative reviews is about a purchase gone wrong, and 65 of the 74 apps have such complaints. Of the 353 reviewers who described contacting support, 2 said it helped. In about half of the complaints, the developer could fix the problem without Apple.
+
+[Full research, method and limits](docs/market-research/README.md)
+
+## What is real and what isn't
+
+- **Real:** Adapty profile reads, grants and the profile stamp, all on seeded demo users; the model calls of both agents; the limits and handoff rules.
+- **Synthetic:** every ticket and chat message. No real end-user text is used. App Store reviews appear only in the research, never as tickets.
+- **Not built:** email and App Store inboxes. "Reply sent" is a status for anything outside the chat, and nothing is emailed. The email → user index is filled by a script; in production it would come from Adapty webhooks.
+
+The Adapty server API finds a profile only by `customer_user_id` or `profile_id`, not by email or transaction, so Resolve keeps its own email index.
+
+## Run it with live agents
+
+```bash
+cp .env.example .env   # fill in the keys, see the comments in the file
+python -m resolve --port 8010
+```
+
+- **`ADAPTY_SECRET_KEY`:** an Adapty app holding the demo users. To copy them into your own app, run `python scripts/seed_demo_profiles.py --yes` (`--one` first to check), then `python scripts/import_feedback.py` to add the hard cases.
+- **The model:** `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` and `OPENAI_MODEL` for any OpenAI-compatible API (with `OPENAI_BASE_URL`). Agent settings can switch between them.
+- **Seeded tickets** start untriaged: use **Run triage** on the ticket, or `python scripts/batch_triage.py`. Each run is a paid model call.
+- **`INSIGHTS_AUTO=0`** stops Insights from re-running on its own while the screen is open; the Run button stays.
+- **`RESOLVE_DB=path`** runs on another SQLite file.
+
+The server writes to Adapty and spends model credits. The API has no auth, so use `--host 0.0.0.0` only on a network you trust.
+
+### Phone apps
+
+Both call `POST /chat` on `http://<laptop-LAN-IP>:8010`:
+
+- [`appy/`](appy/README.md): FitBuddy, the Expo showcase app with an in-app support chat.
+- [`mobile-mock/`](mobile-mock/README.md): a minimal Android app with debug buttons.
+
+## For developers
+
+```bash
+python -m pytest                    # no network, no keys
+python scripts/export_openapi.py    # after any API change
+python scripts/eval.py --yes        # calls a real model, costs money
+```
+
+| Where | What |
+|---|---|
+| `resolve/frontline.py` | Level 2 chat loop |
+| `resolve/triage.py` | Level 1 and the Insights agent |
+| `resolve/policy.py` | Limits, as pure code |
+| `resolve/actions.py` | The only place an action writes to Adapty |
+| `resolve/workflow.py` | Accept, reject, reopen |
+| `resolve/api.py`, `resolve/analytics.py` | JSON API and the numbers behind Analyze |
+| `resolve/llm*.py` | One tool-calling interface for both providers |
+| `resolve/static/ui/` | The web screens; `?mock=1` shows sample data with no requests |
+
+**Docs:** [how the agents work](docs/agents.md) · [API schema](docs/openapi.json) · [design brief and tokens](docs/design/README.md) · [market research](docs/market-research/README.md) · [how AI was used to build this](docs/history/AI_LOG.md) · [rules for coding agents](AGENTS.md)
+
+## What's next
+
+- Check what a reply claims against what the agent actually did.
+- Email and App Store review inboxes into Level 1.
+- Auto-accept low-risk options above a confidence threshold, once the eval is large enough to trust.
+- A real retention offer instead of free days, such as store promo codes.
+- Ask Adapty for profile search by email or transaction in the server API, and a support scope for API keys.
+
+## Credits
+
+Built in two days at the Adapty Hackathon in Belgrade, 7–8 November 2026, by Team 12. This fork is Alex's continuation of the [team repository](https://github.com/Milos-Blagojevic/adapty-hackathon).
+
+- **Alex Kryukov:** Level 1 and Level 2 agents, contract and API, LLM providers, web UI, mock APK, market research.
+- **Milos Blagojevic:** v1 inbox and Adapty client, ticket generator, v1 eval, insights and A/B draft, pitch.
+- **Dzhamal Abdulbasirov:** mobile showcase app.
+
+The demo data comes from the organisers' [seed dataset](https://github.com/kpotehin/adapty-seed-data-hack). That is why ids read `lumen_*` while the app is called FitBuddy, and why a few older test replies still say Lumen.

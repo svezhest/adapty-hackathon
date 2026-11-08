@@ -4,11 +4,13 @@ Design sources for the support web app: Incoming, Ticket, Chat, Agent settings, 
 
 ## What is in here
 
+The exported screens now live in `resolve/static/ui/`. This folder keeps the brief, the canvas layout and the design tokens.
+
 - `project/*.dc.html` — one file per screen. The markup inside `<x-dc>` is plain HTML + inline CSS; page CSS is in `<helmet><style>`; the behaviour and mock data are in the `<script type="text/x-dc">` block at the bottom (`renderVals()` returns everything the template uses, `{{ name }}` = a value from it, `<sc-for>` = loop, `<sc-if>` = condition).
 - `project/canvas.json` — the canvas layout (which screen is where, titles).
 - `spec.md` — the original brief.
 
-These files run inside the Design canvas runtime, not as standalone pages. For standalone HTML, use Share › Export on the canvas, or copy the markup and CSS into `static/ui-alex/` and wire it to `app.js`.
+These files run inside the Design canvas runtime, not as standalone pages. For standalone HTML, use Share › Export on the canvas, or copy the markup and CSS into `static/ui/` and wire it to `app.js`.
 
 ## Screens → routes → API
 

@@ -1,3 +1,5 @@
+> The original design brief, kept as written. The screens as built are in `resolve/static/ui/`; where the two differ, the code and `docs/agents.md` are right.
+
 # Resolve web UI: design spec for Claude Design
 
 How to use it: paste **Part A** once as the project brief, then run **Part C** one step at a time (each step is a self-contained prompt with an acceptance list). Part B is the visual direction; paste it together with Part A. Part D is for the hand-off to code.
@@ -26,7 +28,7 @@ Screens:
 Realistic content to design with (use these, not lorem ipsum):
 
 - Ticket subjects: "Paid but still locked", "Refund for annual plan, threatens chargeback", "Charged after free trial", "Wants another free week after compensation", "How do I cancel? (Serbian)", "Lifetime but filters broken", "Where is my money".
-- Users: `lumen_443814_02380`, `maria.k@gmail.com`, "unknown user".
+- Users: `lumen_443814_02380`, `maria.k@example.com`, "unknown user".
 - What we found: "The user wants more free days after already being compensated for the trial conversion." Root cause: "Second complaint about the same trial conversion two days after a 7-day grant; no new problem in the profile." Confidence 88%.
 - Account line: "Premium · active until Nov 20 2026 · Google Play · lumen_weekly · $18.90 revenue".
 - Answers:
@@ -129,13 +131,13 @@ Acceptance: one unmistakable hero; smaller charts clearly separated by soft colo
 - **Reopen ticket**: back link, the ticket subject, "Closed Nov 7 · Granted 7 days", an amber note "Access granted earlier stays in Adapty", a note field, **Reopen ticket**.
 
 ### Step 7. States and motion
-Loading skeletons, empty states, errors (plain red line), the stamp press, the fold into a letter, the ballot unfold, toasts ("Sent to maria.k@gmail.com"). Keep motion short (150–300 ms) and calm.
+Loading skeletons, empty states, errors (plain red line), the stamp press, the fold into a letter, the ballot unfold, toasts ("Sent to maria.k@example.com"). Keep motion short (150–300 ms) and calm.
 
 ---
 
 ## Part D. Hand-off to code
 
-The built UI is static HTML/CSS/vanilla JS served at `/static/ui-alex/index.html` (no build step), with hash routes: `#/incoming`, `#/incoming/{ticket_id}`, `#/reopen/{ticket_id}`, `#/new`, `#/chat/{session_id}`, `#/settings`, `#/analyze`. Ask Claude Design to export **HTML + CSS** per screen with the classes it uses, and keep the data fields below so the existing `app.js` can be re-skinned.
+The built UI is static HTML/CSS/vanilla JS served at `/static/ui/Main.dc.html` (no build step), with hash routes: `#/incoming`, `#/incoming/{ticket_id}`, `#/reopen/{ticket_id}`, `#/new`, `#/chat/{session_id}`, `#/settings`, `#/analyze`. Ask Claude Design to export **HTML + CSS** per screen with the classes it uses, and keep the data fields below so the existing `app.js` can be re-skinned.
 
 Data per screen (full contract in `docs/openapi.json`):
 - Incoming: `GET /api/tickets?status=&q=` → `{id, status, source, category, customer_user_id, email, subject, created_at, confidence, top_action, snippet}`.

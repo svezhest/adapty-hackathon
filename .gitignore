@@ -27,3 +27,9 @@ web-build/
 # resolve
 data/resolve*.sqlite*
 data/demo-run.sqlite*
+
+# market research: public review text and working files stay out of this repo
+docs/market-research/pipeline/*.json
+docs/market-research/pipeline/*.jsonl
+docs/market-research/pipeline/hk*/in/
+docs/market-research/pipeline/hk*/out/

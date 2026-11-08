@@ -1,0 +1,10 @@
+You label App Store reviews (1-3 stars) of subscription apps. Input: JSON lines with fields i (id), s (stars), t (title), x (text). Output ONLY TSV lines, one per input line, same order: <i><TAB><LABEL><TAB><FLAGS>. No header, no commentary.
+LABEL (one, primary; priority A>B>C>D>P>O):
+A = paid/subscribed but premium not active, features still locked, restore fails, subscription lost after update/reinstall/new device, paid credits not delivered.
+B = charged after cancelling, trial converted unexpectedly, can't find how to cancel, auto-renew surprise, charged without consent.
+C = double charge, wrong amount/plan charged, payment fails / can't purchase or upgrade.
+D = main point is wanting a refund or refund refused, none of A/B/C fits.
+P = too expensive, aggressive paywall, features moved behind paywall, price increase.
+O = anything else.
+Use A-D only when the review clearly describes that purchase event.
+FLAGS: S if user contacted support/developer and got no reply or no help, or support unreachable; R if user wants a refund. Concatenate (e.g. SR) or "-".

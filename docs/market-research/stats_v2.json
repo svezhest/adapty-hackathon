@@ -1,0 +1,282 @@
+{
+ "n": 21825,
+ "neg": 9963,
+ "pur": 1617,
+ "pur_all_pct": 7.4,
+ "pur_neg_pct": 16.2,
+ "coarse_neg": {
+  "A": 397,
+  "O": 5947,
+  "P": 2399,
+  "B": 963,
+  "C": 95,
+  "D": 162
+ },
+ "tier": {
+  "top": 6.0,
+  "mid": 8.9
+ },
+ "genre": {
+  "Education": {
+   "share": 5.9,
+   "apps": 10,
+   "apps3": 4
+  },
+  "Entertainment": {
+   "share": 7.3,
+   "apps": 10,
+   "apps3": 7
+  },
+  "Health & Fitness": {
+   "share": 5.3,
+   "apps": 10,
+   "apps3": 7
+  },
+  "Lifestyle": {
+   "share": 5.3,
+   "apps": 6,
+   "apps3": 5
+  },
+  "Music": {
+   "share": 4.1,
+   "apps": 10,
+   "apps3": 5
+  },
+  "Photo & Video": {
+   "share": 13.3,
+   "apps": 10,
+   "apps3": 8
+  },
+  "Productivity": {
+   "share": 4.7,
+   "apps": 10,
+   "apps3": 7
+  },
+  "Utilities": {
+   "share": 13.6,
+   "apps": 8,
+   "apps3": 8
+  }
+ },
+ "apps_ge": {
+  "1": 65,
+  "3": 51,
+  "5": 46,
+  "10": 19
+ },
+ "n_apps": 74,
+ "top_apps": [
+  [
+   29.7,
+   "Lens Scan: Identify Anything",
+   "Utilities",
+   "mid"
+  ],
+  [
+   28.0,
+   "Cleaner Guru: Clean Up Storage",
+   "Utilities",
+   "top"
+  ],
+  [
+   25.3,
+   "Video Up! Video Editor & Maker",
+   "Photo & Video",
+   "mid"
+  ],
+  [
+   24.7,
+   "Facetune: Photo & Video Editor",
+   "Photo & Video",
+   "top"
+  ],
+  [
+   20.7,
+   "AI Video Generator - Vixel",
+   "Photo & Video",
+   "mid"
+  ],
+  [
+   18.3,
+   "iDrama – Short Dramas & Reels",
+   "Entertainment",
+   "mid"
+  ],
+  [
+   18.3,
+   "Praktika – AI Language Tutor",
+   "Education",
+   "mid"
+  ],
+  [
+   17.3,
+   "FaceApp: Perfect Face Editor",
+   "Photo & Video",
+   "top"
+  ]
+ ],
+ "purchase_beats_price": 20,
+ "detailed_n": 1517,
+ "pain": [
+  [
+   "cant_cancel",
+   289
+  ],
+  [
+   "charged_after_cancel",
+   252
+  ],
+  [
+   "unaware_subscribed",
+   168
+  ],
+  [
+   "paid_still_limited",
+   153
+  ],
+  [
+   "trial_no_reminder",
+   150
+  ],
+  [
+   "restore_fails",
+   114
+  ],
+  [
+   "refund_refused",
+   82
+  ],
+  [
+   "refund_wanted",
+   78
+  ],
+  [
+   "price_surprise",
+   71
+  ],
+  [
+   "not_delivered",
+   59
+  ],
+  [
+   "double_wrong_charge",
+   50
+  ],
+  [
+   "lost_after_reinstall",
+   29
+  ],
+  [
+   "payment_fails",
+   22
+  ]
+ ],
+ "wants": [
+  [
+   "refund",
+   695
+  ],
+  [
+   "cancel",
+   344
+  ],
+  [
+   "access",
+   268
+  ],
+  [
+   "none",
+   180
+  ],
+  [
+   "explanation",
+   30
+  ]
+ ],
+ "support": [
+  [
+   "unknown",
+   1036
+  ],
+  [
+   "unhelpful",
+   202
+  ],
+  [
+   "not_contacted",
+   128
+  ],
+  [
+   "no_reply",
+   112
+  ],
+  [
+   "bot_only",
+   37
+  ],
+  [
+   "helped",
+   2
+  ]
+ ],
+ "escalation": [
+  [
+   "none",
+   1381
+  ],
+  [
+   "apple",
+   69
+  ],
+  [
+   "bank",
+   51
+  ],
+  [
+   "threat",
+   16
+  ]
+ ],
+ "plan": [
+  [
+   "unknown",
+   1128
+  ],
+  [
+   "annual",
+   189
+  ],
+  [
+   "weekly",
+   109
+  ],
+  [
+   "monthly",
+   78
+  ],
+  [
+   "lifetime",
+   13
+  ]
+ ],
+ "solver": [
+  [
+   "developer",
+   817
+  ],
+  [
+   "store",
+   609
+  ],
+  [
+   "none",
+   91
+  ]
+ ],
+ "amount": {
+  "n": 411,
+  "median": 30.0,
+  "mean": 52.54
+ },
+ "flag_S": 723
+}

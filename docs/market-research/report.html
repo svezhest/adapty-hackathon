@@ -1,0 +1,225 @@
+<title>Purchase Pain Index</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: violet hero band with the thesis and four proof numbers, then three donuts (what / who can fix / what they want), the support failure funnel, category bars, and the ask. Two screens of reading. */
+:root {
+  --bg: #f7f6fb;
+  --paper: #ffffff;
+  --ink: #202020;
+  --muted: #64645d;
+  --line: #e6e4ee;
+  --violet: #6720ff;
+  --violet-2: #9a6bff;
+  --lav: #c4b5ff;
+  --lav-soft: #efeaff;
+  --grey: #b8b8b8;
+  --grey-2: #e2e1e6;
+  --hero-fg: #ffffff;
+  --hero-muted: #e3d9ff;
+  --display: "Onest", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111015; --paper: #1a1820; --ink: #f1eff7; --muted: #a9a6b4; --line: #2c2936;
+  --violet: #8c5cff; --violet-2: #b08cff; --lav: #5b48a8; --lav-soft: #251f3a; --grey: #6b6a72; --grey-2: #34323c;
+  --hero-fg: #ffffff; --hero-muted: #d9ccff; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111015; --paper: #1a1820; --ink: #f1eff7; --muted: #a9a6b4; --line: #2c2936;
+  --violet: #8c5cff; --violet-2: #b08cff; --lav: #5b48a8; --lav-soft: #251f3a; --grey: #6b6a72; --grey-2: #34323c;
+  --hero-fg: #ffffff; --hero-muted: #d9ccff; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--display); }
+.band, .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 960px; margin: 0 auto; }
+.band { background: linear-gradient(135deg, #5a14f0 0%, #6720ff 55%, #8a52ff 100%); color: var(--hero-fg); padding-block: 44px 40px; }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--hero-muted); }
+h1 { font: 800 clamp(32px, 5.4vw, 54px)/1.04 var(--display); letter-spacing: -.02em; margin: 14px 0 14px; text-wrap: balance; max-width: 18ch; }
+.lede { font-size: 17px; max-width: 60ch; color: var(--hero-muted); margin: 0; }
+.lede b { color: var(--hero-fg); }
+.kpis { margin-top: 28px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); border-radius: 14px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.kpi b { font: 800 40px/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.kpi span { font-size: 13.5px; line-height: 1.4; color: var(--hero-muted); }
+.wrap { padding-block: 36px 56px; }
+.wrap .inner { display: grid; gap: 34px; }
+h2 { font: 700 24px/1.2 var(--display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 6px 0 0; max-width: 70ch; }
+.donuts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.card h3 { font: 700 16px/1.3 var(--display); margin: 0; }
+.donut { width: 150px; aspect-ratio: 1; max-width: 100%; border-radius: 50%; margin: 0 auto; position: relative; }
+.donut::after { content: ""; position: absolute; inset: 26%; background: var(--paper); border-radius: 50%; }
+.donut .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; z-index: 1; }
+.donut .c b { font: 800 28px/1 var(--display); color: var(--violet); }
+.donut .c small { font-size: 11px; color: var(--muted); }
+.legend { display: grid; gap: 7px; font-size: 13.5px; }
+.legend div { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; }
+.legend em { font: 700 13px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; }
+.d1 { background: conic-gradient(var(--violet) 0 40%, var(--violet-2) 40% 64.6%, var(--lav) 64.6% 88%, var(--grey) 88% 98.5%, var(--grey-2) 98.5% 100%); }
+.d2 { background: conic-gradient(var(--violet) 0 53.9%, var(--grey) 53.9% 94%, var(--grey-2) 94% 100%); }
+.d3 { background: conic-gradient(var(--violet) 0 45.8%, var(--violet-2) 45.8% 68.5%, var(--lav) 68.5% 86.2%, var(--grey) 86.2% 88.2%, var(--grey-2) 88.2% 100%); }
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px; }
+.funnel { display: grid; gap: 8px; }
+.fr { display: grid; grid-template-columns: minmax(0, 1fr) 56px; gap: 10px; align-items: center; font-size: 13.5px; }
+.fr .bar { height: 28px; border-radius: 8px; background: var(--lav-soft); position: relative; overflow: hidden; }
+.fr .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: var(--violet); }
+.fr .bar span { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); z-index: 1; font-weight: 600; color: var(--ink); }
+.fr .bar i + span { color: #fff; }
+.fr.ok .bar i { background: #16a34a; }
+.fr em { font: 700 13px var(--mono); font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
+.big { font: 800 44px/1 var(--display); color: var(--violet); letter-spacing: -.02em; }
+.stat-list { display: grid; gap: 12px; }
+.stat { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.stat b { font: 800 26px/1 var(--display); color: var(--violet); font-variant-numeric: tabular-nums; }
+.bars { display: grid; gap: 9px; }
+.br { display: grid; grid-template-columns: 140px minmax(0, 1fr) 56px 64px; gap: 10px; align-items: center; font-size: 13.5px; }
+.br .t { height: 14px; background: var(--lav-soft); border-radius: 7px; position: relative; }
+.br .t i { position: absolute; inset: 0 auto 0 0; background: var(--violet); border-radius: 7px; }
+.br em { font: 700 13px var(--mono); font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
+.br small { font: 500 12px var(--mono); color: var(--muted); text-align: right; }
+.br.h { color: var(--muted); font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.worst { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.w { background: var(--lav-soft); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; }
+.w b { font: 800 24px/1 var(--display); color: var(--violet); }
+.w span { font-size: 13px; }
+.w small { font-size: 12px; color: var(--muted); }
+.ask { background: var(--ink); color: var(--bg); border-radius: 18px; padding: 24px; display: grid; gap: 14px; }
+.ask h2 { color: var(--bg); }
+.ask ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; max-width: 72ch; }
+.ask b { color: var(--lav); }
+.method { color: var(--muted); font-size: 13px; display: grid; gap: 6px; max-width: 80ch; }
+.method a { color: var(--violet); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .donuts, .split, .worst { grid-template-columns: minmax(0, 1fr); }
+  .br { grid-template-columns: 104px minmax(0, 1fr) 50px; }
+  .br small { display: none; }
+}
+</style>
+
+<header class="band">
+  <div class="inner">
+    <div class="eyebrow">Team 12 · Market research · Adapty Hackathon Belgrade</div>
+    <h1>1 in 6 angry reviews is about money that went wrong.</h1>
+    <p class="lede">We read <b>21,825 App Store reviews</b> of <b>74 top-grossing subscription apps</b> in 8 categories and tagged every complaint about a purchase. The problem is everywhere, the developer could fix most of it, and today almost nobody does.</p>
+    <div class="kpis">
+      <div class="kpi"><b>88%</b><span>of apps have purchase complaints (65 of 74)</span></div>
+      <div class="kpi"><b>16%</b><span>of 1–3★ reviews are purchase problems (1,617)</span></div>
+      <div class="kpi"><b>54%</b><span>of them the developer can fix alone, no Apple needed</span></div>
+      <div class="kpi"><b>2 / 353</b><span>reviewers who contacted support say they got help</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="inner">
+
+    <section>
+      <h2>Three questions, three answers</h2>
+      <p class="sub">1,517 purchase complaints, read one by one.</p>
+    </section>
+
+    <div class="donuts">
+      <div class="card">
+        <h3>What went wrong</h3>
+        <div class="donut d1" role="img" aria-label="Pie: cannot cancel or did not know 40%, unexpected charges 25%, paid but no access 23%, refund fights 11%, payment fails 1%"><div class="c"><b>1,517</b><small>complaints</small></div></div>
+        <div class="legend">
+          <div><i style="background:var(--violet)"></i><span>Can’t cancel, didn’t know they subscribed, trial without a reminder</span><em>40%</em></div>
+          <div><i style="background:var(--violet-2)"></i><span>Charged after cancelling, surprise or double charge</span><em>25%</em></div>
+          <div><i style="background:var(--lav)"></i><span>Paid, but no access: restore fails, still limited, credits missing</span><em>23%</em></div>
+          <div><i style="background:var(--grey)"></i><span>Refund refused or wanted</span><em>11%</em></div>
+          <div><i style="background:var(--grey-2)"></i><span>Payment fails</span><em>1%</em></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Who can fix it</h3>
+        <div class="donut d2" role="img" aria-label="Pie: developer alone 54%, only Apple 40%, nothing to fix 6%"><div class="c"><b>54%</b><small>developer</small></div></div>
+        <div class="legend">
+          <div><i style="background:var(--violet)"></i><span>The developer, alone: restore access, explain the charge, help cancel, offer a save</span><em>54%</em></div>
+          <div><i style="background:var(--grey)"></i><span>Only Apple: App Store refund</span><em>40%</em></div>
+          <div><i style="background:var(--grey-2)"></i><span>Nothing to fix</span><em>6%</em></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>What the user wants</h3>
+        <div class="donut d3" role="img" aria-label="Pie: refund 46%, cancel 23%, access 18%, explanation 2%, unspecified 12%"><div class="c"><b>46%</b><small>refund</small></div></div>
+        <div class="legend">
+          <div><i style="background:var(--violet)"></i><span>Money back</span><em>46%</em></div>
+          <div><i style="background:var(--violet-2)"></i><span>Cancel</span><em>23%</em></div>
+          <div><i style="background:var(--lav)"></i><span>Access to what they paid for</span><em>18%</em></div>
+          <div><i style="background:var(--grey)"></i><span>An explanation</span><em>2%</em></div>
+          <div><i style="background:var(--grey-2)"></i><span>Not stated</span><em>12%</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>Support is where it breaks</h3>
+        <p class="sub" style="margin:0">353 reviewers describe what happened when they contacted support.</p>
+        <div class="funnel">
+          <div class="fr"><div class="bar"><i style="width:57%"></i><span>Answered, didn’t help</span></div><em>202</em></div>
+          <div class="fr"><div class="bar"><i style="width:32%"></i><span>No reply at all</span></div><em>112</em></div>
+          <div class="fr"><div class="bar"><i style="width:10.5%"></i><span>Only a bot, no human</span></div><em>37</em></div>
+          <div class="fr ok"><div class="bar"><i style="width:0.6%"></i><span>Helped</span></div><em>2</em></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>And then it costs real money</h3>
+        <div class="stat-list">
+          <div class="stat"><b>136</b><span>users went to their bank, to Apple, or threatened to: chargebacks and refunds the developer no longer controls</span></div>
+          <div class="stat"><b>$30</b><span>median amount users name in the review (411 reviews state a price, mean $53)</span></div>
+          <div class="stat"><b>49%</b><span>of complaints that name a plan are about an annual plan: the biggest single payment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <section style="display:grid;gap:14px">
+      <div>
+        <h2>No category is safe. Mid-chart apps are hit 1.5× harder.</h2>
+        <p class="sub">Share of all reviews about a purchase problem. Apps from ranks 41–60: <b>8.9%</b>. Top 5 of each chart: <b>6.0%</b>. The smaller the team, the worse it gets: that is Adapty’s core customer.</p>
+      </div>
+      <div class="card">
+        <div class="bars" role="table" aria-label="Purchase complaint share by category">
+          <div class="br h" role="row"><span>Category</span><span></span><span style="text-align:right">share</span><small>apps ≥3%</small></div>
+          <div class="br" role="row"><span>Utilities</span><span class="t"><i style="width:100%"></i></span><em>13.6%</em><small>8 / 8</small></div>
+          <div class="br" role="row"><span>Photo &amp; Video</span><span class="t"><i style="width:97.8%"></i></span><em>13.3%</em><small>8 / 10</small></div>
+          <div class="br" role="row"><span>Entertainment</span><span class="t"><i style="width:53.7%"></i></span><em>7.3%</em><small>7 / 10</small></div>
+          <div class="br" role="row"><span>Education</span><span class="t"><i style="width:43.4%"></i></span><em>5.9%</em><small>4 / 10</small></div>
+          <div class="br" role="row"><span>Health &amp; Fitness</span><span class="t"><i style="width:39%"></i></span><em>5.3%</em><small>7 / 10</small></div>
+          <div class="br" role="row"><span>Lifestyle / dating</span><span class="t"><i style="width:39%"></i></span><em>5.3%</em><small>5 / 6</small></div>
+          <div class="br" role="row"><span>Productivity / AI</span><span class="t"><i style="width:34.6%"></i></span><em>4.7%</em><small>7 / 10</small></div>
+          <div class="br" role="row"><span>Music</span><span class="t"><i style="width:30.1%"></i></span><em>4.1%</em><small>5 / 10</small></div>
+        </div>
+      </div>
+      <div class="worst">
+        <div class="w"><b>29.7%</b><span>Lens Scan</span><small>Utilities · mid-chart</small></div>
+        <div class="w"><b>28.0%</b><span>Cleaner Guru</span><small>Utilities · top 5</small></div>
+        <div class="w"><b>25.3%</b><span>Video Up!</span><small>Photo &amp; Video · mid-chart</small></div>
+        <div class="w"><b>24.7%</b><span>Facetune</span><small>Photo &amp; Video · top 5</small></div>
+        <div class="w"><b>20.7%</b><span>Vixel AI Video</span><small>Photo &amp; Video · mid-chart</small></div>
+        <div class="w"><b>18.3%</b><span>Praktika AI Tutor</span><small>Education · mid-chart</small></div>
+      </div>
+      <p class="sub">For these apps, one review in four or five is a purchase complaint. 46 of 74 apps (62%) are above 5%.</p>
+    </section>
+
+    <div class="ask">
+      <h2>What this means for Adapty</h2>
+      <ul>
+        <li><b>Adapty’s AI covers the road to the sale</b>: Paywall Generator, AI Editor, Autopilot, Mail. After the sale, when a charge goes wrong, support works by hand in the Profiles screen.</li>
+        <li><b>RevenueCat already sells to support teams.</b> Adapty has no answer for them yet.</li>
+        <li><b>Adapty earns 1% of every renewal.</b> A user calmed down and kept, instead of refunded or charged back, keeps paying both the app and Adapty.</li>
+        <li><b>Adapty already has the data to fix the 54%</b>: subscription state, cancellation and billing events, access levels. What is missing is the agent that reads it and answers the user. That is what we built.</li>
+      </ul>
+    </div>
+
+    <section class="method">
+      <h2 style="font-size:16px">Method</h2>
+      <p>US App Store top-grossing charts, 8 categories: the top 5 and 5 apps from ranks 41–60 in each, social and streaming platforms and hardware companion apps excluded. 74 apps, up to 300 most recent reviews each, 21,825 reviews, 92% written in 2026, from Apple’s public review feed. Every 1–3★ review (9,963) was classified by Claude Haiku; the 1,617 purchase complaints were then read again for pain, wish, support outcome, escalation, plan and who can fix it. Spot check of 10 random detailed labels: 8 correct. Reviews are public complaints, not ticket volume: most unhappy users write to support or their bank and never post a review.</p>
+      <p>Platform benchmarks that point the same way: refunds by 2–5% of paying users (<a href="https://adapty.io/blog/refund-rate-metrics-and-benchmarking/">Adapty, 11,000+ apps</a>); billing errors behind 32% of Google Play and 15% of App Store cancellations (<a href="https://www.revenuecat.com/blog/growth/google-play-billing-error-churn-how-to-fix/">RevenueCat</a>); <a href="https://www.revenuecat.com/support-teams">RevenueCat for support teams</a>.</p>
+    </section>
+
+  </div>
+</main>
