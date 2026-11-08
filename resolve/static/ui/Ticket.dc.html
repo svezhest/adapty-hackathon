@@ -216,7 +216,7 @@ html{scroll-padding-bottom:104px}
 
 <section class="found" aria-labelledby="h-found">
 <div style="flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
-<p id="h-found" class="found-k">What we found<sc-if value="{{ hasCategory }}"><span aria-hidden="true" style="color: var(--ink-4)">·</span><span style="font-weight: 500">{{ category }}</span></sc-if></p>
+<p class="found-k"><span id="h-found" class="sr">What we found</span><sc-if value="{{ hasCategory }}"><span style="font-weight: 500">{{ category }}</span></sc-if></p>
 <sc-if value="{{ showFoundH }}"><p class="found-h">{{ foundSummary }}</p></sc-if>
 <sc-if value="{{ canTriage }}" hint-placeholder-val="{{ false }}"><p style="margin: 8px 0 0"><button type="button" class="quiet" onClick="{{ runTriage }}">{{ triageLabel }}</button></p></sc-if>
 <sc-if value="{{ hasTriageFail }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 6px 0 0; font-size:13px; color: var(--bad)">{{ triageFail }}</p></sc-if>
@@ -358,7 +358,7 @@ html{scroll-padding-bottom:104px}
 <aside style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 
 <section class="card" aria-labelledby="h-acc" style="padding: var(--gutter); display: flex; flex-direction: column; gap: 6px">
-<p id="h-acc" class="kicker" style="margin-bottom: 4px">Account</p>
+<p id="h-acc" class="sr">Account</p>
 <p style="margin: 0; font-size:14px; font-weight: 500; color: var(--ink)">{{ acc1 }}</p>
 <p style="margin: 0; font-size:14px; color: var(--ink-2)">{{ acc2 }}</p>
 <p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ acc3 }}</p>
@@ -422,7 +422,7 @@ html{scroll-padding-bottom:104px}
 
 <sc-if value="{{ jiraShow }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-labelledby="h-jira" style="margin-top: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
-<p id="h-jira" class="kicker">For the engineers</p>
+<p id="h-jira" class="sr">For the engineers</p>
 <sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a> · {{ jiraTitle }} <span style="color: var(--ink-2)">· {{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
 <sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
 <sc-if value="{{ jiraOffer }}" hint-placeholder-val="{{ false }}"><p style="margin: 0"><button type="button" class="quiet" onClick="{{ openJira }}">Send to a team in Jira</button></p></sc-if>

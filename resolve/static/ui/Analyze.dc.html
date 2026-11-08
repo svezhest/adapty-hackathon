@@ -256,7 +256,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 
 <section class="card" aria-labelledby="log-h" style="padding: 20px var(--gutter) 8px; min-width: 0">
 <div class="ch">
-<div><h2 id="log-h">Agent replies</h2></div>
+<div><h2 id="log-h" class="sr">Agent replies</h2></div>
 <a href="Chat.dc.html" style="font-size:14px; font-weight: 500">Try the agent</a>
 </div>
 <div role="list" style="margin-top: 10px">
@@ -279,7 +279,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <section class="card" aria-labelledby="c1" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
 
-<div style="flex: 1; min-width: 0"><h2 id="c1" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Chat outcomes</h2></div>
+<h2 id="c1" class="sr">Chat outcomes</h2>
 <span class="meta num">{{ donutTotal }} chats</span>
 </div>
 <div style="position: relative; width: 140px; height: 140px; align-self: center">
@@ -299,8 +299,8 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <section class="card" aria-labelledby="c2" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
 
-<div style="flex: 1; min-width: 0"><h2 id="c2" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Why chats went to people</h2></div>
-<span class="meta num">{{ reasonsTotal }}</span>
+<h2 id="c2" class="sr">Why chats went to people</h2>
+<span class="meta num">{{ reasonsTotal }} handed to people</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
 <sc-for list="{{ reasons }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-2)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
@@ -310,8 +310,8 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <sc-if value="{{ hasBlocked }}"><section class="card" aria-labelledby="c3" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
 
-<div style="flex: 1; min-width: 0"><h2 id="c3" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Blocked by limits</h2></div>
-<span class="meta num">{{ blockedTotal }}</span>
+<h2 id="c3" class="sr">Blocked by limits</h2>
+<span class="meta num">{{ blockedTotal }} blocked by limits</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
 <sc-for list="{{ blocked }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--accent)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
@@ -321,7 +321,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <section class="card" aria-labelledby="c4" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
 
-<div style="flex: 1; min-width: 0"><h2 id="c4" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Level 1 decisions</h2></div>
+<h2 id="c4" class="sr">Level 1 decisions</h2>
 <span class="meta num">{{ triagedTotal }} triaged</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
