@@ -144,7 +144,7 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:6px;paddi
 <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 32px">
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Incoming</h1>
+<h1 class="sr">Incoming</h1>
 <div role="tablist" aria-label="Ticket status" style="display: flex; align-items: center; gap: 22px">
 <button type="button" role="tab" aria-selected="{{ openSel }}" class="{{ openCls }}" onClick="{{ toOpen }}">Open <span class="cnt">{{ openCount }}</span></button>
 <button type="button" role="tab" aria-selected="{{ closedSel }}" class="{{ closedCls }}" onClick="{{ toClosed }}">Closed <span class="cnt">{{ closedCount }}</span></button>

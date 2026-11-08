@@ -62,6 +62,13 @@ input::placeholder{color:var(--ink-3)}
 .bigcaret ~ #msg{caret-color:transparent}
 @keyframes caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.bigcaret{animation:none}}
+.chatlog{flex:1 1 auto;overflow-y:auto;padding:76px 20px 12px;scroll-padding-top:76px}
+.chatbar{position:absolute;top:10px;left:10px;right:10px;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:6px 14px 6px 6px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--glass-strong);-webkit-backdrop-filter:var(--glass-strong-filter);backdrop-filter:var(--glass-strong-filter);box-shadow:var(--shadow-float);font-size:14px;color:var(--ink-2)}
+.chatbar .idbar{border-color:transparent;background:var(--glass)}
+.chatbar .idbar:focus-within{background:var(--surface);border-color:var(--accent-line)}
+.chatbar input::placeholder{color:var(--ink-2)}
+@media (max-width:640px){.chatlog{padding-top:112px;scroll-padding-top:112px}.chatbar form{display:contents!important}.chatbar .idbar{flex:1 1 100%;width:auto}.ro-as{display:none}}
+@media (prefers-reduced-transparency:reduce){.chatbar{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
 .idbar{display:inline-flex;align-items:center;gap:4px;width:320px;max-width:100%;height:36px;padding:0 4px 0 12px;border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--surface);transition:border-color .15s,box-shadow .15s}
 .idbar:focus-within{border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-ring)}
 .idbar input{flex:1;min-width:0;height:100%;border:0;outline:0;padding:0;background:transparent;color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
@@ -135,17 +142,16 @@ input::placeholder{color:var(--ink-3)}
 </header>
 
 <main style="max-width: 1200px; margin: 0 auto; padding: 16px 24px 48px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size:14px; color: var(--ink-3)">
-<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color: var(--ink-2)">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><span class="idbar"><label for="chat-id" class="sr">Chat or ticket id</label><input id="chat-id" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" aria-label="Open" title="Open"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 10l-5 5 5 5"></path><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></button></span><sc-if value="{{ readOnly }}"><span class="ro">Read only · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></sc-if><button type="button" class="linkbtn" style="font-size:14px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: var(--bad)">{{ idErr }}</span></sc-if>
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px">
+<section class="card" aria-label="Chat with the FitBuddy assistant" style="position: relative; flex: 999 1 520px; min-width: 0; height: 680px; display: flex; flex-direction: column; overflow: hidden">
+<div class="chatbar">
+<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color: var(--ink-2)">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><span class="idbar"><label for="chat-id" class="sr">Chat or ticket id</label><input id="chat-id" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" aria-label="Open" title="Open"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 10l-5 5 5 5"></path><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></button></span><sc-if value="{{ readOnly }}"><span class="ro">Read only<span class="ro-as"> · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></span></sc-if><button type="button" class="linkbtn" style="font-size:14px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: var(--bad)">{{ idErr }}</span></sc-if>
 <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 10px">
 <span id="dbg-l">Debug</span>
 <button type="button" role="switch" aria-checked="{{ debug }}" aria-labelledby="dbg-l" class="{{ swCls }}" onClick="{{ toggleDebug }}"></button>
 </span>
 </div>
-
-<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px">
-<section class="card" aria-label="Chat with the FitBuddy assistant" style="flex: 999 1 520px; min-width: 0; height: 680px; display: flex; flex-direction: column; overflow: hidden">
-<div role="log" aria-live="polite" style="flex: 1 1 auto; overflow-y: auto; padding: 20px 20px 12px">
+<div role="log" aria-live="polite" class="chatlog">
 <div style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column">
 <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="5">
 <div style="display: flex; flex-direction: column">
