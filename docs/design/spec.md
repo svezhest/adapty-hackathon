@@ -8,12 +8,12 @@ How to use it: paste **Part A** once as the project brief, then run **Part C** o
 
 ## Part A. What the product is
 
-**Resolve**: AI support for subscription apps, built on Adapty (Adapty is a backend for in-app subscriptions: purchases, access levels, paywalls). The demo app is **Lumen**, an AI photo editor with weekly / monthly / annual / lifetime plans sold through the App Store and Google Play.
+**Resolve**: AI support for subscription apps, built on a subscription platform (a backend for in-app subscriptions: purchases, access levels, paywalls). The demo app is **Lumen**, an AI photo editor with weekly / monthly / annual / lifetime plans sold through the App Store and Google Play.
 
 Two AI agents work on the user's live subscription profile:
 
 - **Level 2: the first-line agent inside the app.** The app's user writes in the support chat ("I paid but premium is locked", "refund", "how do I cancel"). The agent reads their subscription profile, explains charges and dates, gives store steps, and can give free days of premium within limits the owner sets. Refunds, threats, "I want a human" and anything risky go to a person as a **ticket**.
-- **Level 1: the triage agent for the support person.** Every ticket (from a chat handoff, a form or an email) is investigated by the agent, which writes what it found and proposes **3 answers**, each with an emoji. The support person picks one (or writes their own) and sends it. Only then anything happens in Adapty.
+- **Level 1: the triage agent for the support person.** Every ticket (from a chat handoff, a form or an email) is investigated by the agent, which writes what it found and proposes **3 answers**, each with an emoji. The support person picks one (or writes their own) and sends it. Only then anything happens.
 
 Who uses the web app: the **support person / app owner**. One screen (Chat) also shows **what the app's end user sees**.
 
@@ -78,7 +78,7 @@ Realistic content to design with (use these, not lorem ipsum):
 
 ### Step 1. App shell + Incoming list
 Design the shell and the inbox.
-- Left sidebar (~240px): "Resolve" wordmark with a small violet logo tile and "for Lumen"; a **New feedback** button (like Gmail's Compose); nav: Incoming (count of tickets waiting), Chat, Agent settings, Analyze; at the bottom a tiny "Built on Adapty" and a "Mock data" marker when in demo.
+- Left sidebar (~240px): "Resolve" wordmark with a small violet logo tile and "for Lumen"; a **New feedback** button (like Gmail's Compose); nav: Incoming (count of tickets waiting), Chat, Agent settings, Analyze; at the bottom a tiny "Hackathon project" and a "Mock data" marker when in demo.
 - Top: a big rounded search bar ("Search tickets", searches everything including the chat text).
 - Under it two tabs: **Open 8** · **Closed 2** (closed never appear in Open).
 - Rows (~44px, full width, translucent separators, hover highlight): state dot · user (fixed ~200px) · **subject** – grey continuation on the same line (suggested action, or the search snippet with the matched words highlighted) · age on the right. Bold rows = waiting for a person; normal = still triaging or closed.
@@ -99,7 +99,7 @@ Opened from a row, as its own page with a back arrow.
 - **Send stamp** under the answers: a big round warm-red rubber stamp "SEND" (dashed inner ring, slightly tilted, press animation), disabled until something is selected. Next to it a one-line summary "Grant 7 days of access → lumen_443814_02380" and a quiet "Close without a reply" link.
 - After Send: the chosen answer **folds into a letter** (an envelope line: emoji, "Sent to <user> – first line of the reply", time, a small red SENT postmark). Clicking the letter **unfolds a ballot**: all candidates with emojis, the chosen one ticked and shown in full ("edited" mark if changed), the rest greyed. Click again to fold.
 - Closed ticket = header + one line "✓ Ticket closed · Granted 7 days, until Nov 20 · Nov 7, 21:52" + **Reopen** + the letter. Dismissed = one line, no letter.
-- Errors: a plain red line next to the stamp ("Adapty did not accept the grant: try again"), the selection stays.
+- Errors: a plain red line next to the stamp ("The subscription service did not accept the grant: try again"), the selection stays.
 Acceptance: four answers look equal; nothing boxed except the selection tint; the stamp is the single strong element on the page.
 
 ### Step 3. Chat (what the app user sees)
@@ -128,7 +128,7 @@ Acceptance: one unmistakable hero; smaller charts clearly separated by soft colo
 
 ### Step 6. Small pages
 - **New feedback**: back arrow, a text area, from (user id or email), source (form / email), subject, Send.
-- **Reopen ticket**: back link, the ticket subject, "Closed Nov 7 · Granted 7 days", an amber note "Access granted earlier stays in Adapty", a note field, **Reopen ticket**.
+- **Reopen ticket**: back link, the ticket subject, "Closed Nov 7 · Granted 7 days", an amber note "Access granted earlier stays on the account", a note field, **Reopen ticket**.
 
 ### Step 7. States and motion
 Loading skeletons, empty states, errors (plain red line), the stamp press, the fold into a letter, the ballot unfold, toasts ("Sent to maria.k@example.com"). Keep motion short (150–300 ms) and calm.

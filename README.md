@@ -1,8 +1,8 @@
 # Resolve
 
-**AI support for subscription apps, built on Adapty.** One agent talks to the app's users and fixes what is safe to fix. Another turns everything else into a ready ticket, so a person only has to pick an answer.
+**AI support for subscription apps.** One agent talks to the app's users and fixes what is safe to fix. Another turns everything else into a ready ticket, so a person only has to pick an answer.
 
-Most support questions in a subscription app are about money: "charged after the trial", "paid but still locked", "how do I cancel". Adapty already knows the truth about every purchase. Resolve reads it and acts on it, inside limits the app owner sets.
+Most support questions in a subscription app are about money: "charged after the trial", "paid but still locked", "how do I cancel". The subscription platform already knows the truth about every purchase. Resolve reads it and acts on it, inside limits the app owner sets.
 
 [Watch the 2-minute demo](https://www.youtube.com/watch?v=tm1e8iPP_tg)
 
@@ -12,7 +12,7 @@ Most support questions in a subscription app are about money: "charged after the
 
 Screenshots of the running app. The chats and tickets are test data; the replies, options and scores come from the agents.
 
-**Ticket.** The cause, the evidence and how sure the agent is, then answers that take different actions. The person sends one, edits it or writes their own. Nothing runs in Adapty before that click.
+**Ticket.** The cause, the evidence and how sure the agent is, then answers that take different actions. The person sends one, edits it or writes their own. Nothing runs before that click.
 
 ![Ticket: what the agent found and three answers to choose from](docs/screenshots/ticket.png)
 
@@ -20,7 +20,7 @@ Screenshots of the running app. The chats and tickets are test data; the replies
 
 ![Analyze: machines vs humans](docs/screenshots/analyze.png)
 
-**Insights.** Complaints grouped by the paywall the user saw, turned into one A/B test to try. It can create a draft in Adapty; nothing starts on its own.
+**Insights.** Complaints grouped by the paywall the user saw, turned into one A/B test to try. It can create a draft test; nothing starts on its own.
 
 ![Insights: complaint categories and a hypothesis](docs/screenshots/insights.png)
 
@@ -33,7 +33,7 @@ Also in the app: [Impact](docs/screenshots/impact.png), the numbers behind the p
 
 ## Try it in a minute
 
-No keys needed. This serves a saved snapshot, calls no model and writes nothing to Adapty. Requires Python 3.11+.
+No keys needed. This serves a saved snapshot, calls no model and writes nothing to the subscription platform. Requires Python 3.11+.
 
 ```bash
 git clone https://github.com/svezhest/adapty-hackathon.git && cd adapty-hackathon
@@ -53,13 +53,13 @@ flowchart LR
     L2 -->|can't or shouldn't solve it| L1[Level 1<br>triage agent]
     L1 -->|ticket with options| P[Support person]
     P -->|accepted answer| L2C[Reply in the chat]
-    L2 -->|grant within limits| A[(Adapty)]
+    L2 -->|grant within limits| A[(Subscription platform)]
     P -->|grant on click| A
     A -->|profile| L2
     A -->|profile| L1
 ```
 
-- **Level 2, in the app.** Code loads the user's Adapty profile before the model runs. The agent explains charges, plans and dates, gives the store's steps to restore, cancel or ask for a refund, and can grant free days.
+- **Level 2, in the app.** Code loads the user's subscription profile before the model runs. The agent explains charges, plans and dates, gives the store's steps to restore, cancel or ask for a refund, and can grant free days.
 - **Level 1, for the support person.** Every handoff and every other piece of feedback becomes a ticket. The agent finds the cause and proposes 2–3 answers with different actions, each with a ready reply and a risk. The user can write in any language; the person reads and decides in English.
 - **Insights.** Code groups the triaged tickets and owns the numbers; the model writes the hypothesis, and code checks every cell and number it cites.
 
@@ -106,26 +106,28 @@ We read 21,825 App Store reviews of 74 top-grossing subscription apps. One in si
 
 ## What is real and what isn't
 
-- **Real:** Adapty profile reads, grants and the profile stamp, all on seeded demo users; the model calls of both agents; the limits and handoff rules.
+- **Real:** subscription profile reads, grants and the profile stamp, all on seeded demo users; the model calls of both agents; the limits and handoff rules.
 - **Synthetic:** every ticket and chat message. No real end-user text is used. App Store reviews appear only in the research, never as tickets.
-- **Not built:** email and App Store inboxes. "Reply sent" is a status for anything outside the chat, and nothing is emailed. The email → user index is filled by a script; in production it would come from Adapty webhooks.
+- **Not built:** email and App Store inboxes. "Reply sent" is a status for anything outside the chat, and nothing is emailed. The email → user index is filled by a script; in production it would come from the platform's webhooks.
 
-The Adapty server API finds a profile only by `customer_user_id` or `profile_id`, not by email or transaction, so Resolve keeps its own email index.
+The platform's server API finds a profile only by `customer_user_id` or `profile_id`, not by email or transaction, so Resolve keeps its own email index.
 
 ## Run it with live agents
+
+The subscription platform behind this build is [Adapty](https://adapty.io), so `ADAPTY_SECRET_KEY` and `resolve/adapty.py` carry its name. "Company" in the screens is a placeholder. This is an independent project, not made or endorsed by Adapty.
 
 ```bash
 cp .env.example .env   # fill in the keys, see the comments in the file
 python -m resolve --port 8010
 ```
 
-- **`ADAPTY_SECRET_KEY`:** an Adapty app holding the demo users. To copy them into your own app, run `python scripts/seed_demo_profiles.py --yes` (`--one` first to check), then `python scripts/import_feedback.py` to add the hard cases.
+- **`ADAPTY_SECRET_KEY`:** the secret key of an app holding the demo users. To copy them into your own app, run `python scripts/seed_demo_profiles.py --yes` (`--one` first to check), then `python scripts/import_feedback.py` to add the hard cases.
 - **The model:** `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` and `OPENAI_MODEL` for any OpenAI-compatible API (with `OPENAI_BASE_URL`). Agent settings can switch between them.
 - **Seeded tickets** start untriaged: use **Run triage** on the ticket, or `python scripts/batch_triage.py`. Each run is a paid model call.
 - **`INSIGHTS_AUTO=0`** stops Insights from re-running on its own while the screen is open; the Run button stays.
 - **`RESOLVE_DB=path`** runs on another SQLite file.
 
-The server writes to Adapty and spends model credits. The API has no auth, so use `--host 0.0.0.0` only on a network you trust.
+The server writes to the subscription platform and spends model credits. The API has no auth, so use `--host 0.0.0.0` only on a network you trust.
 
 ### Phone apps
 
@@ -147,7 +149,7 @@ python scripts/eval.py --yes        # calls a real model, costs money
 | `resolve/frontline.py` | Level 2 chat loop |
 | `resolve/triage.py` | Level 1 and the Insights agent |
 | `resolve/policy.py` | Limits, as pure code |
-| `resolve/actions.py` | The only place an action writes to Adapty |
+| `resolve/actions.py` | The only place an action writes to the subscription platform |
 | `resolve/workflow.py` | Accept, reject, reopen |
 | `resolve/api.py`, `resolve/analytics.py` | JSON API and the numbers behind Analyze |
 | `resolve/llm*.py` | One tool-calling interface for both providers |
@@ -161,14 +163,14 @@ python scripts/eval.py --yes        # calls a real model, costs money
 - Email and App Store review inboxes into Level 1.
 - Auto-accept low-risk options above a confidence threshold, once the eval is large enough to trust.
 - A real retention offer instead of free days, such as store promo codes.
-- Ask Adapty for profile search by email or transaction in the server API, and a support scope for API keys.
+- Ask the platform for profile search by email or transaction in the server API, and a support scope for API keys.
 
 ## Credits
 
 Built in two days at the Adapty Hackathon in Belgrade, 7–8 November 2026, by Team 12. This fork is Alex's continuation of the [team repository](https://github.com/Milos-Blagojevic/adapty-hackathon).
 
 - **Alex Kryukov:** Level 1 and Level 2 agents, contract and API, LLM providers, web UI, mock APK, market research.
-- **Milos Blagojevic:** v1 inbox and Adapty client, ticket generator, v1 eval, insights and A/B draft, pitch.
+- **Milos Blagojevic:** v1 inbox and subscription API client, ticket generator, v1 eval, insights and A/B draft, pitch.
 - **Dzhamal Abdulbasirov:** mobile showcase app.
 
 The demo data comes from the organisers' [seed dataset](https://github.com/kpotehin/adapty-seed-data-hack). That is why ids read `lumen_*` while the app is called FitBuddy, and why a few older test replies still say Lumen.

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Adapty · Ticket</title>
+<title>Company · Ticket</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -146,7 +146,7 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 </sc-if>
 
 <header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Adapty</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl on">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -485,7 +485,7 @@ var KINDS = { cancel: 'Cancel', refund_request: 'Refund', restore: 'Restore' };
 var EMOJI = { grant_access: '👍', reply_only: '🙏', store_instructions: '🔁', refund_to_human: '💸', ask_user: '❓', no_reply: '❌' };
 var LEGACY_ACT = { explain: 'reply_only', escalate_refund: 'refund_to_human', no_action: 'no_reply' };
 var CATEGORIES = { charged_after_trial: 'Charged after trial', no_access_after_purchase: 'No access after purchase', billing_issue: 'Billing issue', refund_request: 'Refund request', cancel_how: 'How to cancel', price_complaint: 'Price complaint', other: 'Other' };
-var STORE_NAMES = { app_store: 'App Store', play_store: 'Google Play', stripe: 'Stripe', paddle: 'Paddle', adapty: 'Adapty' };
+var STORE_NAMES = { app_store: 'App Store', play_store: 'Google Play', stripe: 'Stripe', paddle: 'Paddle', adapty: 'Server side' };
 var SOURCE_WORDS = { chat_handoff: 'chat', form: 'form', email: 'email' };
 function invert(o) { var r = {}; for (var k in o) r[o[k]] = k; return r; }
 var ACT_API = invert(ACT), STORE_API = invert(STORES), KIND_API = invert(KINDS);
@@ -882,7 +882,7 @@ class Component extends DCLogic {
         }
         self.tt = setTimeout(function () {
           if (p.failFirstSend && !s.tried) {
-            self.setState({ checking: false, tried: true, error: chosenVal && chosenVal.action === 'grant' ? 'Adapty did not accept the grant: try again.' : 'The reply was not sent: try again.' });
+            self.setState({ checking: false, tried: true, error: chosenVal && chosenVal.action === 'grant' ? 'The subscription service did not accept the grant: try again.' : 'The reply was not sent: try again.' });
             return;
           }
           self.setState({ vanish: true });

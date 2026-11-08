@@ -36,7 +36,7 @@ We took 21,825 App Store reviews of 74 top-grossing subscription apps in 8 categ
 - **The detailed pass covers 1,517 of the 1,617 complaints.** The breakdowns above are based on those; `report.html` says all 1,617 were read again, but only 1,517 have detailed labels in `stats_v2.json`.
 - **One store, one country, one moment.** US App Store only, November 2026. Google Play isn't covered.
 - **The per-app rates rest on up to 300 reviews each,** so treat them as a signal to look closer, not as a verdict on an app.
-- **We don't know which of these apps use Adapty.**
+- **We don't know which of these apps use the platform Resolve was built on.**
 
 ## What's in this folder
 

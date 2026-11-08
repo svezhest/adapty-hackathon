@@ -12,7 +12,7 @@ The behaviour both agents follow, and the contract the screens and phone apps co
 6. [LLM provider](#llm-provider)
 7. [Internal interfaces](#internal-interfaces)
 8. [Eval](#eval)
-9. [Brand: Adapty, FitBuddy and the Lumen data](#brand-adapty-fitbuddy-and-the-lumen-data)
+9. [Brand: Company, FitBuddy and the Lumen data](#brand-company-fitbuddy-and-the-lumen-data)
 
 ## Overview
 
@@ -374,9 +374,9 @@ Legacy proposals (v1 `proposal_json`, e.g. in `data/demo.sqlite`) are shown as a
 
 Synthetic cases only: `data/eval.json` (Level 1) and `data/l2_scenarios.json` (Level 2). `scripts/eval.py` calls a real model, so it costs money. Level 1 is scored on category and on the action of the first option; `ungrounded_evidence` checks evidence against the facts the run loaded. Level 2 is scored on the code outcomes and on replies judged by the model, as described in "States only what it knows".
 
-## Brand: Adapty, FitBuddy and the Lumen data
+## Brand: Company, FitBuddy and the Lumen data
 
-The owner's decision. Our web product is Adapty (the nav says so). The end-user app is what the phone app `appy/` shows: FitBuddy, a fitness app. The agents and the screens say the same thing.
+The owner's decision. Our web product is called Company (the nav says so), a placeholder, so that nobody takes this project for an official one. The backend stays Adapty, and that name appears only where it has to: code, technical docs, setup, citations and the event's name. The screens say "the subscription service" or "the platform". The end-user app is what the phone app `appy/` shows: FitBuddy, a fitness app. The agents and the screens say the same thing.
 
 - The name comes from one place: `AgentConfig.app_name` (default `FitBuddy`, editable in Agent settings). Level 1 (`triage.system_prompt`, its `store_steps`), Insights (`insights.system_prompt`) and Level 2 (`frontline`) all read it from the stored config; no prompt hard-codes a name. Level 1 and Insights describe the app as a fitness app; no prompt or example describes it as a photo editor.
 - Seed and demo text (tickets, hard cases, Level 2 scenarios, mock text on the screens) says FitBuddy. A body that only made sense for a photo editor is reworded to a fitness equivalent with the same support meaning and the same labels.

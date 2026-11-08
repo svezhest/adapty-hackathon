@@ -1,4 +1,4 @@
-# Adapty Support · web UI (design hand-off)
+# Company Support · web UI (design hand-off)
 
 Design sources for the support web app: Incoming, Ticket, Chat, Agent settings, Analyze, New feedback, Reopen, States and motion, All screens.
 
