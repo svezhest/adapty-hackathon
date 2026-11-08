@@ -55,14 +55,15 @@ input::placeholder{color:var(--ink-3)}
 .in{animation:in .2s ease-out}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (max-width:640px){main form{flex-wrap:wrap;max-width:100%}main form input{min-width:0;flex:1 1 140px}}
-.composer{display:flex;align-items:center;gap:8px;height:50px;padding:0 5px 0 18px;border-radius:999px;background:var(--subtle);border:1px solid var(--line);transition:border-color .15s, box-shadow .15s, background .15s}
+.composer{display:flex;align-items:flex-end;gap:8px;min-height:50px;padding:4px 5px 4px 18px;border-radius:25px;background:var(--subtle);border:1px solid var(--line);transition:border-color .15s, box-shadow .15s, background .15s}
 .composer{position:relative}
-#msg{caret-color:var(--accent)}
-.bigcaret{position:absolute;left:18px;top:50%;width:3px;height:26px;margin-top:-13px;border-radius:2px;background:var(--accent);pointer-events:none;animation:caret 1.06s steps(1) infinite}
+#msg{display:block;flex:1 1 auto;min-width:0;height:calc(var(--msg-rows,1) * 22px + 18px);margin:0;padding:9px 0;border:0;outline:none;resize:none;background:transparent;color:var(--ink);font-size:15px;line-height:22px;letter-spacing:-.005em;overflow-y:var(--msg-scroll,hidden);scrollbar-width:thin;caret-color:var(--accent);transition:height .22s cubic-bezier(.22,.9,.3,1)}
+.mtext{white-space:pre-wrap;overflow-wrap:anywhere}
+.bigcaret{position:absolute;left:18px;bottom:11px;width:3px;height:26px;border-radius:2px;background:var(--accent);pointer-events:none;animation:caret 1.06s steps(1) infinite}
 .bigcaret.off{display:none}
 .bigcaret:not(.off) ~ #msg{caret-color:transparent}
 @keyframes caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.bigcaret{animation:none}}
+@media (prefers-reduced-motion:reduce){.bigcaret{animation:none}#msg,.chatlog{transition:none}}
 .idbar{display:inline-flex;align-items:center;gap:4px;width:320px;max-width:100%;height:36px;padding:0 4px 0 12px;border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--surface);transition:border-color .15s,box-shadow .15s}
 .idbar:focus-within{border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-ring)}
 .idbar input{flex:1;min-width:0;height:100%;border:0;outline:0;padding:0;background:transparent;color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
@@ -86,7 +87,7 @@ input::placeholder{color:var(--ink-3)}
 .fullchat{position:fixed;inset:0;margin:0;padding:0}
 .chatstage,.chatpane{position:absolute;inset:0}
 .chatpane{display:flex;flex-direction:column}
-.chatlog{flex:1 1 auto;min-height:0;overflow-y:auto;padding:calc(var(--hdr) + var(--tb) + 22px) var(--gutter) 104px;scroll-padding-top:calc(var(--hdr) + var(--tb) + 22px)}
+.chatlog{flex:1 1 auto;min-height:0;overflow-y:auto;padding:calc(var(--hdr) + var(--tb) + 22px) var(--gutter) calc(104px + (var(--msg-rows,1) - 1) * 22px);transition:padding-bottom .22s cubic-bezier(.22,.9,.3,1);scroll-padding-top:calc(var(--hdr) + var(--tb) + 22px)}
 .chatbar{position:absolute;top:calc(var(--hdr) + 6px);left:var(--edge);right:var(--edge);z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;pointer-events:none;font-size:14px;color:var(--ink-2)}
 .chatbar form{pointer-events:none}
 .chatbar .idbar,.chatbar .fly,.chatbar .ro{pointer-events:auto;height:36px;border:0;border-radius:var(--r-ctl);-webkit-backdrop-filter:var(--glass-strong-filter);backdrop-filter:var(--glass-strong-filter);box-shadow:var(--shadow-float)}
@@ -171,7 +172,7 @@ input::placeholder{color:var(--ink-3)}
 <sc-if value="{{ m.label }}"><span style="margin: 14px 0 3px 36px; font-size:12px; font-weight: 500; color: var(--ink-3)">{{ m.label }}</span></sc-if>
 <div class="{{ m.rowCls }}">
 <sc-if value="{{ m.left }}"><span class="{{ m.avCls }}" aria-hidden="true">F</span></sc-if>
-<div class="{{ m.bCls }}">{{ m.text }}<span class="t">{{ m.ts }}</span>
+<div class="{{ m.bCls }}"><span class="mtext">{{ m.text }}</span><span class="t">{{ m.ts }}</span>
 <sc-if value="{{ m.tailR }}"><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; right: -5px; bottom: 0"><path d="M0 0 Q0 12 11 16 L0 16 Z" fill="var(--accent)"></path></svg></sc-if>
 <sc-if value="{{ m.tailL }}"><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; left: -5px; bottom: 0"><path d="M11 0 Q11 12 0 16 L11 16 Z" fill="{{ m.tailFill }}"></path></svg></sc-if>
 </div>
@@ -187,7 +188,7 @@ input::placeholder{color:var(--ink-3)}
 <div class="composer" style="max-width: 720px; margin: 0 auto">
 <label for="msg" class="sr">Message</label>
 <span class="{{ caretCls }}" aria-hidden="true"></span>
-<input id="msg" type="text" autocomplete="off" placeholder="{{ msgPh }}" disabled="{{ readOnly }}" value="{{ draft }}" onChange="{{ onDraft }}" style="flex: 1; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: var(--ink); font-size:15px; letter-spacing: -.005em">
+<textarea id="msg" rows="1" autocomplete="off" placeholder="{{ msgPh }}" disabled="{{ readOnly }}" value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onMsgKey }}"></textarea>
 <button type="submit" class="send" aria-label="Send" disabled="{{ noDraft }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
 </div>
 </form>
@@ -303,7 +304,7 @@ function planOf(user, users) {
 }
 
 class Component extends DCLogic {
-  componentWillUnmount() { if (this.fitter) this.fitter.disconnect(); if (this.tt) clearTimeout(this.tt); if (this.poll) clearInterval(this.poll); }
+  componentWillUnmount() { if (this.fitter) this.fitter.disconnect(); if (this.msgFitter) this.msgFitter.disconnect(); if (this.mirror) this.mirror.remove(); if (this.tt) clearTimeout(this.tt); if (this.poll) clearInterval(this.poll); }
   componentDidMount() {
     // The chat runs under the header and the flying controls, so its padding follows their real height.
     var head = document.querySelector('.top'), bar = document.querySelector('.chatbar'), css = document.documentElement.style;
@@ -312,6 +313,7 @@ class Component extends DCLogic {
     if (window.ResizeObserver) { this.fitter = new ResizeObserver(fit); this.fitter.observe(head); this.fitter.observe(bar); }
     var box = document.getElementById('msg');
     if (box && window.matchMedia('(hover: hover)').matches) box.focus({ preventScroll: true });
+    if (box) this.growWithText(box);
     if (!LIVE) return;
     var self = this;
     var p = this.props || {};
@@ -391,6 +393,46 @@ class Component extends DCLogic {
           if (!self.state.sending) self.apply(n);
         }, function () {});
       }, POLL_MS);
+    }
+  }
+  // The box grows up line by line. A hidden copy measures the text, because the box itself is mid-animation.
+  growWithText(box) {
+    var self = this, LINE = 22, css = document.documentElement.style;
+    var mirror = this.mirror = document.createElement('textarea');
+    mirror.setAttribute('aria-hidden', 'true');
+    mirror.tabIndex = -1;
+    mirror.style.cssText = 'position:fixed;left:-9999px;top:0;visibility:hidden;height:0;padding:0;border:0;overflow:hidden;resize:none';
+    document.body.appendChild(mirror);
+    this.fitMsg = function () {
+      var st = getComputedStyle(box);
+      mirror.style.width = box.clientWidth + 'px';
+      mirror.style.fontFamily = st.fontFamily;
+      mirror.style.fontSize = st.fontSize;
+      mirror.style.letterSpacing = st.letterSpacing;
+      mirror.style.lineHeight = LINE + 'px';
+      mirror.value = box.value;
+      var lines = Math.max(1, Math.round(mirror.scrollHeight / LINE));
+      var screen = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      var most = Math.max(3, Math.min(10, Math.floor(screen * 0.4 / LINE)));
+      var rows = Math.min(lines, most);
+      css.setProperty('--msg-scroll', lines > most ? 'auto' : 'hidden');
+      if (rows === self.msgRows) return;
+      var log = document.querySelector('[role="log"]');
+      var atEnd = log && log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+      self.msgRows = rows;
+      css.setProperty('--msg-rows', rows);
+      if (!atEnd) return;
+      var until = performance.now() + 260;
+      (function follow() {
+        log.scrollTop = log.scrollHeight;
+        if (performance.now() < until) requestAnimationFrame(follow);
+      })();
+    };
+    this.fitMsg();
+    var width = box.clientWidth;
+    if (window.ResizeObserver) {
+      this.msgFitter = new ResizeObserver(function () { if (box.clientWidth !== width) { width = box.clientWidth; self.fitMsg(); } });
+      this.msgFitter.observe(box);
     }
   }
   toBottom() {
@@ -482,6 +524,7 @@ class Component extends DCLogic {
       };
     });
     var draft = s.draft || '';
+    if (draft !== this.fittedDraft) { this.fittedDraft = draft; if (this.fitMsg) requestAnimationFrame(this.fitMsg); }
     var menu = !!s.menu;
     return {
       msgs: shaped,
@@ -496,6 +539,13 @@ class Component extends DCLogic {
       onIdDraft: function (e) { self.setState({ idDraft: e.target.value }); },
       openById: function (e) { e.preventDefault(); self.openById(self.state.idDraft); },
       onDraft: function (e) { self.setState({ draft: e.target.value }); },
+      // Enter sends on a computer, Shift+Enter starts a line. On a phone Enter starts a line and the button sends.
+      onMsgKey: function (e) {
+        if (e.key !== 'Enter' || e.shiftKey || e.isComposing || e.keyCode === 229 || !window.matchMedia('(hover: hover)').matches) return;
+        e.preventDefault();
+        var send = e.target.form.querySelector('.send');
+        if (!send.disabled) send.click();
+      },
       submit: function (e) { e.preventDefault(); if (draft.trim()) self.say(draft.trim()); },
       user: LIVE && !user ? (s.users ? 'no user' : '') : user,
       onUser: LIVE ? function (e) { self.fresh(e.target.value); } : function (e) { self.setState({ user: e.target.value }); },
