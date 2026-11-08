@@ -26,9 +26,13 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .inp:focus,.ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ta{min-height:170px;padding:12px 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.55;resize:vertical}
 .bad{border-color:var(--bad)}
-.seg{display:inline-flex;padding:3px;border-radius:6px;background:var(--subtle);gap:2px}
-.seg button{height:34px;padding:0 16px;border-radius:6px;border:0;background:transparent;color:var(--ink-2);font-size:14px;font-weight:500;cursor:pointer}
-.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(15,15,15,.12)}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;height:40px;padding:3px;border-radius:var(--r-ctl);background:var(--subtle)}
+.thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:4px;background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line);transition:transform .28s cubic-bezier(.22,.9,.3,1)}
+.seg.at-email .thumb{transform:translateX(100%)}
+.seg button{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;border:0;background:transparent;color:var(--ink-2);font-size:14px;font-weight:500;cursor:pointer;transition:color .2s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.thumb,.seg button{transition:none}}
 .primary{height:40px;padding:0 20px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--surface);font-size:14px;font-weight:600;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
 .primary:hover{background:var(--accent)}
 .done{animation:in .24s ease-out}
@@ -64,9 +68,10 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px">
 <label class="lbl">From<input class="inp" type="text" placeholder="User id or email" value="{{ from }}" onChange="{{ onFrom }}"></label>
 <div class="lbl"><span id="src-l">Source</span>
-<div class="seg" role="radiogroup" aria-labelledby="src-l">
-<button type="button" role="radio" aria-checked="{{ isForm }}" class="{{ formCls }}" onClick="{{ toForm }}">Form</button>
-<button type="button" role="radio" aria-checked="{{ isEmail }}" class="{{ emailCls }}" onClick="{{ toEmail }}">Email</button>
+<div class="{{ segCls }}" role="radiogroup" aria-labelledby="src-l">
+<span class="thumb" aria-hidden="true"></span>
+<button type="button" role="radio" aria-checked="{{ isForm }}" class="{{ formCls }}" onClick="{{ toForm }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v14H5z"></path><path d="M9 10h6M9 14h6"></path></svg>Form</button>
+<button type="button" role="radio" aria-checked="{{ isEmail }}" class="{{ emailCls }}" onClick="{{ toEmail }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"></path><path d="M4 7l8 6 8-6"></path></svg>Email</button>
 </div>
 </div>
 </div>
@@ -104,7 +109,8 @@ class Component extends DCLogic {
       onMsg: function (e) { self.setState({ msg: e.target.value }); },
       onFrom: function (e) { self.setState({ from: e.target.value }); },
       onSubject: function (e) { self.setState({ subject: e.target.value }); },
-      isForm: src === 'form', isEmail: src === 'email',
+      segCls: src === 'email' ? 'seg at-email' : 'seg',
+      isForm: String(src === 'form'), isEmail: String(src === 'email'),
       formCls: src === 'form' ? 'on' : '', emailCls: src === 'email' ? 'on' : '',
       toForm: function () { self.setState({ src: 'form' }); },
       toEmail: function () { self.setState({ src: 'email' }); },
