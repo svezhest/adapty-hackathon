@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from datetime import datetime
 
 from resolve import actions, db, jira, llm, policy, triage
 from resolve.adapty import AdaptyError, Client
@@ -32,6 +33,7 @@ class Services:
     adapty: Client | None = None
     llm: LLM | None = None
     jira: JiraClient | None = None
+    frozen_now: datetime | None = None  # demo mode: Analyze reads the snapshot as of its last event
 
 
 class OptionsChanged(Exception):

@@ -4,7 +4,7 @@ Every teammate seeded their own Lumen app, and the organisers' seeder puts a ran
 customer id (`lumen_<run>_<n>`). Our tickets, hard cases and Level 2 scenarios use the run 443814
 (Milos's app). This script replays exactly those users into another app with the organisers' own
 code (`seed_adapty.build_users` + `push_user`): same customer ids, same transactions, same dates
-(the clock is taken from the cached profiles in data/demo.sqlite), plus the server-side grants that
+(the clock is taken from the cached profiles in data/eval-base.sqlite), plus the server-side grants that
 show as `store=adapty` in the cache. Only these ~70 users are written; nothing else in the app changes.
 
     python scripts/seed_demo_profiles.py              # dry run: what would be written
@@ -49,7 +49,7 @@ def wanted_ids() -> set[str]:
 
 
 def cached_profiles() -> dict[str, dict]:
-    conn = sqlite3.connect(config.DEMO_DB_PATH)
+    conn = sqlite3.connect(config.EVAL_DB_PATH)
     return {cid: json.loads(p) for cid, p in conn.execute("SELECT customer_user_id, profile_json FROM tickets WHERE profile_json IS NOT NULL")}
 
 

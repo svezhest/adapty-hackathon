@@ -5,7 +5,7 @@
     python scripts/eval.py --yes --l2         # + Level 2 scenarios (paid)
     python scripts/eval.py --yes --only t-017,x-004,l2-repeat
 
-Runs on a scratch copy of --db (default data/demo.sqlite, which has the profiles the labels were written
+Runs on a scratch copy of --db (default data/eval-base.sqlite, which has the profiles the labels were written
 against); the source DB is never written. The hard-case feedback (data/feedback_extra.json) and the
 email index (scripts/seed_emails.py EMAILS) are added to the copy. Profiles come from that cache (a
 customer id not in it = profile not found); --live-profiles reads them from Adapty instead. Adapty
@@ -468,7 +468,7 @@ def main() -> int:
     parser.add_argument("--repeat", type=int, default=1, help="Level 2: runs per scenario")
     parser.add_argument("--no-judge", action="store_true", help="Level 2: skip the reply checks (no judge calls)")
     parser.add_argument("--only", default="", help="comma-separated case / scenario ids")
-    parser.add_argument("--db", type=Path, default=config.DEMO_DB_PATH, help="source DB, copied; never written")
+    parser.add_argument("--db", type=Path, default=config.EVAL_DB_PATH, help="source DB, copied; never written")
     parser.add_argument("--live-profiles", action="store_true", help="read profiles from Adapty instead of the DB cache")
     parser.add_argument("--out", type=Path, default=None, help="default data/eval_results.json (Level 2 only: data/eval_l2_results.json)")
     args = parser.parse_args()

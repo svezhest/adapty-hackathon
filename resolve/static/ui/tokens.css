@@ -39,7 +39,12 @@ html{overflow-x:clip;scroll-padding-top:76px}
 .top nav{order:3;flex:1 1 100%!important;flex-wrap:nowrap!important;overflow-x:auto;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter);scrollbar-width:none}
 .top nav::-webkit-scrollbar{display:none}
 .top nav .nl{flex:0 0 auto}
+.top nav{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 var(--fade-l),#000 calc(100% - var(--fade-r)),transparent 100%)}
+@supports (animation-timeline:scroll()){.top nav{animation:navfade linear both;animation-timeline:scroll(self inline)}}
 }
+@property --fade-l{syntax:'<length>';inherits:false;initial-value:0px}
+@property --fade-r{syntax:'<length>';inherits:false;initial-value:36px}
+@keyframes navfade{0%{--fade-l:0px;--fade-r:36px}10%{--fade-l:36px}90%{--fade-r:36px}100%{--fade-l:36px;--fade-r:0px}}
 .nl{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:var(--r-ctl);border:0;background:transparent;font-size:14px;font-weight:500;line-height:1;color:var(--ink-2);cursor:pointer;transition:background .15s,color .15s}
 .nl:hover{background:var(--subtle);color:var(--ink)}
 .nl.on{background:var(--accent-soft);color:var(--accent)}

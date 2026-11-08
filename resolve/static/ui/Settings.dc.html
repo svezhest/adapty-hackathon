@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Company · Agent settings</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
@@ -22,6 +24,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
 .grp{padding:18px 24px 6px}
+.card > .set:first-child{border-top:0}
 .set{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px;min-height:54px;padding:9px 24px;border-top:1px solid var(--subtle)}
 .set .nm{display:flex;flex-direction:column;min-width:0;flex:1 1 260px}
 .set .nm span:first-child{font-size:14px;font-weight:500;color:var(--ink)}
@@ -126,7 +129,6 @@ select.ctl{padding-left:6px}
 
 <section class="card" aria-label="Settings" style="overflow: hidden; padding-bottom: 6px">
 
-<p class="kicker grp">AI model</p>
 <div class="set">
 <label for="prov" class="nm"><span>Provider</span><span class="hint">Running now: {{ running }}</span></label>
 <select id="prov" class="ctl" value="{{ v.provider }}" onChange="{{ on.provider }}">
@@ -137,7 +139,6 @@ select.ctl{padding-left:6px}
 <sc-if value="{{ provErr }}"><p class="err">{{ provErr }}</p></sc-if>
 </div>
 
-<p class="kicker grp" style="padding-top: 22px">The app</p>
 <div class="set">
 <label for="app" class="nm"><span>App name</span></label>
 <input id="app" class="{{ cls.appName }}" type="text" value="{{ v.appName }}" onChange="{{ on.appName }}" style="width: 200px">

@@ -33,6 +33,7 @@ JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN", "").strip()
 RESOLVE_PUBLIC_URL = os.environ.get("RESOLVE_PUBLIC_URL", "").strip().rstrip("/")
 DB_PATH = Path(os.environ.get("RESOLVE_DB", ROOT / "data" / "resolve.sqlite"))
 DEMO_DB_PATH = ROOT / "data" / "demo.sqlite"
+EVAL_DB_PATH = ROOT / "data" / "eval-base.sqlite"  # the 60 seed tickets with cached profiles: eval labels are written against them
 SEED_REPO = Path(os.environ.get("SEED_REPO", Path.home() / "hackathon" / "adapty-seed-data-hack"))
 
 

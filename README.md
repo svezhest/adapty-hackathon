@@ -6,7 +6,7 @@ Most support questions in a subscription app are about money: "charged after the
 
 [Watch the 2-minute demo](https://www.youtube.com/watch?v=tm1e8iPP_tg)
 
-![Incoming: tickets waiting for a person, each with the action the agent suggests](docs/screenshots/incoming.png)
+![Incoming: tickets waiting for a person, each with how sure the agent is, the action it suggests and the risk](docs/screenshots/incoming.png)
 
 ## The screens
 

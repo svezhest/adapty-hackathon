@@ -177,6 +177,16 @@ def compute(conn: db.Database, range_id: str = "today", tz_offset_min: int = 0, 
 TIMELINE_DAYS = 14
 
 
+def last_event(conn: db.Database) -> datetime | None:
+    """The latest moment anything happened in this DB, or None when it is empty."""
+    stamps = [
+        conn.execute(f"SELECT MAX({column}) FROM {table}").fetchone()[0]
+        for table, column in (("tickets", "updated_at"), ("conversations", "updated_at"), ("messages", "ts"), ("grants", "ts"))
+    ]
+    stamps = [s for s in stamps if s]
+    return parse_datetime(max(stamps)) if stamps else None
+
+
 def _bucket_key(ts: str, hourly: bool) -> str:
     return ts[:13] + ":00:00Z" if hourly else ts[:10]
 

@@ -39,7 +39,7 @@ LIFETIME = dict(ACTIVE_WEEKLY, store="app_store", store_product_id="lumen.lifeti
 
 
 def legacy_proposal(**overrides) -> dict:
-    """A v1 `proposal_json` (as stored in data/demo.sqlite): shown as a one-option ticket in v2."""
+    """A v1 `proposal_json` (as stored in data/eval-base.sqlite): shown as a one-option ticket in v2."""
     base = {
         "category": "charged_after_trial",
         "root_cause": "The weekly trial converted on Oct 30 and the user missed the date.",

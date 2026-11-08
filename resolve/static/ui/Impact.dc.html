@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Company · Impact</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
@@ -60,11 +62,8 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <style>
 .imp { color:var(--ink); font:15px/1.5 var(--sans); }
 .imp { max-width:1200px; margin:0 auto; padding:28px 24px 64px; }
-.imp .ihead { display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
-.imp h1 { font:500 34px/1.1 var(--serif); margin:0; letter-spacing:-.01em; }
-.imp h1 em { font-style:normal; color:inherit; }
-.imp h2 { font:500 13px/16px var(--sans); color:var(--ink-3); margin:36px 0 14px; }
-.imp .ihead + h2 { margin-top:16px; }
+.imp .sec { margin-top:40px; }
+.imp h2 { font:500 30px/1.2 var(--serif); letter-spacing:-.01em; color:var(--ink); margin:0 0 18px; }
 .imp .grid { display:grid; gap:16px; }
 .imp .g4 { grid-template-columns:repeat(4,1fr); }
 .imp .g3 { grid-template-columns:repeat(3,1fr); }
@@ -91,16 +90,13 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .imp .card li { margin:4px 0; }
 .imp .quote-strip { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; }
 .imp .platform blockquote { font-size:20px; }
-.imp .assump { color:var(--ink-3); font-size:14px; }
-.imp .assump li { margin:3px 0; }
-.imp footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line); color:var(--ink-3); font-size:13px; }
-.imp footer ol { columns:2; column-gap:40px; padding-left:18px; margin:8px 0 0; }
-.imp footer li { margin:2px 0; break-inside:avoid; }
-.imp footer a { color:var(--ink-3); }
+.imp footer { margin-top:56px; padding-top:32px; border-top:1px solid var(--line); color:var(--ink-2); font-size:15px; }
+.imp footer ol { padding-left:24px; margin:0; }
+.imp footer li { margin:8px 0; padding-left:4px; overflow-wrap:anywhere; }
+.imp footer a { color:var(--ink-2); }
 @media (max-width: 980px) { .imp .g4, .imp .g3, .imp .quote-strip { grid-template-columns:1fr 1fr; } }
 @media (max-width: 640px) { .imp .g4, .imp .g3, .imp .quote-strip { grid-template-columns:1fr; }
-.imp { padding:24px 20px; }
-.imp .ihead { flex-direction:column; } }
+.imp { padding:24px 20px; } }
 .imp .num { width:auto; height:auto; padding:0; border:0; text-align:left; }
 .imp .pill { border-radius:6px; background:var(--accent-soft); }
 .imp .pill.green { background:var(--ok-soft); }
@@ -163,11 +159,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 </header>
 
 <main class="imp">
-  <div class="ihead">
-    <h1>Why it <em>matters</em></h1>
-  </div>
-
-  <h2>How big the problem is</h2>
+  <h1 class="sr">Impact</h1>
   <div class="grid g4">
     <div class="card">
       <p class="num brand">27<small>%</small></p>
@@ -202,10 +194,9 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
     </div>
   </div>
 
-  <h2>On FitBuddy, the app you just saw</h2>
-  <div class="card">
+  <div class="card sec">
     <table>
-      <thead><tr><th>FitBuddy demo data: organisers' dataset, 3.9 months</th><th></th><th>What it costs today</th></tr></thead>
+      <thead><tr><th colspan="2">FitBuddy demo data: organisers' dataset, 3.9 months</th><th>What it costs today</th></tr></thead>
       <tbody>
         <tr><td class="n">9,722</td><td>paying users over the period · <b>$112k</b> gross a month</td><td class="muted" rowspan="3">About 1,170 refund, billing-failure and trial-charge events a month. If one in four writes in: <b>300 tickets</b> (one in two: 600). At 7 minutes each, <b>35–70 hours</b> of the founder's month; at the industry's $8–15 per email ticket, $2.4–9k.</td></tr>
         <tr><td class="n">$3.2k</td><td>refunded a month · 2.8% of gross · 6.3% of payers refund</td></tr>
@@ -214,8 +205,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
     </table>
   </div>
 
-  <h2>What Resolve changes</h2>
-  <div class="grid g3">
+  <div class="grid g3 sec">
     <div class="card">
       <span class="pill">Level 2 · in the app</span>
       <h3>Safe cases never become tickets</h3>
@@ -238,15 +228,14 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
       <span class="pill amber">Money</span>
       <h3>Refunds avoided, paywall fixed</h3>
       <ul style="margin-top:0">
-        <li>Refund asks turned into 7 days of access at 30–50%: <b>$1.0–1.6k a month</b> back on FitBuddy, ~1.4% of gross.</li>
+        <li>If 30–50% of refund asks take 7 days of access: <b>$1.0–1.6k a month</b> back on FitBuddy, ~1.4% of gross.</li>
         <li>Billing failures are a third of Android cancellations: a reply that links to the card fix recovers a share.</li>
         <li>The part that scales with revenue: <b>12 of 16</b> trial complaints came from one onboarding flow → a draft A/B test. The paywall gets fixed instead of the rating.</li>
       </ul>
     </div>
   </div>
 
-  <h2>What the platform gets</h2>
-  <div class="card fill platform">
+  <div class="card fill platform sec">
       <blockquote>“Users who are surprised by a charge are the ones who refund.” “If you're testing headline copy and color schemes while your trial refund rate is above 6%, you're testing the wrong things.” “Intercept refund requests <b>before they hit the store</b>.”</blockquote>
       <p class="src"><a href="https://adapty.io/blog/photo-video-app-subscription-benchmarks/">Adapty, Photo &amp; Video benchmarks, April 2026</a></p>
   </div>
@@ -266,23 +255,8 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
     </div>
   </div>
 
-  <h2>Validate next</h2>
-  <div class="card">
-    <ul class="assump" style="margin:0; font-size:15px; color:var(--ink)">
-      <li>The share of the platform's <b>own</b> support tickets that are end users asking about charges and refunds.</li>
-      <li>A 200-ticket eval; auto-accept of low-risk Level 1 options above a confidence threshold.</li>
-      <li>One real app's inbox for a week; email and App Store reviews as channels.</li>
-    </ul>
-  </div>
-
   <footer>
-    <b>Assumptions we own:</b>
-    <ul class="assump">
-      <li>“One in four events becomes a ticket” and “30–50% of refund asks accept 7 days” are ours; Refund Saver's 40–50% is the ceiling we borrow. Nobody publishes ticket volumes for subscription apps; Calm is the one public case.</li>
-      <li>Refund rate is not ticket rate: most refunds go straight to Apple or Google. The paywall loop does not depend on that premise.</li>
-      <li>Review studies classify recent reviews of large apps by keyword or model; they are not store-wide rates. Benchmark reports are vendor data; Refund Saver's figures are the vendor's marketing.</li>
-    </ul>
-    <b>Sources</b>
+    <h2>Sources</h2>
     <ol>
       <li><a href="https://refundappeal.com/data/">RefundAppeal, App Store Subscription Billing Complaints, 2026</a></li>
       <li><a href="https://sideradar.com/research/app-review-complaints">SideRadar, 247,263 one- and two-star reviews, Oct 2026</a></li>

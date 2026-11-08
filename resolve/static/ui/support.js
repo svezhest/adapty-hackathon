@@ -72,6 +72,8 @@
     for (var a = 0; a < node.attributes.length; a++) {
       var attr = node.attributes[a];
       var name = attr.name, raw = attr.value;
+      // sc-d="{{ x }}": an SVG attribute that waits for data; the browser would reject the raw {{ }} while parsing.
+      if (name.indexOf('sc-') === 0) name = name.slice(3);
       var one = raw.match(ONE);
       var evName = null;
       for (var key in EVENTS) if (key.toLowerCase() === name) evName = EVENTS[key];
@@ -266,6 +268,9 @@
       Promise.resolve().then(render);
     };
     render();
+    // On a phone the nav scrolls sideways: start with the current screen in view.
+    var nav = root.querySelector('.top nav'), here = nav && nav.querySelector('.nl.on');
+    if (here && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = here.offsetLeft - nav.offsetLeft - (nav.clientWidth - here.offsetWidth) / 2;
     if (typeof comp.componentDidMount === 'function') comp.componentDidMount();
     window.__dc = comp;
   }

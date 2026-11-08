@@ -336,7 +336,7 @@ def build_router(services, live: insights_live.Live | None = None, ab_runner=lam
         range_: Literal["today", "7d", "30d"] = Query("today", alias="range", description="period: today (hourly) / 7d / 30d (daily)"),
         tz: int = Query(0, ge=-840, le=840, description="the viewer's offset from UTC in minutes (JS: -getTimezoneOffset()); sets local midnight and hours"),
     ):
-        return analytics.compute(conn, range_, tz)
+        return analytics.compute(conn, range_, tz, now=services.frozen_now)
 
     @router.get("/api/users", response_model=list[UserItem], tags=["mobile"], summary="Seeded demo users for a user picker")
     def users():

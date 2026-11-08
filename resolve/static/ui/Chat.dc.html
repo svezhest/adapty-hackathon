@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Company · Test chat</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
@@ -54,6 +56,17 @@ input::placeholder{color:var(--ink-3)}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (max-width:640px){main form{flex-wrap:wrap;max-width:100%}main form input{min-width:0;flex:1 1 140px}}
 .composer{display:flex;align-items:center;gap:8px;height:50px;padding:0 5px 0 18px;border-radius:999px;background:var(--subtle);border:1px solid var(--line);transition:border-color .15s, box-shadow .15s, background .15s}
+.composer{position:relative}
+#msg{caret-color:var(--accent)}
+.bigcaret{position:absolute;left:18px;top:50%;width:3px;height:26px;margin-top:-13px;border-radius:2px;background:var(--accent);pointer-events:none;animation:caret 1.06s steps(1) infinite}
+.bigcaret ~ #msg{caret-color:transparent}
+@keyframes caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.bigcaret{animation:none}}
+.idbar{display:inline-flex;align-items:center;gap:4px;width:320px;max-width:100%;height:36px;padding:0 4px 0 12px;border:1px solid var(--line);border-radius:var(--r-ctl);background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.idbar:focus-within{border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-ring)}
+.idbar input{flex:1;min-width:0;height:100%;border:0;outline:0;padding:0;background:transparent;color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.idbar button{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:0;border-radius:4px;background:transparent;color:var(--accent);cursor:pointer}
+.idbar button:hover{background:var(--accent-soft)}
 .composer:focus-within{background:var(--surface);border-color:var(--accent-line);box-shadow:0 0 0 4px var(--accent-ring)}
 .send{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s, transform .15s}
 .send:hover{background:var(--accent)}
@@ -123,7 +136,7 @@ input::placeholder{color:var(--ink-3)}
 
 <main style="max-width: 1200px; margin: 0 auto; padding: 16px 24px 48px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size:14px; color: var(--ink-3)">
-<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color: var(--ink-2)">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><label for="chat-id">Chat id</label><input id="chat-id" class="idf" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" class="linkbtn" style="font-size:14px">Open</button><sc-if value="{{ readOnly }}"><span class="ro">Read only · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></sc-if><button type="button" class="linkbtn" style="font-size:14px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: var(--bad)">{{ idErr }}</span></sc-if>
+<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color: var(--ink-2)">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><span class="idbar"><label for="chat-id" class="sr">Chat or ticket id</label><input id="chat-id" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" aria-label="Open" title="Open"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 10l-5 5 5 5"></path><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg></button></span><sc-if value="{{ readOnly }}"><span class="ro">Read only · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></sc-if><button type="button" class="linkbtn" style="font-size:14px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: var(--bad)">{{ idErr }}</span></sc-if>
 <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 10px">
 <span id="dbg-l">Debug</span>
 <button type="button" role="switch" aria-checked="{{ debug }}" aria-labelledby="dbg-l" class="{{ swCls }}" onClick="{{ toggleDebug }}"></button>
@@ -134,9 +147,6 @@ input::placeholder{color:var(--ink-3)}
 <section class="card" aria-label="Chat with the FitBuddy assistant" style="flex: 999 1 520px; min-width: 0; height: 680px; display: flex; flex-direction: column; overflow: hidden">
 <div role="log" aria-live="polite" style="flex: 1 1 auto; overflow-y: auto; padding: 20px 20px 12px">
 <div style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column">
-<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 160px 0 0; text-align: center; color: var(--ink-3)">Send a message to start a new chat.</p>
-</sc-if>
 <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="5">
 <div style="display: flex; flex-direction: column">
 <sc-if value="{{ m.label }}"><span style="margin: 14px 0 3px 36px; font-size:12px; font-weight: 500; color: var(--ink-3)">{{ m.label }}</span></sc-if>
@@ -157,6 +167,7 @@ input::placeholder{color:var(--ink-3)}
 <form onSubmit="{{ submit }}" style="flex: 0 0 auto; padding: 12px 20px 18px">
 <div class="composer" style="max-width: 720px; margin: 0 auto">
 <label for="msg" class="sr">Message</label>
+<sc-if value="{{ bigCaret }}"><span class="bigcaret" aria-hidden="true"></span></sc-if>
 <input id="msg" type="text" autocomplete="off" placeholder="{{ msgPh }}" disabled="{{ readOnly }}" value="{{ draft }}" onChange="{{ onDraft }}" style="flex: 1; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: var(--ink); font-size:14px">
 <button type="submit" class="send" aria-label="Send" disabled="{{ noDraft }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
 </div>
@@ -166,7 +177,6 @@ input::placeholder{color:var(--ink-3)}
 <sc-if value="{{ debug }}" hint-placeholder-val="{{ false }}">
 <aside class="card drawer" aria-label="Debug" style="flex: 1 1 320px; min-width: 0; max-height: 680px; overflow-y: auto; padding: 20px 22px; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; flex-direction: column; gap: 8px">
-<p class="kicker">Session</p>
 <dl style="margin: 0; display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 6px 12px; font-size:14px">
 <dt style="color: var(--ink-3)">Id</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px">{{ session }}</dd>
 <dt style="color: var(--ink-3)">Outcome</dt><dd style="margin: 0"><sc-if value="{{ handedOff }}"><a href="{{ ticketHref }}" style="font-weight: 500">Handed to a person · {{ ticket }} →</a></sc-if><sc-if value="{{ inProgress }}"><span>{{ outcomeText }}</span></sc-if></dd>
@@ -278,6 +288,8 @@ function planOf(user, users) {
 class Component extends DCLogic {
   componentWillUnmount() { if (this.tt) clearTimeout(this.tt); if (this.poll) clearInterval(this.poll); }
   componentDidMount() {
+    var box = document.getElementById('msg');
+    if (box && window.matchMedia('(hover: hover)').matches) box.focus({ preventScroll: true });
     if (!LIVE) return;
     var self = this;
     var p = this.props || {};
@@ -286,7 +298,8 @@ class Component extends DCLogic {
     this.keepUrl();
     API.get('/api/config').then(function (c) { self.setState({ appName: c.app_name }); }, function () {});
     var users = API.get('/api/users').then(function (list) { self.setState({ users: list }); return list; }, function () { self.setState({ users: [] }); return []; });
-    API.get('/api/chat/' + encodeURIComponent(session)).then(function (c) {
+    var saved = p.session ? API.get('/api/chat/' + encodeURIComponent(session)) : Promise.reject({ status: 404 });
+    saved.then(function (c) {
       self.setState({ loading: false });
       if (self.state.session === session) self.apply(c);
     }, function (err) {
@@ -450,12 +463,12 @@ class Component extends DCLogic {
     var menu = !!s.menu;
     return {
       msgs: shaped,
-      empty: msgs.length === 0 && !s.typing && !s.loading,
       typing: !!s.typing,
       draft: draft,
       noDraft: !draft.trim() || (LIVE && (!user || !!s.sending || !!s.loading || !!s.readOnly)),
       readOnly: LIVE && !!s.readOnly,
-      msgPh: LIVE && s.readOnly ? 'Read only: this chat is open for viewing' : 'Message',
+      msgPh: LIVE && s.readOnly ? 'Read only: this chat is open for viewing' : '',
+      bigCaret: !draft && !(LIVE && s.readOnly),
       idDraft: s.idDraft || '',
       idErr: LIVE ? s.idErr || '' : '',
       onIdDraft: function (e) { self.setState({ idDraft: e.target.value }); },

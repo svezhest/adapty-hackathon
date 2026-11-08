@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Company · Analyze</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
@@ -205,13 +207,13 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </div>
 <div style="position: relative; height: 280px" onMouseLeave="{{ unhover }}">
 <svg role="img" aria-label="{{ chartAria }}" viewBox="0 0 1000 280" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible">
-<sc-for list="{{ yTicks }}" as="y"><line x1="0" x2="1000" y1="{{ y.top }}" y2="{{ y.top }}" stroke="{{ y.stroke }}" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-for>
-<path d="{{ areas.closed }}" fill="var(--ink-4)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.handed }}" fill="var(--ink-2)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.agent }}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.feedback }}" fill="none" stroke="var(--surface)" stroke-opacity=".65" stroke-width="3.5" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.feedback }}" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"></path>
-<sc-if value="{{ hovering }}"><line x1="{{ hoverX }}" x2="{{ hoverX }}" y1="0" y2="280" stroke="var(--ink)" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-if>
+<sc-for list="{{ yTicks }}" as="y"><line x1="0" x2="1000" sc-y1="{{ y.top }}" sc-y2="{{ y.top }}" stroke="{{ y.stroke }}" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-for>
+<path sc-d="{{ areas.closed }}" fill="var(--ink-4)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path sc-d="{{ areas.handed }}" fill="var(--ink-2)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path sc-d="{{ areas.agent }}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path sc-d="{{ areas.feedback }}" fill="none" stroke="var(--surface)" stroke-opacity=".65" stroke-width="3.5" vector-effect="non-scaling-stroke"></path>
+<path sc-d="{{ areas.feedback }}" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"></path>
+<sc-if value="{{ hovering }}"><line sc-x1="{{ hoverX }}" sc-x2="{{ hoverX }}" y1="0" y2="280" stroke="var(--ink)" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-if>
 </svg>
 <div style="position: absolute; inset: 0; display: flex">
 <sc-for list="{{ hits }}" as="h" hint-placeholder-count="13"><div class="hit" onMouseEnter="{{ h.enter }}"></div></sc-for>
@@ -234,7 +236,6 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </section>
 </div>
 
-<p class="kicker" style="margin-top: 16px">Replies</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px">
 
 <section class="card" aria-labelledby="vs-h" style="padding: 20px var(--gutter) 8px; min-width: 0">
@@ -275,7 +276,6 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </section>
 </div>
 
-<p class="kicker" style="margin-top: 16px">Breakdown</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
 
 <section class="card" aria-labelledby="c1" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
@@ -287,11 +287,10 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <div style="position: relative; width: 140px; height: 140px; align-self: center">
 <svg role="img" aria-label="{{ donutAria }}" width="140" height="140" viewBox="0 0 148 148" style="transform: rotate(-90deg)">
 <circle cx="74" cy="74" r="56" fill="none" stroke="var(--subtle)" stroke-width="14"></circle>
-<sc-for list="{{ donut }}" as="d"><circle cx="74" cy="74" r="56" fill="none" stroke="{{ d.color }}" stroke-width="14" stroke-dasharray="{{ d.dash }}" stroke-dashoffset="{{ d.offset }}"></circle></sc-for>
+<sc-for list="{{ donut }}" as="d"><circle cx="74" cy="74" r="56" fill="none" stroke="{{ d.color }}" stroke-width="14" sc-stroke-dasharray="{{ d.dash }}" sc-stroke-dashoffset="{{ d.offset }}"></circle></sc-for>
 </svg>
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
 <span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1">{{ donutPct }}</span>
-<span style="font-size:12px; color: var(--ink-3); margin-top: 4px">by the agent</span>
 </div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size:13px">
@@ -333,11 +332,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </section>
 </div>
 
-<p class="kicker" style="margin-top: 16px">Live</p>
-<section class="card" aria-labelledby="work-h" style="padding: 20px var(--gutter) 10px">
-<div class="ch" style="margin-bottom: 12px">
-<div><h2 id="work-h">Agents at work</h2></div>
-</div>
+<section class="card" aria-label="Agents at work" style="padding: 20px var(--gutter) 10px">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 8px 32px">
 <sc-for list="{{ work }}" as="g" hint-placeholder-count="3">
 <div style="display: flex; flex-direction: column">
@@ -589,7 +584,11 @@ class Component extends DCLogic {
     var self = this;
     this.iv = setInterval(function () { self.setState({ tick: ((self.state || {}).tick || 0) + 1 }); }, 1000);
     if (!API.mock) {
-      this.load();
+      // The demo snapshot is a finished day, so "today" would show only its last hour.
+      API.get('/healthz').then(function (h) { return h.demo ? 'week' : null; }, function () { return null; }).then(function (range) {
+        if (range) self.setState({ range: range });
+        self.load(range);
+      });
       this.refresh = setInterval(function () { self.load(); }, REFRESH_MS);
     }
   }

@@ -354,6 +354,8 @@ One row per tool call: `session_id, ts, tool, args, allowed, blocked_reason, res
 
 ### Analyze
 
+Demo mode (`DEMO_MODE=1`): periods are measured from the last event in the snapshot (`analytics.last_event`, fixed at startup), not from today, and the screen opens on 7 days, so the numbers don't empty out as the file ages. `data/demo.sqlite` is built by `scripts/snapshot.py`: the live DB without developers' throwaway chats and without tickets that have no Level 1 triage. The eval and the profile seeding read `data/eval-base.sqlite` instead (the 60 seed tickets their labels were written against).
+
 - tickets: by status, by source, by category, per day
 - Level 2: sessions, resolved by Level 2 vs handed off (and why), grants and days granted, actions blocked by limits (by reason)
 - Level 1 / AI: confidence distribution, which option the person accepts (1st / 2nd / 3rd / edited / rejected), top root causes
@@ -400,7 +402,7 @@ Level 1 (`triage`):
 - `get_user_history {customer_user_id: str}` → earlier tickets (id, created_at, category, status, decision), grants, Level 2 sessions (outcome, last messages)
 - `submit_ticket {TriageTicket}` → ends the run
 
-Legacy proposals (v1 `proposal_json`, e.g. in `data/demo.sqlite`) are shown as a one-option ticket via `triage.legacy_to_ticket(proposal)`: grant_access→grant_access(days 7), explain→reply_only, escalate_refund→refund_to_human, no_action→no_reply.
+Legacy proposals (v1 `proposal_json`, e.g. in `data/eval-base.sqlite`) are shown as a one-option ticket via `triage.legacy_to_ticket(proposal)`: grant_access→grant_access(days 7), explain→reply_only, escalate_refund→refund_to_human, no_action→no_reply.
 
 ## Eval
 

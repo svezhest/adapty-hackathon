@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from resolve.models import Health
-from resolve import api, config, db, insights, jira, llm
+from resolve import analytics, api, config, db, insights, jira, llm
 from resolve.adapty import Client
 from resolve.workflow import Services
 
@@ -30,6 +30,8 @@ def create_app(
     if seed_file.exists():
         db.seed(conn, seed_file)
     services = Services(conn=conn, demo=demo, adapty=adapty_client, llm=llm_client, jira=jira_client)
+    if demo:
+        services.frozen_now = analytics.last_event(conn)
 
     app = FastAPI(title="Resolve")
     app.state.services = services

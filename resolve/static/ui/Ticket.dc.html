@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
 <title>Company · Ticket</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
@@ -51,9 +53,9 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans.sel .emo{transform:scale(1.08)}
 .found{flex:1 1 100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding:32px 40px 30px;border-radius:10px;background:var(--surface);box-shadow:none}
 .found-k{margin:0;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-3)}
-.found-h{margin:0;max-width:30em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:28px;font-weight:460;line-height:1.28;letter-spacing:-0.012em;color:var(--ink);text-wrap:balance}
+.found-h{margin:0;max-width:38em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:460;line-height:1.4;letter-spacing:-0.012em;color:var(--ink);text-wrap:balance}
 .found-r{margin:0;max-width:62ch;font-size:14px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
-@media (max-width:640px){.found{padding:24px 20px}.found-h{font-size:24px}}
+@media (max-width:640px){.found{padding:24px 20px}.found-h{font-size:18px}h1.th{font-size:24px!important}}
 .ttl{font-size:14px;font-weight:600;color:var(--ink)}
 .pick{font-size:13px;color:var(--ink-3);font-weight:500}
 .txt{display:block;margin-top:4px;color:var(--ink-2);font-size:14px;line-height:1.55;text-wrap:pretty}
@@ -129,7 +131,12 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans-main > span:nth-of-type(2){display:contents}
 .ans-main > span:nth-of-type(2) > span:first-child{grid-column:2}
 .ans-main > span:nth-of-type(2) > span:not(:first-child){grid-column:1/-1}
-.risk-high,.risk-medium{flex:0 0 calc(100% + 88px);margin:8px -88px 0 0}
+.risk-high,.risk-medium{flex:0 0 100%;width:100%;margin:8px 0 0}
+.ans-main > span:nth-of-type(2) > span:first-child{padding-right:0}
+.ttl{flex:1 1 calc(100% - 40px);min-width:0}
+.okstamp{top:auto;bottom:10px}
+.hov{top:auto;right:auto;bottom:10px;left:14px}
+.ans.sel .ans-main{padding-bottom:46px}
 .ans > div{padding-left:14px!important}
 }
 html{scroll-padding-bottom:104px}
@@ -202,7 +209,7 @@ html{scroll-padding-bottom:104px}
 
 <div style="display: flex; flex-direction: column; gap: 10px">
 <a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size:14px; font-weight: 500; color: var(--ink-2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Incoming</a>
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:28px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.25; text-wrap: balance; max-width: 34em">{{ heading }}</h1>
+<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:28px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.25; text-wrap: balance; max-width: 34em" class="th">{{ heading }}</h1>
 <p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ meta }}</p>
 </div>
 
@@ -224,10 +231,11 @@ html{scroll-padding-bottom:104px}
 </sc-if>
 </div>
 <div style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px">
-<div role="img" aria-label="{{ foundLabel }}" class="dial dial-xl">
-<svg viewBox="0 0 132 132" aria-hidden="true"><circle class="rim" cx="66" cy="66" r="65"></circle><circle cx="66" cy="66" r="54" fill="none" stroke="{{ foundSoft }}" stroke-width="10" pathLength="60" stroke-dasharray="{{ foundArc }}" transform="rotate(-90 66 66)"></circle><sc-for list="{{ foundTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" cx="{{ foundMark.x }}" cy="{{ foundMark.y }}" r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle><path d="{{ foundDash }}" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round"></path></svg>
+<div role="img" aria-label="{{ foundLabel }}" title="How sure the agent is of the cause" class="dial dial-xl">
+<svg viewBox="0 0 132 132" aria-hidden="true"><circle class="rim" cx="66" cy="66" r="65"></circle><circle cx="66" cy="66" r="54" fill="none" stroke="{{ foundSoft }}" stroke-width="10" pathLength="60" sc-stroke-dasharray="{{ foundArc }}" transform="rotate(-90 66 66)"></circle><sc-for list="{{ foundTicks }}" as="k"><line sc-x1="{{ k.x1 }}" sc-y1="{{ k.y1 }}" sc-x2="{{ k.x2 }}" sc-y2="{{ k.y2 }}" stroke="{{ k.c }}" sc-stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" sc-cx="{{ foundMark.x }}" sc-cy="{{ foundMark.y }}" sc-r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle><path sc-d="{{ foundDash }}" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round"></path></svg>
 <span class="dnum" style="color: {{ foundTone }}">{{ foundNum }}</span>
 </div>
+<sc-if value="{{ hasFound }}"><span style="font-size:12px; color: var(--ink-3)">Confidence</span></sc-if>
 </div>
 </section>
 
@@ -270,8 +278,8 @@ html{scroll-padding-bottom:104px}
 <div class="{{ a.cls }}">
 <label class="ans-main">
 <input type="radio" name="answer" class="sr" checked="{{ a.selected }}" onChange="{{ a.pick }}">
-<span class="dial">
-<svg viewBox="0 0 76 76" aria-hidden="true"><circle class="rim" cx="38" cy="38" r="37"></circle><circle cx="38" cy="38" r="31" fill="none" stroke="{{ a.soft }}" stroke-width="6" pathLength="60" stroke-dasharray="{{ a.arc }}" transform="rotate(-90 38 38)"></circle><sc-for list="{{ a.ticks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" cx="{{ a.mx }}" cy="{{ a.my }}" r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path d="{{ a.inf }}" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="dial" title="How sure the agent is of this answer">
+<svg viewBox="0 0 76 76" aria-hidden="true"><circle class="rim" cx="38" cy="38" r="37"></circle><circle cx="38" cy="38" r="31" fill="none" stroke="{{ a.soft }}" stroke-width="6" pathLength="60" sc-stroke-dasharray="{{ a.arc }}" transform="rotate(-90 38 38)"></circle><sc-for list="{{ a.ticks }}" as="k"><line sc-x1="{{ k.x1 }}" sc-y1="{{ k.y1 }}" sc-x2="{{ k.x2 }}" sc-y2="{{ k.y2 }}" stroke="{{ k.c }}" sc-stroke-width="{{ k.w }}"></line></sc-for><circle class="mk" sc-cx="{{ a.mx }}" sc-cy="{{ a.my }}" sc-r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path sc-d="{{ a.inf }}" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 <span class="dnum" style="color: {{ a.tone }}">{{ a.confText }}</span>
 <sc-if value="{{ a.hasConf }}"><span class="sr">{{ a.conf }}% confidence</span></sc-if>
 </span>
@@ -381,7 +389,7 @@ html{scroll-padding-bottom:104px}
 <span style="font-size:13px; color: var(--ink-3)">Sent to {{ user }} · {{ sentTime }}</span>
 <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-weight: 500">{{ firstLine }}</span>
 </span>
-<span class="postmark" aria-hidden="true"><svg viewBox="0 0 76 76"><circle class="rim" cx="38" cy="38" r="37"></circle><sc-for list="{{ postTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}"></line></sc-for></svg><b>SENT</b><small>{{ postmark }}</small></span>
+<span class="postmark" aria-hidden="true"><svg viewBox="0 0 76 76"><circle class="rim" cx="38" cy="38" r="37"></circle><sc-for list="{{ postTicks }}" as="k"><line sc-x1="{{ k.x1 }}" sc-y1="{{ k.y1 }}" sc-x2="{{ k.x2 }}" sc-y2="{{ k.y2 }}" stroke="{{ k.c }}" sc-stroke-width="{{ k.w }}"></line></sc-for></svg><b>SENT</b><small>{{ postmark }}</small></span>
 </button>
 <sc-if value="{{ sentLang }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-label="What was sent" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 10px">
@@ -457,6 +465,7 @@ var BASE = {
 var ORDER = ['reply', 'steps', 'grant'];
 var CONF = { reply: 85, steps: 64, grant: 38 };
 var CIRC = 2 * Math.PI * 25.5;
+function sameLine(a, b) { var n = function (x) { return String(x).replace(/[.…\s]+$/, '').toLowerCase(); }; return n(a) === n(b); }
 function toneOf(c) { return c >= 75 ? 'var(--ok)' : (c >= 55 ? 'var(--warn)' : 'var(--bad)'); }
 function softOf(c) { return c >= 75 ? 'var(--ok-soft)' : (c >= 55 ? 'var(--warn-soft)' : 'var(--bad-soft)'); }
 function arcOf(c) { return ((c || 0) / 100 * 60).toFixed(2) + ' 60'; }
@@ -887,8 +896,9 @@ class Component extends DCLogic {
     return {
       live: LIVE,
       title: m ? m.title : (s.loadError ? 'Could not open the ticket' : ''),
-      heading: m ? (m.hasTriage && m.foundSummary ? m.foundSummary : m.title) : (s.loadError ? 'Could not open the ticket' : ''),
-      showFoundH: !(m && m.hasTriage && m.foundSummary),
+      heading: m ? m.title : (s.loadError ? 'Could not open the ticket' : ''),
+      showFoundH: !!(m && m.foundSummary) && !sameLine(m.foundSummary, m.title),
+      hasFound: hasFound,
       meta: m ? m.meta : (s.loadError || 'Loading…'),
       lang: lang, hasLang: !!lang,
       messages: (m ? m.messages : []).map(function (x, i) {
