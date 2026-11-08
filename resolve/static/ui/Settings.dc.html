@@ -23,7 +23,8 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.grp{padding:18px 24px 6px}
+.bigh{margin:22px 0 0;font-family:var(--serif);font-size:30px;font-weight:500;letter-spacing:-.01em;line-height:1.15;color:var(--ink)}
+#h-plan{margin-top:0}
 .card > .set:first-child{border-top:0}
 .set{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 24px;min-height:54px;padding:9px 24px;border-top:1px solid var(--subtle)}
 .set .nm{display:flex;flex-direction:column;min-width:0;flex:1 1 260px}
@@ -33,8 +34,8 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ctl.bad{border-color:var(--bad);box-shadow:0 0 0 3px rgba(214,58,63,.10)}
 .num{width:84px;text-align:right;font-variant-numeric:tabular-nums}
-.intro{margin:0;padding:0 24px 14px;font-size:14px;line-height:1.5;color:var(--ink-2)}
-.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:0 24px 16px}
+.intro{margin:0;padding:16px 24px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .plan{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px 13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--ink);transition:border-color .15s, box-shadow .15s}
 .plan:hover{border-color:var(--accent-line)}
 .plan.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
@@ -43,7 +44,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .plan .risk{font-size:12px;font-weight:600}
 .plan .pd{font-size:13px;line-height:1.45;color:var(--ink-3)}
 .plan .pm{font-size:13px;font-weight:500;color:var(--ink-2)}
-.sum{margin:0;padding:12px 24px 4px;border-top:1px solid var(--subtle);font-size:13px;line-height:1.5;color:var(--ink-2)}
+.sum{margin:0;padding:12px 24px;border-top:1px solid var(--subtle);font-size:13px;line-height:1.5;color:var(--ink-2)}
 .sum b{font-weight:600;color:var(--ink)}
 .err{flex:1 0 100%;margin:0;font-size:13px;font-weight:500;color:var(--bad)}
 .sw{position:relative;width:38px;height:22px;border-radius:999px;border:0;background:var(--line);cursor:pointer;transition:background .18s;flex:0 0 auto}
@@ -125,42 +126,13 @@ select.ctl{padding-left:6px}
 <sc-if value="{{ failText }}"><p class="err">{{ failText }}</p></sc-if>
 </div>
 
-<section class="card" aria-label="Settings" style="overflow: hidden; padding-bottom: 6px">
-
-<div class="set">
-<label for="prov" class="nm"><span>Provider</span><span class="hint">Running now: {{ running }}</span></label>
-<select id="prov" class="ctl" value="{{ v.provider }}" onChange="{{ on.provider }}">
-<option value="env">Default from .env</option>
-<option value="openai" disabled="{{ prov.openaiOff }}">{{ prov.openai }}</option>
-<option value="anthropic" disabled="{{ prov.anthropicOff }}">{{ prov.anthropic }}</option>
-</select>
-<sc-if value="{{ provErr }}"><p class="err">{{ provErr }}</p></sc-if>
-</div>
-
-<div class="set">
-<label for="app" class="nm"><span>App name</span></label>
-<input id="app" class="{{ cls.appName }}" type="text" value="{{ v.appName }}" onChange="{{ on.appName }}" style="width: 200px">
-<sc-if value="{{ err.appName }}"><p class="err">Give the app a name.</p></sc-if>
-</div>
-<div class="set">
-<label for="tone" class="nm"><span>Tone</span></label>
-<select id="tone" class="ctl" value="{{ v.tone }}" onChange="{{ on.tone }}">
-<option>Friendly</option>
-<option>Neutral</option>
-<option>Formal</option>
-<sc-if value="{{ toneCustom }}"><option value="{{ toneCustom }}">{{ toneCustomText }}</option></sc-if>
-</select>
-</div>
-<div class="set">
-<label for="maxm" class="nm"><span>Max messages per chat</span><span class="hint">After this the chat goes to a person</span></label>
-<input id="maxm" class="{{ cls.maxMessages }}" type="number" min="5" max="50" value="{{ v.maxMessages }}" onChange="{{ on.maxMessages }}">
-<sc-if value="{{ err.maxMessages }}"><p class="err">Choose 5 to 50 messages.</p></sc-if>
-</div>
-
-<p class="kicker grp" style="padding-top: 22px">Free days the assistant may give</p>
+<h2 class="bigh" id="h-plan">Plan</h2>
 <div class="plans" role="radiogroup" aria-label="Free days plan">
 <sc-for list="{{ plans }}" as="pl"><button type="button" role="radio" aria-checked="{{ pl.on }}" class="{{ pl.cls }}" onClick="{{ pl.pick }}"><span class="pt">{{ pl.name }}<sc-if value="{{ pl.rec }}"><span class="rec">Recommended</span></sc-if></span><span class="risk" style="color: {{ pl.tone }}">{{ pl.risk }}</span><span class="pm">{{ pl.most }}</span><span class="pd">{{ pl.desc }}</span></button></sc-for>
 </div>
+
+<h2 class="bigh" id="h-det">Details</h2>
+<section class="card" aria-labelledby="h-det" style="overflow: hidden">
 <div class="set">
 <span class="nm"><span id="l-allow">Allow free access grants</span><span class="hint">Off: every such case waits for a person</span></span>
 <button type="button" role="switch" aria-labelledby="l-allow" aria-checked="{{ v.allowGrants }}" class="{{ sw.allowGrants }}" onClick="{{ tg.allowGrants }}"></button>
@@ -212,8 +184,39 @@ select.ctl{padding-left:6px}
 <span class="nm"><span id="l-rp">Repeat complaint after a grant → person</span></span>
 <button type="button" role="switch" aria-labelledby="l-rp" aria-checked="{{ v.hRepeat }}" class="{{ sw.hRepeat }}" onClick="{{ tg.hRepeat }}"></button>
 </div>
+<div class="set">
+<label for="prov" class="nm"><span>Provider</span><span class="hint">Running now: {{ running }}</span></label>
+<select id="prov" class="ctl" value="{{ v.provider }}" onChange="{{ on.provider }}">
+<option value="env">Default from .env</option>
+<option value="openai" disabled="{{ prov.openaiOff }}">{{ prov.openai }}</option>
+<option value="anthropic" disabled="{{ prov.anthropicOff }}">{{ prov.anthropic }}</option>
+</select>
+<sc-if value="{{ provErr }}"><p class="err">{{ provErr }}</p></sc-if>
+</div>
 
-<p class="kicker grp" style="padding-top: 22px">Bug reports to Jira</p>
+<div class="set">
+<label for="app" class="nm"><span>App name</span></label>
+<input id="app" class="{{ cls.appName }}" type="text" value="{{ v.appName }}" onChange="{{ on.appName }}" style="width: 200px">
+<sc-if value="{{ err.appName }}"><p class="err">Give the app a name.</p></sc-if>
+</div>
+<div class="set">
+<label for="tone" class="nm"><span>Tone</span></label>
+<select id="tone" class="ctl" value="{{ v.tone }}" onChange="{{ on.tone }}">
+<option>Friendly</option>
+<option>Neutral</option>
+<option>Formal</option>
+<sc-if value="{{ toneCustom }}"><option value="{{ toneCustom }}">{{ toneCustomText }}</option></sc-if>
+</select>
+</div>
+<div class="set">
+<label for="maxm" class="nm"><span>Max messages per chat</span><span class="hint">After this the chat goes to a person</span></label>
+<input id="maxm" class="{{ cls.maxMessages }}" type="number" min="5" max="50" value="{{ v.maxMessages }}" onChange="{{ on.maxMessages }}">
+<sc-if value="{{ err.maxMessages }}"><p class="err">Choose 5 to 50 messages.</p></sc-if>
+</div>
+</section>
+
+<h2 class="bigh" id="h-jira">Bug reports to Jira</h2>
+<section class="card" aria-labelledby="h-jira" style="overflow: hidden">
 <p class="intro">{{ jiraStatus }}</p>
 <div class="set">
 <span class="nm"><span id="l-jauto">Create issues automatically</span><span class="hint">Off: a person creates each issue from the ticket</span></span>
