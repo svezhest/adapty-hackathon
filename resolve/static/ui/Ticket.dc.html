@@ -40,6 +40,11 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .kv{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:6px 16px;margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--subtle);font-size:13px}
 .kv dt{color:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
 .kv dd{margin:0;color:var(--ink)}
+.rcpt{margin:12px 0 0;padding:0;border-top:1px solid var(--subtle);font-size:13px}
+.rcpt-r{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;padding:7px 0;border-bottom:1px solid var(--subtle)}
+.rcpt-r:last-child{border-bottom:0;padding-bottom:0}
+.rcpt-r dt{color:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;overflow-wrap:anywhere}
+.rcpt-r dd{margin:0 0 0 auto;min-width:0;color:var(--ink);text-align:right;overflow-wrap:anywhere}
 .b{position:relative;max-width:78%;padding:8px 12px 8px 14px;border-radius:18px;font-size:14px;line-height:1.45}
 .b-u{background:var(--accent);color:var(--surface);border-bottom-right-radius:5px}
 .b-a{background:var(--subtle);color:var(--ink);border-bottom-left-radius:5px}
@@ -364,8 +369,8 @@ html{scroll-padding-bottom:104px}
 <p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ acc3 }}</p>
 <button type="button" class="{{ detCls }}" style="font-size:14px; align-self: flex-start; margin-top: 4px" aria-expanded="{{ details }}" onClick="{{ toggleDetails }}">Details<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
 <sc-if value="{{ details }}" hint-placeholder-val="{{ false }}">
-<dl class="kv ballot">
-<sc-for list="{{ accountRows }}" as="e"><dt>{{ e.k }}</dt><dd>{{ e.v }}</dd></sc-for>
+<dl class="rcpt ballot">
+<sc-for list="{{ accountRows }}" as="e"><div class="rcpt-r"><dt>{{ e.k }}</dt><dd>{{ e.v }}</dd></div></sc-for>
 </dl>
 </sc-if>
 </section>
