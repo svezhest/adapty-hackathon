@@ -120,7 +120,6 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <main class="setm" style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-direction: column; gap: 4px">
 <h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Agent settings</h1>
-<p style="margin: 0; color: var(--ink-2); font-size:14px">What the in-app agent may do on its own.</p>
 <sc-if value="{{ failText }}"><p class="err">{{ failText }}</p></sc-if>
 </div>
 
@@ -159,7 +158,6 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 </div>
 
 <p class="kicker grp" style="padding-top: 22px">Free days the assistant may give</p>
-<p class="intro">When a paying user is blocked or surprised by a charge, the assistant can add free premium days on its own instead of making them wait for a person. It never charges anyone and never refunds. A free day costs you money only if the user would have paid for that day, for example when they cancel and keep premium a little longer. Pick how much you are comfortable with:</p>
 <div class="plans" role="radiogroup" aria-label="Free days plan">
 <sc-for list="{{ plans }}" as="pl"><button type="button" role="radio" aria-checked="{{ pl.on }}" class="{{ pl.cls }}" onClick="{{ pl.pick }}"><span class="pt">{{ pl.name }}<sc-if value="{{ pl.rec }}"><span class="rec">Recommended</span></sc-if></span><span class="risk" style="color: {{ pl.tone }}">{{ pl.risk }}</span><span class="pm">{{ pl.most }}</span><span class="pd">{{ pl.desc }}</span></button></sc-for>
 </div>
@@ -168,30 +166,29 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <button type="button" role="switch" aria-labelledby="l-allow" aria-checked="{{ v.allowGrants }}" class="{{ sw.allowGrants }}" onClick="{{ tg.allowGrants }}"></button>
 </div>
 <div class="set">
-<label for="lvl" class="nm"><span>Access level</span><span class="hint">What the free days unlock</span></label>
+<label for="lvl" class="nm"><span>Access level</span></label>
 <select id="lvl" class="ctl" value="{{ v.level }}" onChange="{{ on.level }}" disabled="{{ grantsOff }}">
 <option value="premium">premium</option>
 <option value="pro">pro</option>
 </select>
 </div>
 <div class="set">
-<label for="days" class="nm"><span>Max days per grant</span><span class="hint">The most one gift can be; the assistant often gives less</span></label>
+<label for="days" class="nm"><span>Max days per grant</span></label>
 <input id="days" class="{{ cls.maxDays }}" type="number" min="1" max="30" value="{{ v.maxDays }}" onChange="{{ on.maxDays }}" disabled="{{ grantsOff }}">
 <sc-if value="{{ err.maxDays }}"><p class="err">Choose 1 to 30 days.</p></sc-if>
 </div>
 <div class="set">
-<label for="per" class="nm"><span>Grants per user per 30 days</span><span class="hint">How often the same person can get free days; stops repeat asks</span></label>
+<label for="per" class="nm"><span>Grants per user per 30 days</span></label>
 <input id="per" class="{{ cls.perUser }}" type="number" min="0" max="5" value="{{ v.perUser }}" onChange="{{ on.perUser }}" disabled="{{ grantsOff }}">
 <sc-if value="{{ err.perUser }}"><p class="err">Choose 0 to 5 grants.</p></sc-if>
 </div>
 <div class="set">
-<span class="nm"><span id="l-paying">Paying users only</span><span class="hint">{{ payingHint }}</span></span>
+<span class="nm"><span id="l-paying">Paying users only</span></span>
 <button type="button" role="switch" aria-labelledby="l-paying" aria-checked="{{ v.payingOnly }}" class="{{ sw.payingOnly }}" onClick="{{ tg.payingOnly }}" disabled="{{ grantsOff }}"></button>
 </div>
 <p class="sum">{{ worst }}<sc-if value="{{ usedLine }}"> {{ usedLine }}</sc-if></p>
 
 <p class="kicker grp" style="padding-top: 22px">Always passed to a person</p>
-<p class="intro">The assistant never decides these on its own: it tells the user a teammate will reply and opens a ticket in Incoming. Keep them all on unless you have a reason.</p>
 <div class="set">
 <span class="nm"><span id="l-ref">Refund request</span></span>
 <button type="button" role="switch" aria-labelledby="l-ref" aria-checked="{{ v.hRefund }}" class="{{ sw.hRefund }}" onClick="{{ tg.hRefund }}"></button>
@@ -218,7 +215,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 </div>
 
 <p class="kicker grp" style="padding-top: 22px">Bug reports to Jira</p>
-<p class="intro">When the cause is a defect in the product, the agent writes a bug report and picks the team from the list below. {{ jiraStatus }}</p>
+<p class="intro">{{ jiraStatus }}</p>
 <div class="set">
 <span class="nm"><span id="l-jauto">Create issues automatically</span><span class="hint">Off: a person creates each issue from the ticket</span></span>
 <button type="button" role="switch" aria-labelledby="l-jauto" aria-checked="{{ v.jiraAuto }}" class="{{ sw.jiraAuto }}" onClick="{{ tg.jiraAuto }}"></button>
@@ -432,7 +429,6 @@ class Component extends DCLogic {
       teamRows: teamRows,
       addTeam: function () { putTeams(teamList.concat([{ name: '', project_key: '', handles: '', issue_type: 'Bug' }])); },
       jiraStatus: !LIVE ? 'Connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Demo mode: no issue is created.' : 'Not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
-      payingHint: LIVE ? 'Only users with a paid subscription active now' : 'Never grant to users who never paid',
       v: v, on: on, tg: tg, sw: sw, err: err, cls: cls,
       running: LIVE ? runningNow(s.llm) : 'openai · deepseek-flash',
       prov: LIVE ? {

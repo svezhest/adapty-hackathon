@@ -422,7 +422,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 <sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
 <sc-if value="{{ jiraOffer }}" hint-placeholder-val="{{ false }}"><p style="margin: 0"><button type="button" class="quiet" onClick="{{ openJira }}">Send to a team in Jira</button></p></sc-if>
 <sc-if value="{{ jiraForm }}" hint-placeholder-val="{{ false }}">
-<sc-if value="{{ jiraProposed }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; color: var(--ink-2)">The agent thinks this is a bug in the product and wrote a report for the team. Sending an answer also creates this issue.</p></sc-if>
+<sc-if value="{{ jiraProposed }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; color: var(--ink-2)">Sending an answer also creates this issue.</p></sc-if>
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <label class="field">Team<select class="inp" value="{{ jiraTeamV }}" onChange="{{ onJiraTeam }}"><sc-for list="{{ jiraTeams }}" as="o"><option>{{ o.name }}</option></sc-for></select></label>
 <label class="field">Priority<select class="inp" value="{{ jiraPriority }}" onChange="{{ onJiraPriority }}"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>

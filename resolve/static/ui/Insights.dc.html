@@ -174,7 +174,6 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <span style="font-size:14px; color: var(--ink-3); font-variant-numeric: tabular-nums">{{ triaged }} of {{ total }} tickets triaged</span>
 <sc-if value="{{ showLive }}"><span class="{{ liveCls }}" aria-live="off"><i></i>{{ liveText }}</span></sc-if>
 </div>
-<p style="margin: 0; max-width: 760px; color: var(--ink-2); font-size:14px; text-wrap: pretty">Complaints grouped by the paywall the user saw. The paywall and A/B arm come from the offline dataset, not from the live profile.</p>
 </div>
 
 <div class="two">
@@ -195,7 +194,7 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </div>
 </sc-if>
 <sc-if value="{{ noData }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; padding: 22px 0 18px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">No triaged tickets yet. Open tickets in the inbox; each open runs Level 1 triage.</p>
+<p style="margin: 0; padding: 22px 0 18px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">No triaged tickets yet.</p>
 </sc-if>
 </section>
 
@@ -284,12 +283,12 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <div class="sk" style="width: 78%; height: 16px"></div>
 <div class="sk" style="width: 60%"></div>
 <div class="sk" style="width: 84%"></div>
-<p class="muted" style="padding-top: 4px">Reading {{ triaged }} triaged tickets. The answer comes in 5–20 seconds.</p>
+<p class="muted" style="padding-top: 4px">Reading {{ triaged }} triaged tickets.</p>
 </div>
 </sc-if>
 
 <sc-if value="{{ notRun }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">Not run yet. One model call reads the aggregates and writes a single hypothesis you can test.</p>
+<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">Not run yet.</p>
 </sc-if>
 
 <sc-if value="{{ demoNoCache }}" hint-placeholder-val="{{ false }}">
@@ -309,7 +308,6 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <label for="goal" class="lbl">Goal</label>
 <textarea id="goal" class="ctl" placeholder="What the test should show" value="{{ goal }}" onChange="{{ onGoal }}"></textarea>
 </div>
-<p class="muted" style="line-height: 1.5; text-wrap: pretty">Creates a draft flow test with that placement’s flows as 50/50 arms in the subscription service. Nothing starts; no user sees it until you start it there.</p>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <button type="button" class="btn nf big" disabled="{{ cantDraft }}" title="{{ draftHint }}" onClick="{{ draft }}">
 <sc-if value="{{ creating }}"><svg class="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"></path></svg></sc-if>
@@ -653,7 +651,7 @@ class Component extends DCLogic {
       triaged: d ? d.triaged : 0, total: d ? d.total : 0,
       showLive: !API.mock || API.param('sim') === '1',
       liveCls: s.loadError ? 'live err' : 'live',
-      liveText: s.loadError ? 'Offline · ' + s.loadError : 'Live · updated ' + (secs < 1 ? 'just now' : secs + ' s ago'),
+      liveText: s.loadError ? 'Offline · ' + s.loadError : 'Live',
       hasData: !!(d && d.triaged), noData: !!(d && !d.triaged),
       cats: rows, rows: rows,
 

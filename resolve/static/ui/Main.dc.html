@@ -167,13 +167,11 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:6px;paddi
 <sc-if value="{{ emptyOpen }}" hint-placeholder-val="{{ false }}">
 <div style="padding: 80px 24px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center">
 <p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Nothing waiting.</p>
-<p style="margin: 0; color: var(--ink-3)">Level 2 is handling the chats.</p>
 </div>
 </sc-if>
 <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
 <div style="padding: 72px 24px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
 <p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">No tickets match “{{ q }}”</p>
-<p style="margin: 0; color: var(--ink-3)">Search looks in subjects, users, messages and chat text.</p>
 <button type="button" class="linkbtn" onClick="{{ clearQ }}">Clear search</button>
 </div>
 </sc-if>

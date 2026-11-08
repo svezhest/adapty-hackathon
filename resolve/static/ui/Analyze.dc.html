@@ -191,7 +191,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <div>
 <section class="card" aria-labelledby="big-h" style="padding: 22px 24px 20px; border-radius:10px">
 <div class="ch">
-<div><h2 id="big-h">{{ chartTitle }}</h2><p>Who closed each chat or ticket</p></div>
+<div><h2 id="big-h">{{ chartTitle }}</h2></div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 12px; font-size:13px; color: var(--ink-2)">
 <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
@@ -242,8 +242,8 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </div>
 <div class="cmp-head">
 <span></span>
-<span class="who"><span class="sw" style="background: var(--accent)"></span>Machines<span class="src">{{ agentReplies }} replies · from app logs</span></span>
-<span class="who"><span class="sw" style="background: var(--ink-2)"></span>Humans<span class="src">{{ peopleReplies }} replies · from Incoming</span></span>
+<span class="who"><span class="sw" style="background: var(--accent)"></span>Machines<span class="src">{{ agentReplies }} replies</span></span>
+<span class="who"><span class="sw" style="background: var(--ink-2)"></span>Humans<span class="src">{{ peopleReplies }} replies</span></span>
 </div>
 <sc-for list="{{ vs }}" as="m" hint-placeholder-count="5">
 <div class="cmp">
@@ -256,7 +256,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 
 <section class="card" aria-labelledby="log-h" style="padding: 20px 22px 8px; min-width: 0">
 <div class="ch">
-<div><h2 id="log-h">Agent replies from the app logs</h2><p>Latest lines of the FitBuddy chat log</p></div>
+<div><h2 id="log-h">Agent replies from the app logs</h2></div>
 <a href="Chat.dc.html" style="font-size:14px; font-weight: 500">Try the agent</a>
 </div>
 <div role="list" style="margin-top: 10px">
