@@ -8,11 +8,12 @@ The behaviour both agents follow, and the contract the screens and phone apps co
 2. [Level 2: first-line agent](#level-2-first-line-agent)
 3. [Level 1: triage agent](#level-1-triage-agent)
 4. [Insights](#insights)
-5. [API and data](#api-and-data)
-6. [LLM provider](#llm-provider)
-7. [Internal interfaces](#internal-interfaces)
-8. [Eval](#eval)
-9. [Brand: Company, FitBuddy and the Lumen data](#brand-company-fitbuddy-and-the-lumen-data)
+5. [Jira: bug reports to the teams](#jira-bug-reports-to-the-teams)
+6. [API and data](#api-and-data)
+7. [LLM provider](#llm-provider)
+8. [Internal interfaces](#internal-interfaces)
+9. [Eval](#eval)
+10. [Brand: Company, FitBuddy and the Lumen data](#brand-company-fitbuddy-and-the-lumen-data)
 
 ## Overview
 
@@ -116,6 +117,7 @@ ticket:
     action: grant_access(days) | reply_only | store_instructions(kind) | refund_to_human | ask_user(question) | no_reply
     reply: draft to the user
     risk: low | medium | high, one line why
+  bug_report: for the engineers, when the cause is a product defect, else null (see Jira)
 ```
 
 The support person: accept one option, edit it (reply text, days), or reject all and write their own. Only then anything runs.
@@ -237,6 +239,33 @@ Draft: `placement` must be one of `insights.PLACEMENTS` (else 422); a single-flo
 
 Screen (`resolve/static/ui/Insights.dc.html`, ported from the design hand-off, wired through `api.js`/`support.js` like the other `static/ui` screens): By category (bars), Category × product, Category × paywall seen (tested cell highlighted), Hypothesis (Run / Re-run; caveat muted under the hypothesis; the variant arm under the variant; the tickets it was read from, linked to the Ticket screen, under the evidence; a line `Generated|Updated on its own <time> · N model calls, X s.` followed by `what_changed`, or `reason` when an auto report has none; `reason` itself only while pending or updating), Draft A/B test (placement, goal prefilled from the hypothesis, drafts created). States: no triaged tickets; not run yet; running (skeleton, or the old hypothesis dimmed with "Updating · reason"); error (line under the header, the last good report stays); demo (no Run button, "No cached analysis in the snapshot" when there is none, Draft disabled with "Demo mode"); drafting; draft error (line under the button, button stays on); no drafts yet (block hidden). Live: poll every 2.5 s, "Live · updated N s ago"; changed counts tick up and their cell flashes, the highlighted cell moves to its new row, 150–340 ms. After an auto run the previous hypothesis stays under "Before". `?mock=1`: the design's sample data, no API calls; `?mock=1&state=<design state>` picks one of the nine design states (e.g. `Analysis running`, `Draft error`); `?mock=1&sim=1` adds a ticket every 3 s and replays the auto rule in the browser with a canned hypothesis (no model). Nav on every `static/ui` screen: Incoming · Chat · Agent settings · Analyze · Insights · Impact; the Screens menu lists Analyze, Insights, Impact under Numbers.
 
+## Jira: bug reports to the teams
+
+Most tickets end with an answer to the user. Some also point at a defect a team has to fix. Level 1 writes the report for those, and it goes straight to the team that fixes it, as one issue per ticket.
+
+**The agent.** `submit_ticket` has an optional `bug_report`: `{team, summary, details, priority}`. It is set when the cause is a defect in the product, and stays null for questions, refund or cancel requests, store decisions and user mistakes. The model sees the teams as `config.teams` (`name`, `handles`) and never the project keys. A team outside the list gets one correction. With no teams or no Jira settings the model is offered no team, and a report is dropped without a correction, so the replies promise nothing.
+
+**Who files it.** Three paths, one function (`jira.export`):
+
+| Path | When | `by` |
+|---|---|---|
+| The button on the ticket | The person creates it, with team, title, priority and details editable. Works on any ticket, with or without the agent's report | `person` |
+| With the reply | A reply went out on a ticket with a report, because that reply may tell the user the team has it. Closing without a reply files nothing | `person` |
+| On its own | `jira.auto_create` is on: right after triage, at most `max_auto_per_day` in 24 hours. Off by default | `agent` |
+
+**What code guarantees.**
+
+- One issue per ticket: `jira_json` on the ticket, one process-wide lock, and a `resolve-<ticket id>` label searched before each create, so a crash after the create does not file a second one.
+- A failure from Jira is recorded in `jira_error`, shown on the ticket and can be retried. It never fails the triage and never undoes a reply.
+- Email addresses are removed from everything sent. The issue carries the ticket id and `customer_user_id`.
+- The issue body is plain text nodes in Atlassian Document Format, and says that it rests on what a user wrote. A prompt injection can at worst file a wrong bug within the daily limit: an issue is the only thing this writes, and the token never reaches the model.
+- `priority` and `labels` are dropped when a project refuses them. Anything else Jira refuses is shown as it said it.
+- `JIRA_BASE_URL` must be https, except on a local address.
+
+**Settings.** `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` in `.env` (Jira Cloud, REST API v3); `RESOLVE_PUBLIC_URL` optionally adds a link back to the ticket. Teams and auto-create are in Agent settings. Demo mode makes no call and records `{demo: true}`.
+
+**Not done.** The same bug from ten users files ten issues: nothing groups them yet. Nothing reads the issue's status back, so a fixed bug does not reach the ticket or the user. Only Jira Cloud.
+
 ## API and data
 
 ### Web tabs
@@ -262,9 +291,11 @@ POST /api/tickets/{id}/triage   → runs Level 1 (cached; ?force=1 reruns)
 POST /api/tickets/{id}/accept   {option: int, edits: {reply?, days?}} → result of the action
 POST /api/tickets/{id}/reject   {note, reply?} → ticket
 POST /api/tickets/{id}/reopen   {note?} → ticket
+POST /api/tickets/{id}/jira     {team?, summary?, details?, priority?} → ticket with jira or jira_error (409 not connected, 422 no such team)
 
 GET  /api/config  /  PUT /api/config   → config (below)
 GET  /api/llm                   → provider and model in use (never key values)
+GET  /api/jira                  → {connected, site, demo} (never the token)
 GET  /api/analytics             → numbers for Analyze (below)
 GET  /api/users                 → seeded customer_user_ids with a short status, for the Chat tab and debug buttons
 GET  /healthz                   → {ok, demo}
@@ -312,7 +343,8 @@ Decisions: accept stores `decision_json = Decision.model_dump()`; reject always 
   "tools": {"grant_access": true},
   "grant": {"access_level": "premium", "max_days": 7, "max_grants_per_user_30d": 1, "require_paid": true},
   "always_handoff": ["refund", "chargeback", "threat", "asks_for_human", "profile_mismatch", "repeat_after_grant"],
-  "max_turns": 8
+  "max_turns": 8,
+  "jira": {"auto_create": false, "max_auto_per_day": 20, "teams": [{"name": "Mobile", "project_key": "APP", "handles": "crashes and screens in the apps", "issue_type": "Bug"}]}
 }
 ```
 

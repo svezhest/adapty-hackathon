@@ -10,7 +10,7 @@ from typing import Literal
 from fastapi import APIRouter, BackgroundTasks, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
-from resolve import analytics, config, db, frontline, insights, insights_live, llm, policy, triage, workflow
+from resolve import analytics, config, db, frontline, insights, insights_live, jira, llm, policy, triage, workflow
 from resolve.adapty import access_level
 from resolve.models import (
     API_STATUSES,
@@ -23,6 +23,8 @@ from resolve.models import (
     ChatSession,
     Decision,
     FeedbackCreated,
+    JiraExport,
+    JiraInfo,
     FeedbackRequest,
     Analytics,
     InsightsView,
@@ -138,6 +140,8 @@ def ticket_full(conn: db.Database, ticket: dict) -> dict:
         "decision": ticket["decision"],
         "action": ticket["action"],
         "action_error": ticket["action_error"],
+        "jira": ticket["jira"],
+        "jira_error": ticket["jira_error"],
         "conversation": conversation,
         "history": ticket["history"],
     }
@@ -246,6 +250,21 @@ def build_router(services, live: insights_live.Live | None = None, ab_runner=lam
         triage.run(services, ticket_id, force=force)
         return ticket_full(conn, ticket_or_404(ticket_id))
 
+    @router.post("/api/tickets/{ticket_id}/jira", response_model=Ticket, tags=["inbox"], responses={
+        **E404,
+        409: {"model": ErrorDetail, "description": "Jira is not connected"},
+        422: {"model": ErrorDetail, "description": "No such team, or an empty title or details"},
+    }, summary="File the bug report as one Jira issue; a failure from Jira comes back as jira_error")
+    def export_to_jira(ticket_id: str, body: JiraExport | None = None):
+        ticket_or_404(ticket_id)
+        try:
+            jira.export(services, ticket_id, "person", body)
+        except jira.NotConnected as exc:
+            raise HTTPException(409, str(exc)) from None
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from None
+        return ticket_full(conn, ticket_or_404(ticket_id))
+
     @router.post("/api/tickets/{ticket_id}/accept", response_model=Ticket, tags=["inbox"], responses={**E404, **E409, **E502})
     def accept(ticket_id: str, body: Decision):
         if ticket_or_404(ticket_id)["status"] not in ACCEPT_STATUSES:
@@ -293,6 +312,11 @@ def build_router(services, live: insights_live.Live | None = None, ab_runner=lam
             _switch_llm(services, body.llm_provider)  # 422 when that provider has no keys; nothing saved
         db.save_config(conn, body.model_dump())
         return body.model_dump()
+
+    @router.get("/api/jira", response_model=JiraInfo, tags=["settings"], summary="Whether Jira is connected (never the token)")
+    def get_jira():
+        client = services.jira
+        return {"connected": client is not None, "site": client.base_url if client else None, "demo": services.demo}
 
     @router.get("/api/llm", response_model=LlmInfo, tags=["settings"])
     def get_llm():

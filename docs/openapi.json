@@ -375,6 +375,85 @@
     }
    }
   },
+  "/api/tickets/{ticket_id}/jira": {
+   "post": {
+    "tags": [
+     "inbox"
+    ],
+    "summary": "File the bug report as one Jira issue; a failure from Jira comes back as jira_error",
+    "operationId": "export_to_jira_api_tickets__ticket_id__jira_post",
+    "parameters": [
+     {
+      "name": "ticket_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ticket Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "anyOf": [
+         {
+          "$ref": "#/components/schemas/JiraExport"
+         },
+         {
+          "type": "null"
+         }
+        ],
+        "title": "Body"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ticket"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Unknown id",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorDetail"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Jira is not connected",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "No such team, or an empty title or details",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ErrorDetail"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/api/tickets/{ticket_id}/accept": {
    "post": {
     "tags": [
@@ -671,6 +750,27 @@
        "application/json": {
         "schema": {
          "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/jira": {
+   "get": {
+    "tags": [
+     "settings"
+    ],
+    "summary": "Whether Jira is connected (never the token)",
+    "operationId": "get_jira_api_jira_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/JiraInfo"
         }
        }
       }
@@ -1113,6 +1213,9 @@
       ],
       "title": "Llm Provider",
       "default": "env"
+     },
+     "jira": {
+      "$ref": "#/components/schemas/JiraConfig"
      }
     },
     "type": "object",
@@ -1239,6 +1342,45 @@
      "agent_log"
     ],
     "title": "Analytics"
+   },
+   "BugReport": {
+    "properties": {
+     "team": {
+      "type": "string",
+      "title": "Team",
+      "description": "The team from config.teams whose `handles` fits"
+     },
+     "summary": {
+      "type": "string",
+      "maxLength": 200,
+      "title": "Summary",
+      "description": "What breaks, one line an engineer understands"
+     },
+     "details": {
+      "type": "string",
+      "maxLength": 4000,
+      "title": "Details",
+      "description": "Where it breaks, the version and device if given, what the user did, expected and actual. No names or emails."
+     },
+     "priority": {
+      "type": "string",
+      "enum": [
+       "high",
+       "medium",
+       "low"
+      ],
+      "title": "Priority",
+      "description": "high: paying users lose what they paid for or the app is unusable; medium: a feature is broken; low: cosmetic"
+     }
+    },
+    "type": "object",
+    "required": [
+     "team",
+     "summary",
+     "details",
+     "priority"
+    ],
+    "title": "BugReport"
    },
    "ChatCounts": {
     "properties": {
@@ -1495,6 +1637,17 @@
      },
      "edits": {
       "$ref": "#/components/schemas/OptionEdits"
+     },
+     "jira": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/JiraExport"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "The person's edits of the bug report, filed with this reply; not part of the stored decision"
      },
      "expected_action": {
       "anyOf": [
@@ -2421,6 +2574,222 @@
     ],
     "title": "InsightsView"
    },
+   "JiraConfig": {
+    "properties": {
+     "auto_create": {
+      "type": "boolean",
+      "title": "Auto Create",
+      "description": "The agent files its bug reports on its own; off = a person's click",
+      "default": false
+     },
+     "max_auto_per_day": {
+      "type": "integer",
+      "maximum": 500.0,
+      "minimum": 0.0,
+      "title": "Max Auto Per Day",
+      "description": "The most issues the agent files on its own in 24 hours",
+      "default": 20
+     },
+     "teams": {
+      "items": {
+       "$ref": "#/components/schemas/JiraTeam"
+      },
+      "type": "array",
+      "title": "Teams"
+     }
+    },
+    "type": "object",
+    "title": "JiraConfig"
+   },
+   "JiraExport": {
+    "properties": {
+     "team": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Team"
+     },
+     "summary": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 255
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Summary"
+     },
+     "details": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 8000
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Details"
+     },
+     "priority": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "high",
+         "medium",
+         "low"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     }
+    },
+    "type": "object",
+    "title": "JiraExport",
+    "description": "What the support person may change before creating the issue. None keeps the agent's value."
+   },
+   "JiraInfo": {
+    "properties": {
+     "connected": {
+      "type": "boolean",
+      "title": "Connected",
+      "description": "JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN are all set"
+     },
+     "site": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Site"
+     },
+     "demo": {
+      "type": "boolean",
+      "title": "Demo"
+     }
+    },
+    "type": "object",
+    "required": [
+     "connected",
+     "demo"
+    ],
+    "title": "JiraInfo"
+   },
+   "JiraLink": {
+    "properties": {
+     "team": {
+      "type": "string",
+      "title": "Team"
+     },
+     "project_key": {
+      "type": "string",
+      "title": "Project Key"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "by": {
+      "type": "string",
+      "enum": [
+       "agent",
+       "person"
+      ],
+      "title": "By"
+     },
+     "created_at": {
+      "type": "string",
+      "title": "Created At"
+     },
+     "key": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Key",
+      "description": "Null in demo mode: no issue was created"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "demo": {
+      "type": "boolean",
+      "title": "Demo",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "team",
+     "project_key",
+     "title",
+     "by",
+     "created_at"
+    ],
+    "title": "JiraLink"
+   },
+   "JiraTeam": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "project_key": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]+$",
+      "title": "Project Key",
+      "description": "The Jira project this team works in, e.g. FIT"
+     },
+     "handles": {
+      "type": "string",
+      "maxLength": 300,
+      "title": "Handles",
+      "description": "What this team fixes: the agent routes by it",
+      "default": ""
+     },
+     "issue_type": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Issue Type",
+      "description": "The issue type in that project",
+      "default": "Bug"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "project_key"
+    ],
+    "title": "JiraTeam"
+   },
    "Level2Stats": {
     "properties": {
      "sessions": {
@@ -3284,6 +3653,29 @@
       ],
       "title": "Action Error"
      },
+     "jira": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/JiraLink"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "The Jira issue filed for this ticket"
+     },
+     "jira_error": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Jira Error",
+      "description": "Why the last export failed"
+     },
      "conversation": {
       "anyOf": [
        {
@@ -3773,6 +4165,17 @@
       "minItems": 1,
       "title": "Options",
       "description": "Ranked, best first"
+     },
+     "bug_report": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/BugReport"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "For the engineering team, when the cause is a defect in the product; null otherwise"
      },
      "user_language": {
       "anyOf": [

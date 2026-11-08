@@ -12,6 +12,7 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 | `resolve/adapty.py` | The only client of the Adapty server-side API: `get_profile`, `grant_access_level`, `update_profile`, `update_email`, `compensation_expiry` |
 | `resolve/llm.py`, `llm_openai.py`, `llm_anthropic.py`, `llm_schema.py` | `LLM.step(system, messages, tools) -> Step`; providers only translate formats; strict tool schemas from pydantic; `FakeLLM` for tests |
 | `resolve/models.py` | Shared contract: AgentConfig, TriageTicket, Decision, ChatResult, API response models |
+| `resolve/jira.py` | The only client of Jira Cloud; `export`: one issue per ticket |
 | `resolve/policy.py` | Grant limits as pure code (`check_grant`), config loading |
 | `resolve/actions.py` | `execute(...)`: the only place an action writes to Adapty; grants recorded in `grants` |
 | `resolve/frontline.py` | Level 2 chat loop: enabled tools only, every call checked and logged, handoff in code after a blocked grant, after-handoff mode, `cancel_handoff` |
@@ -38,11 +39,11 @@ python scripts/eval.py --yes [--l2]      # paid: ask the owner first
 ## Hard limits (do not relax)
 
 - Adapty writes allowed: `grantAccessLevel` and `updateProfile` on seeded demo users only (and `createProfile` / `setTransaction` only through `scripts/seed_demo_profiles.py` into a teammate's own app). Never Adapty Mail, placements, A/B start/stop.
-- Level 2 may grant on its own only within the config limits, checked in code (`policy.check_grant`). Everything else that writes runs on a person's click in Level 1.
+- Level 2 may grant on its own only within the config limits, checked in code (`policy.check_grant`). Everything else that writes runs on a person's click in Level 1. The one exception the owner can switch on: Level 1 filing its own bug reports in Jira, capped per day (`jira.auto_create`).
 - Refunds are never done by an agent: only the store refunds; Level 2 hands off, Level 1 offers `refund_to_human`.
 - LLM calls cost money: no batch runs, no eval without asking the owner. Model calls per ticket and per chat message are capped in code.
 - No real end-user data: tickets and chats are synthetic; App Store reviews are never ticket text.
-- Nothing sends email or messages anywhere; "sent" is a status.
+- Nothing sends email or messages to users; "sent" is a status. The only outbound message is a Jira issue to the app's own teams (`resolve/jira.py`), with email addresses removed.
 - `.env` is git-ignored. Never print, log or commit any key.
 
 ## Conventions

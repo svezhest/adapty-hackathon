@@ -21,7 +21,7 @@ from datetime import datetime, timedelta, timezone
 import pydantic
 from pydantic import BaseModel
 
-from resolve import config, db, insights, llm, models, policy
+from resolve import config, db, insights, jira, llm, models, policy
 from resolve.adapty import AdaptyError, access_level, compensation_expiry, format_datetime, is_active, parse_datetime
 from resolve.tickets import CATEGORIES, CATEGORY_MEANING
 from resolve.support_craft import REPLY_CRAFT
@@ -302,6 +302,8 @@ The diagnosis, in the order of the ticket's fields:
 {CATEGORY_LINES}
 The category names what went wrong, not what the user asks for: a trial that converted without the user expecting it stays charged_after_trial when they demand their money back; refund_request is a purchase that went as the user expected and they want out. When two issues are in one ticket, the category follows the one that needs the lead's decision; root_cause and the replies cover both.
 
+6. bug_report, for the engineers, apart from the answer to the user: when the cause you found is a defect in the product that a team can fix (a crash, a screen showing the wrong state, a restore or purchase flow that fails while the facts show a valid purchase, a wrong price or text in the app). A crash the user reports counts, as "user reports". The team is the entry of config.teams whose handles fits. Write the details so an engineer can reproduce it without the ticket: where it breaks, the version and device if the user gave them, what the user did, expected and actual; customer_user_id is attached for you, so names and emails stay out. It stays null for a question, a refund or cancel request, a store or billing decision, a user's mistake, and whenever config.teams is empty.
+
 The options: 2 or 3, ranked, the one you would send first. Each is a different strategy a demanding lead would defend for this very user: fix the cause (the store path, sign in to the right account, the exact reason for a charge), make it right (free days for a paying user who was blocked or misled), keep the user (the paid period they keep, a plan from the list that fits, said without pressure), let them go cleanly (cancel or refund path), or learn the one missing fact (ask_user). A third option earns its place only as a real alternative: two strong options beat three with a filler. Each option:
 - action and params (null for fields that do not apply):
   - grant_access: params.days of premium, added after the current expiry (free_days.would_run_to).
@@ -322,6 +324,7 @@ The replies (the lead sends them under their own name):
 - You write as the person from the {app_name} support team. In a handed-off chat your reply is the next message after the assistant's: the user has read the assistant, so build on it instead of repeating it, and correct it where it was wrong. The user is already talking to the teammate (you), so no reply announces a teammate.
 - Short: a chat reply in 25 to 60 words, an email or form reply in 40 to 90. The answer first, one or two facts from the account, the next step, then one question only if it moves the case forward.
 - Honest: every statement is backed by the facts; a claim we cannot see is "I can't see X on your account", not a guess. A reply promises only what accepting its option does: grant_access adds the days on accept (say the date from free_days.would_run_to); the other options add nothing, refund nothing and log nothing, so their replies say what the user can do and what we will do once they answer.
+- With a bug_report, a reply may say the team has the report: sending the reply files it. It gives no date for a fix.
 - Store steps: quote the path from store_steps for the user's store.
 - The reply tells the user what they get and what they can do; the reasoning behind an option (a limit on free days, an earlier grant) is for the lead, in risk_reason.
 - Language: write every reply in the user's language and script (user_language), with its English translation in reply_en; translate every numbered message into messages_en. Translate faithfully, sentence by sentence: add no promise or fact, drop nothing, keep amounts, dates and product names exactly. Everything else (summary, root_cause, evidence, risk_reason, params.question) is always in English, whatever the user's language; the config's tone is about style, never the language. For an English user: user_language English, messages_en and reply_en null.
@@ -490,6 +493,7 @@ def config_facts(cfg: models.AgentConfig) -> dict:
         "grants": f"up to {g.max_days} days of {g.access_level}, at most {g.max_grants_per_user_30d} per user per 30 days" + (", only users with a paid subscription active now (not past payers, not free trials)" if g.require_paid else ""),
         "always_to_a_human": list(cfg.always_handoff),
         "tone": cfg.tone,
+        "teams": [{"name": t.name, "handles": t.handles} for t in cfg.jira.teams],
     }
 
 
@@ -513,6 +517,8 @@ def prefetch(services, ticket: dict, allowed: set[str], profiles: dict[str, dict
         facts["profile"] = {"error": error} if error else model_profile(profiles[cid], now, cfg, grants_30d(services.conn, cid, now))
         facts["history"] = user_history(services.conn, cid, ticket["id"], ticket.get("session_id"))
     facts["config"] = config_facts(cfg)
+    if services.jira is None and not services.demo:
+        facts["config"]["teams"] = []  # nowhere to send a report: the replies must not promise one
     return facts
 
 
@@ -588,6 +594,8 @@ def check_ticket(
     now = now or datetime.now(timezone.utc)
     if t.customer_user_id is not None and t.customer_user_id not in allowed:
         return "customer_user_id must be the ticket's customer or one returned by find_user_by_email, or null"
+    if t.bug_report and t.bug_report.team not in [team.name for team in cfg.jira.teams]:
+        return f"bug_report.team must be one of {[team.name for team in cfg.jira.teams]}"
     actions = [o.action for o in t.options]
     for i, a in enumerate(actions):
         if a in actions[:i]:
@@ -736,6 +744,8 @@ def run(services, ticket_id: str, force: bool = False) -> dict:
                     cid = submitted.customer_user_id
                     grants = grants_30d(conn, cid, now) if cid else []
                     submitted = demote_blocked_grants(submitted, profiles.get(cid) if cid else None, cfg, grants, now)
+                    if not cfg.jira.teams or services.jira is None:
+                        submitted.bug_report = None  # nowhere to send it: nothing to correct
                     problem = check_ticket(submitted, allowed, profiles, cfg, grants, now)
                     style = style_problems(submitted)
                     if problem is None:
@@ -746,7 +756,9 @@ def run(services, ticket_id: str, force: bool = False) -> dict:
                 except ValueError as exc:
                     problem = str(exc)
                 if problem is None and (not style or corrections):
-                    return _store(conn, ticket, submitted, profiles)
+                    _store(conn, ticket, submitted, profiles)
+                    jira.auto_export(services, ticket_id)
+                    return db.get_ticket(conn, ticket_id)
                 log.warning("ticket %s: submit_ticket rejected: %s", ticket_id, "; ".join(filter(None, [problem, *style])))
                 if unparsed and not json_retried:
                     json_retried = True

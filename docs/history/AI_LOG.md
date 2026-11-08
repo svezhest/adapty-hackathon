@@ -57,6 +57,7 @@ How AI was used to build Resolve, what it got wrong, and how we caught it. Appen
 | Sun, repo traces | Claude Code | Collecting the plans and rules into the repo (`PLAN.md`, `CLAUDE.md`, `docs/plans/`), no chat transcripts | - | Owner chose what counts as a trace |
 | Sun, Insights check | Claude Code | Fix "no valid insight" on Hypothesis | The check rejected any cited cell larger than the main one, while the prompt tells the model to test on a cell a paywall can move and name larger unfixable ones | Owner hit the error on the live screen; a larger cell a paywall cannot move may now be cited |
 | After the event, fork cleanup | Claude Code | Remove the old UIs, rebuild the docs, take screenshots | Deleting `ui-alex` as fully replaced would have lost one control: comparing it with the new screens found the Run triage button missing, so it was ported first | Compared the two UIs before deleting and clicked the new button on an untriaged ticket |
+| After the event, Jira | Claude Code | Bug reports from Level 1 to the teams in Jira | With the first version the agent's replies said the team had the report while the issue waited for a click, so sending a reply now files it, and without Jira the model is offered no team | Ran the real model on 8 tickets against a local stand-in checked against Jira's published schema; clicked through the screens; 4 clicks at once filed one issue |
 
 ## Prompts that worked
 

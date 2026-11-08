@@ -103,7 +103,7 @@ def test_strict_schema_triage_ticket():
     schema = strict_schema(TriageTicket)
     assert "$ref" not in json.dumps(schema) and "$defs" not in schema
     objects = [n for n in walk(schema) if n.get("type") == "object"]
-    assert len(objects) == 3  # ticket, option, option params
+    assert len(objects) == 4  # ticket, option, option params, bug report
     for obj in objects:
         assert obj["additionalProperties"] is False
         assert obj["required"] == list(obj["properties"])

@@ -10,7 +10,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from resolve.models import Health
-from resolve import api, config, db, insights, llm
+from resolve import api, config, db, insights, jira, llm
 from resolve.adapty import Client
 from resolve.workflow import Services
 
@@ -24,11 +24,12 @@ def create_app(
     llm_client: llm.LLM | None = None,
     seed_file: Path = config.ROOT / "data" / "tickets.json",
     ab_runner: insights.Runner | None = None,
+    jira_client: jira.Client | None = None,
 ) -> FastAPI:
     conn = db.connect(db_path)
     if seed_file.exists():
         db.seed(conn, seed_file)
-    services = Services(conn=conn, demo=demo, adapty=adapty_client, llm=llm_client)
+    services = Services(conn=conn, demo=demo, adapty=adapty_client, llm=llm_client, jira=jira_client)
 
     app = FastAPI(title="Resolve")
     app.state.services = services
@@ -54,7 +55,7 @@ def create_app(
     return app
 
 
-def build_services_from_env() -> tuple[Path, bool, Client | None, llm.LLM | None, insights.Runner | None]:
+def build_services_from_env() -> tuple[Path, bool, Client | None, llm.LLM | None, insights.Runner | None, jira.Client | None]:
     """What `python -m resolve` wires up: the snapshot copy in demo mode, the real clients otherwise."""
     if config.DEMO_MODE:
         runtime = config.ROOT / "data" / "demo-run.sqlite"
@@ -62,11 +63,11 @@ def build_services_from_env() -> tuple[Path, bool, Client | None, llm.LLM | None
         for suffix in ("", "-wal", "-shm"):
             Path(str(runtime) + suffix).unlink(missing_ok=True)
         shutil.copyfile(config.DEMO_DB_PATH, runtime)
-        return runtime, True, None, None, None
+        return runtime, True, None, None, None, None
     adapty_client = Client(config.adapty_secret())
     llm_client = None
     try:
         llm_client = llm.make_llm()
     except config.MissingKey as exc:
         print(f"warning: {exc}; Level 1 triage, Level 2 chat and insights are disabled")
-    return config.DB_PATH, False, adapty_client, llm_client, insights.Runner()
+    return config.DB_PATH, False, adapty_client, llm_client, insights.Runner(), jira.client_from_env()

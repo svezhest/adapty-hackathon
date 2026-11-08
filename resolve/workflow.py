@@ -16,8 +16,9 @@ import json
 import re
 from dataclasses import dataclass
 
-from resolve import actions, db, llm, policy, triage
+from resolve import actions, db, jira, llm, policy, triage
 from resolve.adapty import AdaptyError, Client
+from resolve.jira import Client as JiraClient
 from resolve.llm import LLM
 from resolve.models import Decision, Rejection
 
@@ -30,6 +31,7 @@ class Services:
     demo: bool
     adapty: Client | None = None
     llm: LLM | None = None
+    jira: JiraClient | None = None
 
 
 class OptionsChanged(Exception):
@@ -185,6 +187,8 @@ def accept(services: Services, ticket_id: str, decision: Decision) -> dict:
         fields["reply_sent_at"] = db.now_iso()
         _post_reply(services, ticket, final["reply"])
     db.update_ticket(services.conn, ticket_id, **fields)
+    if final["action"] != "no_reply" and final["reply"].strip():
+        jira.export_with_reply(services, ticket_id, decision.jira)
     return _ticket(services, ticket_id)
 
 

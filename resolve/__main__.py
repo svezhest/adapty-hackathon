@@ -15,8 +15,8 @@ def main() -> None:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
-    db_path, demo, adapty_client, llm_client, runner = build_services_from_env()
-    app = create_app(db_path, demo, adapty_client, llm_client, ab_runner=runner)
+    db_path, demo, adapty_client, llm_client, runner, jira_client = build_services_from_env()
+    app = create_app(db_path, demo, adapty_client, llm_client, ab_runner=runner, jira_client=jira_client)
     model = f"{llm_client.provider} {llm_client.model}" if llm_client else "none"
     mode = "DEMO MODE (snapshot, no keys)" if demo else f"live · Adapty app {config.APP_ID} · model {model}"
     print(f"Resolve on http://{args.host}:{args.port} · {mode}")

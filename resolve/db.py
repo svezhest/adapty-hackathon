@@ -110,6 +110,8 @@ TICKET_COLUMNS_V2 = {
     "triage_at": "TEXT",
     "triage_error": "TEXT",
     "decision_json": "TEXT",
+    "jira_json": "TEXT",  # the Jira issue filed for the ticket
+    "jira_error": "TEXT",
     "history_json": "TEXT",  # earlier closes of a reopened ticket: [{at, from_status, decision, action, note}]
 }
 
@@ -208,12 +210,22 @@ def _row(row: sqlite3.Row | None) -> dict | None:
     ticket["action"] = json.loads(ticket["action_json"]) if ticket["action_json"] else None
     ticket["triage"] = json.loads(ticket["triage_json"]) if ticket.get("triage_json") else None
     ticket["decision"] = json.loads(ticket["decision_json"]) if ticket.get("decision_json") else None
+    ticket["jira"] = json.loads(ticket["jira_json"]) if ticket.get("jira_json") else None
     ticket["history"] = json.loads(ticket["history_json"]) if ticket.get("history_json") else []
     return ticket
 
 
 def get_ticket(conn: Database, ticket_id: str) -> dict | None:
     return _row(conn.execute("SELECT * FROM tickets WHERE id = ?", (ticket_id,)).fetchone())
+
+
+def count_agent_jira(conn: Database, since: str) -> int:
+    """Issues the agent filed on its own since `since`: the daily limit of auto-create."""
+    row = conn.execute(
+        "SELECT COUNT(*) FROM tickets WHERE json_extract(jira_json, '$.by') = 'agent' AND json_extract(jira_json, '$.created_at') >= ?",
+        (since,),
+    ).fetchone()
+    return row[0]
 
 
 def list_tickets(conn: Database, status: str | None = None) -> list[dict]:
@@ -237,7 +249,7 @@ def update_ticket(conn: Database, ticket_id: str, only_status: tuple[str, ...] |
     unknown = set(fields) - set(TICKET_COLUMNS)
     if unknown:
         raise ValueError(f"unknown ticket columns: {sorted(unknown)}")
-    for key in ("profile", "proposal", "action", "context", "triage", "decision", "history"):
+    for key in ("profile", "proposal", "action", "context", "triage", "decision", "history", "jira"):
         if key in fields:
             raise ValueError(f"pass {key}_json, not {key}")
     fields["updated_at"] = now_iso()

@@ -226,6 +226,28 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <span class="nm"><span id="l-rp">Repeat complaint after a grant</span></span>
 <button type="button" role="switch" aria-labelledby="l-rp" aria-checked="{{ v.hRepeat }}" class="{{ sw.hRepeat }}" onClick="{{ tg.hRepeat }}"></button>
 </div>
+
+<p class="kicker grp" style="padding-top: 22px">Bug reports to Jira</p>
+<p class="intro">When the cause is a defect in the product, the agent writes a bug report and picks the team from the list below. {{ jiraStatus }}</p>
+<div class="set">
+<span class="nm"><span id="l-jauto">Create issues automatically</span><span class="hint">Off: a person creates each issue from the ticket</span></span>
+<button type="button" role="switch" aria-labelledby="l-jauto" aria-checked="{{ v.jiraAuto }}" class="{{ sw.jiraAuto }}" onClick="{{ tg.jiraAuto }}"></button>
+</div>
+<div class="set">
+<label for="jmax" class="nm"><span>Most automatic issues a day</span><span class="hint">Then new reports wait for a person</span></label>
+<input id="jmax" class="{{ cls.jiraMax }}" type="number" min="0" max="500" value="{{ v.jiraMax }}" onChange="{{ on.jiraMax }}">
+<sc-if value="{{ err.jiraMax }}"><p class="err">From 0 to 500.</p></sc-if>
+</div>
+<sc-for list="{{ teamRows }}" as="t">
+<div class="set" style="align-items: flex-end">
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 1 1 130px; font-size: 13px; color: #6b6b75">Team<input class="ctl" type="text" value="{{ t.name }}" onChange="{{ t.onName }}" style="width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 0 1 110px; font-size: 13px; color: #6b6b75">Project key<input class="ctl" type="text" value="{{ t.project_key }}" onChange="{{ t.onKey }}" style="width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 3 1 280px; font-size: 13px; color: #6b6b75">What it fixes<input class="ctl" type="text" value="{{ t.handles }}" onChange="{{ t.onHandles }}" style="width: 100%"></label>
+<button type="button" onClick="{{ t.remove }}" style="height: 34px; padding: 0 4px; border: 0; background: none; color: #6b6b75; font-size: 13.5px; cursor: pointer; text-decoration: underline">Remove</button>
+</div>
+</sc-for>
+<sc-if value="{{ err.jiraTeams }}"><p class="err" style="padding: 8px 24px 0">Each team needs its own name and a project key in capitals, such as FIT.</p></sc-if>
+<div class="set"><button type="button" onClick="{{ addTeam }}" style="padding: 0; border: 0; background: none; color: #5b3cf0; font-size: 14px; font-weight: 500; cursor: pointer">Add a team</button></div>
 </section>
 
 <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}">
@@ -245,10 +267,12 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 var SAVED = {
   provider: 'env', appName: 'FitBuddy', tone: 'Friendly', maxMessages: 20,
   allowGrants: true, level: 'premium', maxDays: 7, perUser: 1, payingOnly: true,
-  hRefund: true, hChargeback: true, hThreat: true, hHuman: true, hMismatch: true, hRepeat: true
+  hRefund: true, hChargeback: true, hThreat: true, hHuman: true, hMismatch: true, hRepeat: true,
+  jiraAuto: false, jiraMax: 20,
+  jiraTeams: JSON.stringify([{ name: 'Mobile', project_key: 'APP', handles: 'crashes and screens in the app', issue_type: 'Bug' }, { name: 'Payments', project_key: 'PAY', handles: 'purchases, restore, access after payment', issue_type: 'Bug' }])
 };
-var TEXT = ['provider', 'appName', 'tone', 'maxMessages', 'level', 'maxDays', 'perUser'];
-var BOOL = ['allowGrants', 'payingOnly', 'hRefund', 'hChargeback', 'hThreat', 'hHuman', 'hMismatch', 'hRepeat'];
+var TEXT = ['provider', 'appName', 'tone', 'maxMessages', 'level', 'maxDays', 'perUser', 'jiraMax'];
+var BOOL = ['allowGrants', 'payingOnly', 'hRefund', 'hChargeback', 'hThreat', 'hHuman', 'hMismatch', 'hRepeat', 'jiraAuto'];
 function inRange(x, a, b) { var n = Number(x); return String(x).trim() !== '' && n >= a && n <= b && Math.floor(n) === n; }
 
 // --- live mode (no ?mock=1): GET/PUT /api/config (AgentConfig) and GET /api/llm ---
@@ -261,9 +285,10 @@ var RULES = [['hRefund', 'refund'], ['hChargeback', 'chargeback'], ['hThreat', '
 var BLANK = {
   provider: '', appName: '', tone: '', maxMessages: '',
   allowGrants: false, level: '', maxDays: '', perUser: '', payingOnly: false,
-  hRefund: false, hChargeback: false, hThreat: false, hHuman: false, hMismatch: false, hRepeat: false
+  hRefund: false, hChargeback: false, hThreat: false, hHuman: false, hMismatch: false, hRepeat: false,
+  jiraAuto: false, jiraMax: '', jiraTeams: '[]'
 };
-var NO_ERR = { appName: false, maxMessages: false, maxDays: false, perUser: false };
+var NO_ERR = { appName: false, maxMessages: false, maxDays: false, perUser: false, jiraMax: false, jiraTeams: false };
 
 function toneKey(tone) {
   var t = String(tone || '').trim().toLowerCase();
@@ -273,7 +298,8 @@ function fromApi(c) {
   var v = {
     provider: c.llm_provider, appName: c.app_name, tone: toneKey(c.tone), maxMessages: c.max_turns,
     allowGrants: !!(c.tools || {}).grant_access, level: c.grant.access_level, maxDays: c.grant.max_days,
-    perUser: c.grant.max_grants_per_user_30d, payingOnly: !!c.grant.require_paid
+    perUser: c.grant.max_grants_per_user_30d, payingOnly: !!c.grant.require_paid,
+    jiraAuto: !!c.jira.auto_create, jiraMax: c.jira.max_auto_per_day, jiraTeams: JSON.stringify(c.jira.teams)
   };
   RULES.forEach(function (r) { v[r[0]] = c.always_handoff.indexOf(r[1]) >= 0; });
   return v;
@@ -287,7 +313,8 @@ function toApi(v, raw) {
     grant: Object.assign({}, raw.grant, { access_level: v.level, max_days: Number(v.maxDays), max_grants_per_user_30d: Number(v.perUser), require_paid: !!v.payingOnly }),
     always_handoff: RULES.filter(function (r) { return v[r[0]]; }).map(function (r) { return r[1]; }),
     max_turns: Number(v.maxMessages),
-    llm_provider: v.provider
+    llm_provider: v.provider,
+    jira: { auto_create: !!v.jiraAuto, max_auto_per_day: Number(v.jiraMax), teams: JSON.parse(v.jiraTeams) }
   });
 }
 // Ready-made limits for free days, from the safest to the most generous. Risk = how many free days one person can get a month.
@@ -325,6 +352,7 @@ class Component extends DCLogic {
       self.setState({ failText: 'Could not load the settings: ' + err.message });
     });
     this.loadLlm();
+    API.get('/api/jira').then(function (j) { self.setState({ jiraInfo: j }); }, function () {});
     API.get('/api/analytics?range=30d').then(function (a) { self.setState({ used: a.period.current.grants }); }, function () {});
   }
   loadLlm() {
@@ -367,13 +395,28 @@ class Component extends DCLogic {
       appName: !String(v.appName).trim(),
       maxMessages: !inRange(v.maxMessages, 5, 50),
       maxDays: !inRange(v.maxDays, 1, 30),
-      perUser: !inRange(v.perUser, 0, 5)
+      perUser: !inRange(v.perUser, 0, 5),
+      jiraMax: !inRange(v.jiraMax, 0, 500),
+      jiraTeams: (function () {
+        var rows = JSON.parse(v.jiraTeams);
+        var names = rows.map(function (t) { return t.name.trim(); });
+        return rows.some(function (t, i) { return !names[i] || names.indexOf(names[i]) !== i || !/^[A-Z][A-Z0-9_]+$/.test(t.project_key); });
+      })()
     };
+    var teamList = JSON.parse(v.jiraTeams);
+    var putTeams = function (rows) { set('jiraTeams', JSON.stringify(rows)); };
+    var teamRows = teamList.map(function (t, i) {
+      var edit = function (k) { return function (e) { var rows = teamList.slice(); rows[i] = Object.assign({}, t); rows[i][k] = k === 'project_key' ? e.target.value.toUpperCase() : e.target.value; putTeams(rows); }; };
+      return { name: t.name, project_key: t.project_key, handles: t.handles, onName: edit('name'), onKey: edit('project_key'), onHandles: edit('handles'),
+        remove: function () { putTeams(teamList.filter(function (_, n) { return n !== i; })); } };
+    });
+    var ji = s.jiraInfo;
     var cls = {
       appName: err.appName ? 'ctl bad' : 'ctl',
       maxMessages: err.maxMessages ? 'ctl num bad' : 'ctl num',
       maxDays: err.maxDays ? 'ctl num bad' : 'ctl num',
-      perUser: err.perUser ? 'ctl num bad' : 'ctl num'
+      perUser: err.perUser ? 'ctl num bad' : 'ctl num',
+      jiraMax: err.jiraMax ? 'ctl num bad' : 'ctl num'
     };
     var dirty = Object.keys(SAVED).some(function (k) { return String(v[k]) !== String(saved[k]); });
     var menu = !!s.menu;
@@ -396,6 +439,9 @@ class Component extends DCLogic {
     var usedLine = used ? 'Given in the last 30 days: ' + used.count + ' time' + (used.count === 1 ? '' : 's') + ', ' + used.days + ' day' + (used.days === 1 ? '' : 's') + ' in total.' : '';
     return {
       plans: plans, worst: worst, usedLine: usedLine,
+      teamRows: teamRows,
+      addTeam: function () { putTeams(teamList.concat([{ name: '', project_key: '', handles: '', issue_type: 'Bug' }])); },
+      jiraStatus: !LIVE ? 'Connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Demo mode: no issue is created.' : 'Not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
       payingHint: LIVE ? 'Only users with a paid subscription active now' : 'Never grant to users who never paid',
       v: v, on: on, tg: tg, sw: sw, err: err, cls: cls,
       running: LIVE ? runningNow(s.llm) : 'openai · deepseek-flash',
@@ -409,7 +455,7 @@ class Component extends DCLogic {
       toneCustomText: raw.length > 40 ? raw.slice(0, 39) + '…' : raw,
       grantsOff: !v.allowGrants,
       dirty: dirty,
-      invalid: err.appName || err.maxMessages || err.maxDays || err.perUser || (LIVE && (!s.loaded || !!s.saving)),
+      invalid: err.appName || err.maxMessages || err.maxDays || err.perUser || err.jiraMax || err.jiraTeams || (LIVE && (!s.loaded || !!s.saving)),
       discard: function () { self.setState(LIVE ? { v: saved, provErr: '', failText: '' } : { v: saved }); },
       save: LIVE ? function () { self.saveLive(); } : function () {
         self.setState({ saved: v, toast: true });

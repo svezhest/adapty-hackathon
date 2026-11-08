@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from resolve.insights import PLACEMENT_IDS
 from resolve.tickets import CATEGORIES
@@ -37,6 +37,27 @@ class GrantLimits(BaseModel):
     require_paid: bool = True
 
 
+class JiraTeam(BaseModel):
+    name: str = Field(min_length=1, max_length=40)
+    project_key: str = Field(pattern=r"^[A-Z][A-Z0-9_]+$", description="The Jira project this team works in, e.g. FIT")
+    handles: str = Field("", max_length=300, description="What this team fixes: the agent routes by it")
+    issue_type: str = Field("Bug", min_length=1, description="The issue type in that project")
+
+
+class JiraConfig(BaseModel):
+    auto_create: bool = Field(False, description="The agent files its bug reports on its own; off = a person's click")
+    max_auto_per_day: int = Field(20, ge=0, le=500, description="The most issues the agent files on its own in 24 hours")
+    teams: list[JiraTeam] = Field(default_factory=list)
+
+    @field_validator("teams")
+    @classmethod
+    def unique_names(cls, teams: list[JiraTeam]) -> list[JiraTeam]:
+        names = [t.name for t in teams]
+        if len(set(names)) != len(names):
+            raise ValueError("team names must be different")
+        return teams
+
+
 class AgentConfig(BaseModel):
     app_name: str = "FitBuddy"
     tone: str = "warm, short, plain English"
@@ -46,6 +67,7 @@ class AgentConfig(BaseModel):
     max_turns: int = Field(8, ge=1, le=50)
     # Which LLM runs both agents: env = LLM_PROVIDER from .env (auto picks the one with keys).
     llm_provider: Literal["env", "openai", "anthropic"] = "env"
+    jira: JiraConfig = Field(default_factory=JiraConfig)
 
 
 # --- Level 1 ticket ------------------------------------------------------------------------------
@@ -69,6 +91,13 @@ class TriageOption(BaseModel):
     reply_en: str | None = Field(None, description="Faithful English translation of reply for the support person. Null when user_language is English.")
 
 
+class BugReport(BaseModel):
+    team: str = Field(description="The team from config.teams whose `handles` fits")
+    summary: str = Field(max_length=200, description="What breaks, one line an engineer understands")
+    details: str = Field(max_length=4000, description="Where it breaks, the version and device if given, what the user did, expected and actual. No names or emails.")
+    priority: Literal["high", "medium", "low"] = Field(description="high: paying users lose what they paid for or the app is unusable; medium: a feature is broken; low: cosmetic")
+
+
 class TriageTicket(BaseModel):
     """The arguments of the `submit_ticket` tool: what Level 1 hands to the support person."""
 
@@ -80,6 +109,7 @@ class TriageTicket(BaseModel):
     root_cause: str = Field(description="One sentence hypothesis of why this happened")
     confidence: float = Field(ge=0, le=1)
     options: list[TriageOption] = Field(min_length=2, max_length=3, description="Ranked, best first")
+    bug_report: BugReport | None = Field(None, description="For the engineering team, when the cause is a defect in the product; null otherwise")
     user_language: str | None = Field(None, description="The language the user writes in, as an English name (Russian, Spanish, Serbian (Latin)); English for English users. Mixed: the language of most of their latest message.")
     messages_en: list[str] | None = Field(None, description="Faithful English translation of each numbered message [1], [2], ... in order, one entry each. Null when user_language is English.")
 
@@ -96,9 +126,19 @@ class OptionEdits(BaseModel):
     question: str | None = None
 
 
+class JiraExport(BaseModel):
+    """What the support person may change before creating the issue. None keeps the agent's value."""
+
+    team: str | None = None
+    summary: str | None = Field(None, max_length=255)
+    details: str | None = Field(None, max_length=8000)
+    priority: Literal["high", "medium", "low"] | None = None
+
+
 class Decision(BaseModel):
     option: int = Field(ge=0, le=2)
     edits: OptionEdits = Field(default_factory=OptionEdits)
+    jira: JiraExport | None = Field(None, exclude=True, description="The person's edits of the bug report, filed with this reply; not part of the stored decision")
     expected_action: str | None = Field(None, exclude=True)  # the action the person saw; a Level 1 rerun may have replaced the options
 
 
@@ -198,6 +238,23 @@ class TicketSummary(BaseModel):
     snippet: str | None = Field(None, description="Only with ?q=: the text around the first match")
 
 
+class JiraLink(BaseModel):
+    team: str
+    project_key: str
+    title: str
+    by: Literal["agent", "person"]
+    created_at: str
+    key: str | None = Field(None, description="Null in demo mode: no issue was created")
+    url: str | None = None
+    demo: bool = False
+
+
+class JiraInfo(BaseModel):
+    connected: bool = Field(description="JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN are all set")
+    site: str | None = None
+    demo: bool
+
+
 class Ticket(TicketSummary):
     body: str
     session_id: str | None = None
@@ -207,6 +264,8 @@ class Ticket(TicketSummary):
     decision: dict | None = Field(None, description="Decision on accept; {rejected: true, note, reply} on reject")
     action: dict | None = Field(None, description="Result of the executed action")
     action_error: str | None = None
+    jira: JiraLink | None = Field(None, description="The Jira issue filed for this ticket")
+    jira_error: str | None = Field(None, description="Why the last export failed")
     conversation: list[ChatMessage] | None = None
     history: list[dict] = Field(default_factory=list, description="Earlier closes of a reopened ticket: {at, from_status, decision, action, note}")
 

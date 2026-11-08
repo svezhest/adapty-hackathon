@@ -25,6 +25,12 @@ OPENAI_MAX_TOKENS = int(os.environ.get("OPENAI_MAX_TOKENS", "4000"))
 DEMO_MODE = os.environ.get("DEMO_MODE", "0") == "1"
 # Insights: re-run the hypothesis on its own when the grouping changes materially (docs/agents.md, "Insights").
 INSIGHTS_AUTO = os.environ.get("INSIGHTS_AUTO", "1").strip() != "0"
+# Jira Cloud: all three, or the app runs without it (docs/agents.md, "Jira"). The token is never printed or logged.
+JIRA_BASE_URL = os.environ.get("JIRA_BASE_URL", "").strip()
+JIRA_EMAIL = os.environ.get("JIRA_EMAIL", "").strip()
+JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN", "").strip()
+# Where this app is reachable, for the link from the issue back to the ticket. Optional.
+RESOLVE_PUBLIC_URL = os.environ.get("RESOLVE_PUBLIC_URL", "").strip().rstrip("/")
 DB_PATH = Path(os.environ.get("RESOLVE_DB", ROOT / "data" / "resolve.sqlite"))
 DEMO_DB_PATH = ROOT / "data" / "demo.sqlite"
 SEED_REPO = Path(os.environ.get("SEED_REPO", Path.home() / "hackathon" / "adapty-seed-data-hack"))

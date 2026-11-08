@@ -24,6 +24,10 @@ Screenshots of the running app. The chats and tickets are test data; the replies
 
 ![Insights: complaint categories and a hypothesis](docs/screenshots/insights.png)
 
+**Bug reports to Jira.** When the cause is a defect in the product, the agent writes a report an engineer can act on and picks the team that fixes it. The person creates the issue with one click, sending the answer creates it too, or the owner lets the agent file on its own.
+
+![A ticket's bug report: team, priority, title and details, ready to create in Jira](docs/screenshots/jira.png)
+
 | Chat | Agent settings |
 |---|---|
 | ![The in-app chat as seen by support, with the agent granting free days](docs/screenshots/chat.png) | ![Agent settings: model, tone and how many free days the agent may give](docs/screenshots/settings.png) |
@@ -52,6 +56,8 @@ flowchart LR
     F[Email or form] -->|feedback| L1
     L2 -->|can't or shouldn't solve it| L1[Level 1<br>triage agent]
     L1 -->|ticket with options| P[Support person]
+    L1 -->|bug report| J[(Jira, the team that fixes it)]
+    P -->|bug report| J
     P -->|accepted answer| L2C[Reply in the chat]
     L2 -->|grant within limits| A[(Subscription platform)]
     P -->|grant on click| A
@@ -61,6 +67,7 @@ flowchart LR
 
 - **Level 2, in the app.** Code loads the user's subscription profile before the model runs. The agent explains charges, plans and dates, gives the store's steps to restore, cancel or ask for a refund, and can grant free days.
 - **Level 1, for the support person.** Every handoff and every other piece of feedback becomes a ticket. The agent finds the cause and proposes 2–3 answers with different actions, each with a ready reply and a risk. The user can write in any language; the person reads and decides in English.
+- **Jira.** Each team has a project and a line on what it fixes, and the agent routes by that line. Code files one issue per ticket, removes email addresses and caps what the agent may file on its own in a day. The automatic mode is off by default.
 - **Insights.** Code groups the triaged tickets and owns the numbers; the model writes the hypothesis, and code checks every cell and number it cites.
 
 ### What the model cannot decide
@@ -124,6 +131,7 @@ python -m resolve --port 8010
 - **`ADAPTY_SECRET_KEY`:** the secret key of an app holding the demo users. To copy them into your own app, run `python scripts/seed_demo_profiles.py --yes` (`--one` first to check), then `python scripts/import_feedback.py` to add the hard cases.
 - **The model:** `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` and `OPENAI_MODEL` for any OpenAI-compatible API (with `OPENAI_BASE_URL`). Agent settings can switch between them.
 - **Seeded tickets** start untriaged: use **Run triage** on the ticket, or `python scripts/batch_triage.py`. Each run is a paid model call.
+- **Jira (optional):** `JIRA_BASE_URL`, `JIRA_EMAIL` and `JIRA_API_TOKEN` for Jira Cloud; the teams and the automatic mode are in Agent settings.
 - **`INSIGHTS_AUTO=0`** stops Insights from re-running on its own while the screen is open; the Run button stays.
 - **`RESOLVE_DB=path`** runs on another SQLite file.
 
@@ -149,6 +157,7 @@ python scripts/eval.py --yes        # calls a real model, costs money
 | `resolve/frontline.py` | Level 2 chat loop |
 | `resolve/triage.py` | Level 1 and the Insights agent |
 | `resolve/policy.py` | Limits, as pure code |
+| `resolve/jira.py` | Bug reports to Jira: one issue per ticket |
 | `resolve/actions.py` | The only place an action writes to the subscription platform |
 | `resolve/workflow.py` | Accept, reject, reopen |
 | `resolve/api.py`, `resolve/analytics.py` | JSON API and the numbers behind Analyze |
@@ -159,6 +168,7 @@ python scripts/eval.py --yes        # calls a real model, costs money
 
 ## What's next
 
+- Group the same bug from different users into one Jira issue, and bring a fixed issue back to the ticket.
 - Check what a reply claims against what the agent actually did.
 - Email and App Store review inboxes into Level 1.
 - Auto-accept low-risk options above a confidence threshold, once the eval is large enough to trust.

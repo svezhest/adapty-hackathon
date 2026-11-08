@@ -406,6 +406,29 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 </p>
 </sc-if>
 
+<sc-if value="{{ jiraShow }}" hint-placeholder-val="{{ false }}">
+<section class="card" aria-labelledby="h-jira" style="margin-top: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
+<p id="h-jira" class="kicker">For the engineers</p>
+<sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14.5px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a> · {{ jiraTitle }} <span style="color: #52525b">· {{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
+<sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14.5px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
+<sc-if value="{{ jiraOffer }}" hint-placeholder-val="{{ false }}"><p style="margin: 0"><button type="button" class="quiet" onClick="{{ openJira }}">Send to a team in Jira</button></p></sc-if>
+<sc-if value="{{ jiraForm }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ jiraProposed }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14px; color: #3f3f46">The agent thinks this is a bug in the product and wrote a report for the team. Sending an answer also creates this issue.</p></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<label class="field">Team<select class="inp" value="{{ jiraTeamV }}" onChange="{{ onJiraTeam }}"><sc-for list="{{ jiraTeams }}" as="o"><option>{{ o.name }}</option></sc-for></select></label>
+<label class="field">Priority<select class="inp" value="{{ jiraPriority }}" onChange="{{ onJiraPriority }}"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
+<label class="field" style="flex: 1 1 320px">Title<input class="inp" type="text" value="{{ jiraTitleV }}" onChange="{{ onJiraTitle }}"></label>
+</div>
+<label class="field">Details<textarea class="ta" style="min-height: 170px" value="{{ jiraDetails }}" onChange="{{ onJiraDetails }}"></textarea></label>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px">
+<button type="button" class="btn-dark" disabled="{{ jiraOff }}" onClick="{{ createJira }}">{{ jiraLabel }}</button>
+<sc-if value="{{ jiraNoSite }}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #52525b">Jira is not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.</span></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ hasJiraErr }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; color: #8e3b36">{{ jiraErr }}</p></sc-if>
+</section>
+</sc-if>
+
 <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
 <div class="toast" role="status">{{ toast }}</div>
 </sc-if>
@@ -691,6 +714,7 @@ class Component extends DCLogic {
     var self = this;
     if (!this.props.id) { this.setState({ loadError: 'The link has no ticket id: open the ticket from Incoming.' }); return; }
     API.get('/api/config').then(function (cfg) { self.setState({ cfg: cfg }); }, function () {});
+    API.get('/api/jira').then(function (j) { self.setState({ jiraInfo: j }); }, function () {});
     this.load();
   }
   componentWillUnmount() { if (this.tt) clearTimeout(this.tt); if (this.pt) clearTimeout(this.pt); }
@@ -731,6 +755,18 @@ class Component extends DCLogic {
     var s = this.state || {};
     var p = this.props || {};
     var m = LIVE ? (s.ticket ? liveModel(s.ticket, s.cfg) : null) : MOCK;
+    var jt = LIVE ? s.ticket : null, jr = jt && jt.jira, jteams = s.cfg && s.cfg.jira ? s.cfg.jira.teams : [];
+    var jrep = jt && jt.triage && jt.triage.bug_report, jdraft = s.jiraDraft || {};
+    var jForm = !!jt && !jr && jteams.length > 0 && (!!jrep || !!s.jiraOpen);
+    var jval = function (k, fallback) { return jdraft[k] != null ? jdraft[k] : jrep && jrep[k] != null ? jrep[k] : fallback; };
+    var jset = function (k) { return function (e) { self.setState({ jiraDraft: Object.assign({}, jdraft, (function () { var o = {}; o[k] = e.target.value; return o; })()) }); }; };
+    var jsite = !!s.jiraInfo && (s.jiraInfo.connected || s.jiraInfo.demo);
+    var jvals = {
+      team: jval('team', jteams[0] ? jteams[0].name : ''), priority: jval('priority', 'medium'),
+      summary: jval('summary', jt ? (jt.triage && jt.triage.summary) || jt.subject : ''),
+      details: jval('details', jt ? (jt.triage && jt.triage.root_cause) || jt.body : '')
+    };
+    var jerr = s.jiraFail || (jt && !jr && jt.jira_error) || '';
     var base = m ? m.base : {};
     var order = m ? m.order : [];
     var confs = m ? m.conf : {};
@@ -877,7 +913,7 @@ class Component extends DCLogic {
         if (self.tt) clearTimeout(self.tt);
         if (LIVE) {
           if (selected === 'own') self.submit(self.path() + '/reject', lang && !s.ownDirect ? { note: '', reply_en: own } : { note: '', reply: own });
-          else self.submit(self.path() + '/accept', { option: Number(selected), expected_action: base[selected] && base[selected].rawAction, edits: editsFor(base, selected, edits) });
+          else self.submit(self.path() + '/accept', { option: Number(selected), expected_action: base[selected] && base[selected].rawAction, edits: editsFor(base, selected, edits), jira: Object.keys(jdraft).length ? jdraft : null });
           return;
         }
         self.tt = setTimeout(function () {
@@ -921,6 +957,26 @@ class Component extends DCLogic {
           self.setState({ ticket: t, triaging: false });
         }, function (err) { self.setState({ triaging: false, triageFail: err.message }); });
       },
+      jiraShow: !!jt && (!!jr || jteams.length > 0 || !!jerr),
+      jiraDone: !!jr && !jr.demo, jiraDemo: !!jr && !!jr.demo,
+      jiraKey: jr ? jr.key : '', jiraUrl: jr ? jr.url : '', jiraTitle: jr ? jr.title : '', jiraTeamName: jr ? jr.team : '', jiraProject: jr ? jr.project_key : '',
+      jiraBy: jr && jr.by === 'agent' ? 'filed by the agent' : 'filed by a person',
+      jiraOffer: !!jt && !jr && !jForm && jteams.length > 0,
+      openJira: function () { self.setState({ jiraOpen: true }); },
+      jiraForm: jForm, jiraProposed: !!jrep,
+      jiraTeams: jteams, jiraTeamV: jvals.team, jiraPriority: jvals.priority, jiraTitleV: jvals.summary, jiraDetails: jvals.details,
+      onJiraTeam: jset('team'), onJiraPriority: jset('priority'), onJiraTitle: jset('summary'), onJiraDetails: jset('details'),
+      jiraNoSite: !!s.jiraInfo && !jsite,
+      jiraOff: !jsite || !!s.jiraBusy || !String(jvals.summary).trim() || !String(jvals.details).trim(),
+      jiraLabel: s.jiraBusy ? 'Creating…' : jerr ? 'Try again' : 'Create Jira issue',
+      createJira: function () {
+        if (s.jiraBusy) return;
+        self.setState({ jiraBusy: true, jiraFail: null });
+        API.post(self.path() + '/jira', jvals).then(function (t) {
+          self.setState({ ticket: t, jiraBusy: false });
+        }, function (err) { self.setState({ jiraBusy: false, jiraFail: err.message }); });
+      },
+      hasJiraErr: !!jerr, jiraErr: jerr,
       hasToast: !!s.toast, toast: s.toast || '',
       menu: menu, menuCls: menu ? 'nl open' : 'nl',
       toggleMenu: function () { self.setState({ menu: !menu }); },
