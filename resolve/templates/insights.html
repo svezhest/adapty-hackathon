@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block title %}Insights · Resolve{% endblock %}
-{% block content %}
-<section class="head">
-  <h1>Insights <span class="muted">{{ groups.triaged }} of {{ groups.total }} tickets triaged</span></h1>
-  <p class="muted">Complaints grouped by category, product and the paywall the user saw. The paywall and A/B arm come from the offline dataset, not from the live profile.</p>
-</section>
-{% include "_insights_report.html" %}
-{% endblock %}

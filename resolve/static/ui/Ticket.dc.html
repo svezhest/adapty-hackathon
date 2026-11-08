@@ -205,6 +205,8 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <div style="flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
 <p id="h-found" class="found-k"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l1.9 6.6 6.6 1.9-6.6 1.9L12 19.5l-1.9-6.6L3.5 11l6.6-1.9z" fill="#6247f5"></path></svg>What we found<sc-if value="{{ hasCategory }}"><span aria-hidden="true" style="color: #c9c3ee">·</span><span style="font-weight: 500">{{ category }}</span></sc-if></p>
 <p class="found-h">{{ foundSummary }}</p>
+<sc-if value="{{ canTriage }}" hint-placeholder-val="{{ false }}"><p style="margin: 8px 0 0"><button type="button" class="quiet" onClick="{{ runTriage }}">{{ triageLabel }}</button></p></sc-if>
+<sc-if value="{{ hasTriageFail }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 6px 0 0; font-size: 13px; color: #8e3b36">{{ triageFail }}</p></sc-if>
 <sc-if value="{{ hasCause }}"><p class="found-r">{{ foundCause }}</p></sc-if>
 <sc-if value="{{ hasEvidence }}"><div><button type="button" class="{{ evCls }}" style="font-size: 13.5px" aria-expanded="{{ evidence }}" onClick="{{ toggleEvidence }}">Evidence<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button></div></sc-if>
 <sc-if value="{{ evidence }}" hint-placeholder-val="{{ false }}">
@@ -909,6 +911,16 @@ class Component extends DCLogic {
       toggleEvidence: function () { self.setState({ evidence: !s.evidence }); },
       details: !!s.details, detCls: s.details ? 'linkbtn open' : 'linkbtn',
       toggleDetails: function () { self.setState({ details: !s.details }); },
+      canTriage: LIVE && !!s.ticket && !s.ticket.triage && !s.ticket.legacy && s.ticket.status === 'new',
+      triageLabel: s.triaging ? 'Running triage…' : s.ticket && s.ticket.triage_error ? 'Run triage again' : 'Run triage',
+      hasTriageFail: !!s.triageFail, triageFail: s.triageFail || '',
+      runTriage: function () {
+        if (s.triaging) return;
+        self.setState({ triaging: true, triageFail: null });
+        API.post(self.path() + '/triage').then(function (t) {
+          self.setState({ ticket: t, triaging: false });
+        }, function (err) { self.setState({ triaging: false, triageFail: err.message }); });
+      },
       hasToast: !!s.toast, toast: s.toast || '',
       menu: menu, menuCls: menu ? 'nl open' : 'nl',
       toggleMenu: function () { self.setState({ menu: !menu }); },
