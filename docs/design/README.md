@@ -28,6 +28,8 @@ These files run inside the Design canvas runtime, not as standalone pages. For s
 
 ## Tokens
 
+The values below are from the original brief, kept for history. The current ones are in `resolve/static/ui/tokens.css`.
+
 - Base: white. Page `#fafafa` with a soft violet haze (radial `rgba(124,92,255,.12)` top-left, `rgba(176,148,255,.11)` top-right, `rgba(124,92,255,.07)` bottom).
 - Cards `#fff`, border `#ebe8f6`, radius 10, a lavender wash at the top (`#faf8ff` → `#fff` over 180px). Controls radius 6.
 - Text `#18181b`, secondary `#52525b`, muted `#6b6b75`; hairlines `#ececf0` / `#f2f2f4`.
