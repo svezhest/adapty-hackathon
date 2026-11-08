@@ -39,9 +39,21 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 .tip{position:absolute;top:8px;min-width:210px;padding:12px 14px;border-radius:6px;background:var(--surface);border:1px solid var(--line);box-shadow:0 16px 40px -14px rgba(15,15,15,.28);font-size:13px;pointer-events:none;animation:pop .12s ease-out}
 .tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
 .endlbl{position:absolute;left:calc(100% + 8px);display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-2);white-space:nowrap;transform:translateY(-50%)}
-.bar-row{display:grid;grid-template-columns:minmax(0,1fr) 28px;gap:12px;align-items:center}
-.bar-lbl{font-size:13px;color:var(--ink-2);margin-bottom:5px}
-.track{height:8px;border-radius:6px;background:var(--subtle);overflow:hidden}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
+.cards.four{grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))}
+.statcard{display:flex;flex-direction:column;gap:14px;padding:20px var(--gutter)}
+.cnt{display:flex;align-items:baseline;gap:8px;font-size:14px;color:var(--ink-2)}
+.cnt b{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1;letter-spacing:-.01em;color:var(--ink)}
+.rows{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.stat{display:grid;grid-template-columns:minmax(0,1fr) minmax(64px,32%) 28px;gap:12px;align-items:center;font-size:14px;line-height:18px;color:var(--ink-2)}
+.stat .num,.leg .num{font-weight:600;color:var(--ink);text-align:right}
+.ringrow{flex:1;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 24px}
+.ringbox{position:relative;flex:0 0 auto;width:124px;height:124px}
+.ringnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:30px;font-weight:500;line-height:1;letter-spacing:-.01em;transform:translateY(.08em)}
+.legs{flex:1 1 150px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.leg{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;line-height:18px;color:var(--ink-2)}
+.leg > span:first-child{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.track{height:6px;border-radius:6px;background:var(--subtle);overflow:hidden}
 .fill{height:100%;border-radius:6px}
 .pulse{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
 .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent-line);animation:ring 1.6s ease-out infinite}
@@ -274,58 +286,46 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </section>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
+<div class="{{ cardsCls }}">
 
-<section class="card" aria-labelledby="c1" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; align-items: center; gap: 12px">
-
+<section class="card statcard" aria-labelledby="c1">
 <h2 id="c1" class="sr">Chat outcomes</h2>
-<span class="meta num">{{ donutTotal }} chats</span>
-</div>
-<div style="position: relative; width: 140px; height: 140px; align-self: center">
-<svg role="img" aria-label="{{ donutAria }}" width="140" height="140" viewBox="0 0 148 148" style="transform: rotate(-90deg)">
+<p class="cnt" style="margin: 0"><b class="num">{{ donutTotal }}</b> chats</p>
+<div class="ringrow">
+<div class="ringbox">
+<svg role="img" aria-label="{{ donutAria }}" width="124" height="124" viewBox="0 0 148 148" style="display: block; transform: rotate(-90deg)">
 <circle cx="74" cy="74" r="56" fill="none" stroke="var(--subtle)" stroke-width="14"></circle>
 <sc-for list="{{ donut }}" as="d"><circle cx="74" cy="74" r="56" fill="none" stroke="{{ d.color }}" stroke-width="14" sc-stroke-dasharray="{{ d.dash }}" sc-stroke-dashoffset="{{ d.offset }}"></circle></sc-for>
 </svg>
-<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1">{{ donutPct }}</span>
+<span class="ringnum num">{{ donutPct }}</span>
 </div>
+<div class="legs">
+<sc-for list="{{ donut }}" as="d"><div class="leg"><span><span class="sw" style="background: {{ d.color }}"></span>{{ d.name }}</span><span class="num">{{ d.v }}</span></div></sc-for>
 </div>
-<div style="display: flex; flex-direction: column; gap: 6px; font-size:13px">
-<sc-for list="{{ donut }}" as="d"><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px"><span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2)"><span class="sw" style="background: {{ d.color }}"></span>{{ d.name }}</span><span class="num" style="font-weight: 600">{{ d.v }}</span></div></sc-for>
 </div>
 </section>
 
-<section class="card" aria-labelledby="c2" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; align-items: center; gap: 12px">
-
+<section class="card statcard" aria-labelledby="c2">
 <h2 id="c2" class="sr">Why chats went to people</h2>
-<span class="meta num">{{ reasonsTotal }} handed to people</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ reasons }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-2)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<p class="cnt" style="margin: 0"><b class="num">{{ reasonsTotal }}</b> handed to people</p>
+<div class="rows">
+<sc-for list="{{ reasons }}" as="b" hint-placeholder-count="4"><div class="stat"><span>{{ b.name }}</span><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-2)"></div></div><span class="num">{{ b.v }}</span></div></sc-for>
 </div>
 </section>
 
-<sc-if value="{{ hasBlocked }}"><section class="card" aria-labelledby="c3" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; align-items: center; gap: 12px">
-
+<sc-if value="{{ hasBlocked }}"><section class="card statcard" aria-labelledby="c3">
 <h2 id="c3" class="sr">Blocked by limits</h2>
-<span class="meta num">{{ blockedTotal }} blocked by limits</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ blocked }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--accent)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<p class="cnt" style="margin: 0"><b class="num">{{ blockedTotal }}</b> blocked by limits</p>
+<div class="rows">
+<sc-for list="{{ blocked }}" as="b" hint-placeholder-count="4"><div class="stat"><span>{{ b.name }}</span><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--accent)"></div></div><span class="num">{{ b.v }}</span></div></sc-for>
 </div>
 </section></sc-if>
 
-<section class="card" aria-labelledby="c4" style="padding: 20px var(--gutter); display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; align-items: center; gap: 12px">
-
+<section class="card statcard" aria-labelledby="c4">
 <h2 id="c4" class="sr">Level 1 decisions</h2>
-<span class="meta num">{{ triagedTotal }} triaged</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ funnel }}" as="b" hint-placeholder-count="5"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-4)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<p class="cnt" style="margin: 0"><b class="num">{{ triagedTotal }}</b> triaged</p>
+<div class="rows">
+<sc-for list="{{ funnel }}" as="b" hint-placeholder-count="5"><div class="stat"><span>{{ b.name }}</span><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-4)"></div></div><span class="num">{{ b.v }}</span></div></sc-for>
 </div>
 </section>
 </div>
@@ -433,6 +433,7 @@ function band(lower, upper, ymax) {
   return curve(top, true) + ' ' + curve(bot, false) + ' Z';
 }
 function fmtAge(s) {
+  s = Math.max(0, s);
   if (s >= 86400) { var d = Math.floor(s / 86400), dh = Math.floor((s % 86400) / 3600); return d + 'd ' + ('0' + dh).slice(-2) + 'h'; }
   if (s >= 3600) { var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60); return h + 'h ' + ('0' + m).slice(-2) + 'm'; }
   var mm = Math.floor(s / 60), ss = s % 60;
@@ -645,6 +646,7 @@ class Component extends DCLogic {
       chartTitle: v.chartTitle, chartAria: v.chartAria, bucketHead: v.bucketHead,
       agentReplies: v.agentReplies, peopleReplies: v.peopleReplies,
       donutTotal: v.donutTotal, donutPct: v.donutPct, donutAria: v.donutAria,
+      cardsCls: v.hasBlocked ? 'cards four' : 'cards',
       reasonsTotal: v.reasonsTotal, hasBlocked: v.hasBlocked, blockedTotal: v.blockedTotal, triagedTotal: v.triagedTotal,
       updated: v.updated,
       exportCsv: function () {

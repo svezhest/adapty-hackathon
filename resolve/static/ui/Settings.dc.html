@@ -44,8 +44,6 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .plan .risk{font-size:12px;font-weight:600}
 .plan .pd{font-size:13px;line-height:1.45;color:var(--ink-3)}
 .plan .pm{font-size:13px;font-weight:500;color:var(--ink-2)}
-.sum{margin:0;padding:12px 24px;border-top:1px solid var(--subtle);font-size:13px;line-height:1.5;color:var(--ink-2)}
-.sum b{font-weight:600;color:var(--ink)}
 .err{flex:1 0 100%;margin:0;font-size:13px;font-weight:500;color:var(--bad)}
 .sw{position:relative;width:38px;height:22px;border-radius:999px;border:0;background:var(--line);cursor:pointer;transition:background .18s;flex:0 0 auto}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .18s}
@@ -158,7 +156,6 @@ select.ctl{padding-left:6px}
 <span class="nm"><span id="l-paying">Paying users only</span></span>
 <button type="button" role="switch" aria-labelledby="l-paying" aria-checked="{{ v.payingOnly }}" class="{{ sw.payingOnly }}" onClick="{{ tg.payingOnly }}" disabled="{{ grantsOff }}"></button>
 </div>
-<p class="sum">{{ worst }}<sc-if value="{{ usedLine }}"> {{ usedLine }}</sc-if></p>
 
 <div class="set">
 <span class="nm"><span id="l-ref">Refund request → person</span></span>
@@ -342,7 +339,6 @@ class Component extends DCLogic {
     });
     this.loadLlm();
     API.get('/api/jira').then(function (j) { self.setState({ jiraInfo: j }); }, function () {});
-    API.get('/api/analytics?range=30d').then(function (a) { self.setState({ used: a.period.current.grants }); }, function () {});
   }
   loadLlm() {
     var self = this;
@@ -421,13 +417,8 @@ class Component extends DCLogic {
         pick: function () { self.setState({ v: Object.assign({}, v, p.v) }); }
       };
     });
-    var worst = !v.allowGrants ? 'Free days are off: the assistant gives none.'
-      : err.maxDays || err.perUser ? 'Fix the limits above to see the worst case.'
-      : 'Worst case: one person gets up to ' + Number(v.maxDays) * Number(v.perUser) + ' free days a month' + (v.payingOnly ? ', and only while they are paying.' : ', including people who are not paying.') + (cur ? '' : ' (your own limits)');
-    var used = LIVE ? s.used : { count: 3, days: 17 };
-    var usedLine = used ? 'Given in the last 30 days: ' + used.count + ' time' + (used.count === 1 ? '' : 's') + ', ' + used.days + ' day' + (used.days === 1 ? '' : 's') + ' in total.' : '';
     return {
-      plans: plans, worst: worst, usedLine: usedLine,
+      plans: plans,
       teamRows: teamRows,
       addTeam: function () { putTeams(teamList.concat([{ name: '', project_key: '', handles: '', issue_type: 'Bug' }])); },
       jiraStatus: !LIVE ? 'Connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Demo mode: no issue is created.' : 'Not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
