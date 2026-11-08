@@ -27,14 +27,14 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .set .nm span:first-child{font-size:14px;font-weight:500;color:var(--ink)}
 .set .hint{font-size:13px;color:var(--ink-3)}
 .ctl{height:34px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
-.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ctl.bad{border-color:var(--bad);box-shadow:0 0 0 3px rgba(214,58,63,.10)}
 .num{width:84px;text-align:right;font-variant-numeric:tabular-nums}
 .intro{margin:0;padding:0 24px 14px;font-size:14px;line-height:1.5;color:var(--ink-2)}
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:0 24px 16px}
 .plan{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px 13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--ink);transition:border-color .15s, box-shadow .15s}
 .plan:hover{border-color:var(--accent-line)}
-.plan.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,60,240,.12)}
+.plan.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
 .plan .pt{display:flex;align-items:baseline;justify-content:space-between;gap:6px;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500}
 .plan .rec{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--accent)}
 .plan .risk{font-size:12px;font-weight:600}
@@ -61,18 +61,19 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .setm > .bar,.setm > .toast{width:auto}
 .ctl,.num{width:200px;height:36px}
 .ctl.num{width:200px}
+select.ctl{padding-left:6px}
 .num{text-align:left}
 .plan .pt{font-size:16px;flex-wrap:nowrap}
 .plan .pt > span{font-size:12px}
 </style>
 </helmet>
-<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--haze); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
-<header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
+<header class="top">
 <a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
@@ -86,7 +87,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<div id="catalogue" class="pop" style="position: absolute; top: 100%; left: 24px; right: 24px; padding: 6px; border-radius:var(--r-card); background:var(--glass-menu); -webkit-backdrop-filter:var(--glass-strong-filter); backdrop-filter:var(--glass-strong-filter); border: 1px solid var(--line); box-shadow:var(--shadow-pop); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
 <section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">

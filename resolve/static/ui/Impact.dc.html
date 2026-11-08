@@ -27,14 +27,14 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .set .nm span:first-child{font-size:14px;font-weight:500;color:var(--ink)}
 .set .hint{font-size:13px;color:var(--ink-3)}
 .ctl{height:34px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
-.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ctl.bad{border-color:var(--bad);box-shadow:0 0 0 3px rgba(214,58,63,.10)}
 .num{width:84px;text-align:right;font-variant-numeric:tabular-nums}
 .intro{margin:0;padding:0 24px 14px;font-size:14px;line-height:1.5;color:var(--ink-2)}
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:0 24px 16px}
 .plan{display:flex;flex-direction:column;gap:6px;text-align:left;padding:12px 13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--ink);transition:border-color .15s, box-shadow .15s}
 .plan:hover{border-color:var(--accent-line)}
-.plan.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,60,240,.12)}
+.plan.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
 .plan .pt{display:flex;align-items:baseline;justify-content:space-between;gap:6px;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500}
 .plan .rec{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:600;color:var(--accent)}
 .plan .risk{font-size:12px;font-weight:600}
@@ -58,58 +58,50 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:11px 16px;border-radius:6px;background:var(--ink);color:var(--surface);font-size:14px;font-weight:500;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);animation:bar .22s ease-out;z-index:40}
 </style>
 <style>
-.imp { --grey:var(--ink-3); --faint:var(--ink-3); --fill:var(--accent-soft); --brand:var(--accent); --green:var(--ok); --amber:var(--warn);
-  --serif: Newsreader, Georgia, "Times New Roman", serif; --sans: Inter, system-ui, -apple-system, sans-serif; color:var(--ink); font:16px/1.5 var(--sans); }
+.imp { color:var(--ink); font:15px/1.5 var(--sans); }
 .imp { max-width:1200px; margin:0 auto; padding:28px 24px 64px; }
-.imp .ihead { display:flex; align-items:baseline; justify-content:space-between; gap:24px; margin-bottom:28px; }
+.imp .ihead { display:flex; align-items:baseline; justify-content:space-between; gap:24px; }
 .imp h1 { font:500 34px/1.1 var(--serif); margin:0; letter-spacing:-.01em; }
 .imp h1 em { font-style:normal; color:inherit; }
-.imp .ihead .sub { color:var(--grey); font-size:14px; max-width:520px; text-align:right; }
-.imp h2 { font:600 13px/1 var(--sans); text-transform:uppercase; letter-spacing:.12em; color:var(--grey); margin:36px 0 14px; }
+.imp h2 { font:500 13px/16px var(--sans); color:var(--ink-3); margin:36px 0 14px; }
+.imp .ihead + h2 { margin-top:16px; }
 .imp .grid { display:grid; gap:16px; }
 .imp .g4 { grid-template-columns:repeat(4,1fr); }
 .imp .g3 { grid-template-columns:repeat(3,1fr); }
-.imp .card { border:1px solid var(--line); border-radius:10px; padding:20px 22px; background:var(--surface); }
-.imp .card.fill { background:var(--fill); border-color:transparent; }
+.imp .card { border:1px solid var(--line); border-radius:var(--r-card); padding:20px var(--gutter); background:var(--surface); box-shadow:var(--shadow-card); }
+.imp .card.fill { background:var(--accent-soft); border-color:var(--line); box-shadow:none; }
 .imp .num { font:500 56px/1 var(--serif); letter-spacing:-.02em; margin:0 0 10px; }
-.imp .num small { font-size:28px; color:var(--grey); }
-.imp .num.brand { color:var(--brand); }
-.imp .lead { font-size:16px; margin:0 0 8px; }
-.imp .src { color:var(--faint); font-size:13px; margin:0; }
+.imp .num small { font-size:28px; color:var(--ink-3); }
+.imp .num.brand { color:var(--accent); }
+.imp .lead { font-size:15px; margin:0 0 8px; }
+.imp .src { color:var(--ink-3); font-size:13px; margin:0; }
 .imp .src a { color:inherit; text-decoration:none; border-bottom:1px solid var(--line); }
 .imp blockquote { margin:0; font:italic 400 24px/1.3 var(--serif); }
 .imp blockquote + .src { margin-top:10px; }
 .imp table { width:100%; border-collapse:collapse; font-size:14px; }
-.imp th { text-align:left; font-weight:600; color:var(--grey); font-size:13px; text-transform:uppercase; letter-spacing:.08em; padding:8px 10px; border-bottom:1px solid var(--line); }
+.imp th { text-align:left; font-weight:500; color:var(--ink-3); font-size:13px; padding:8px 10px; border-bottom:1px solid var(--line); }
 .imp td { padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
 .imp td.n { font:500 22px/1.1 var(--serif); white-space:nowrap; }
-.imp td.muted { color:var(--grey); }
-.imp .pill { display:inline-block; font:600 12px/1 var(--sans); letter-spacing:.06em; text-transform:uppercase; padding:5px 9px; border-radius:999px; background:var(--accent-soft); color:var(--brand); margin-bottom:12px; }
-.imp .pill.green { background:var(--ok-soft); color:var(--green); }
-.imp .pill.amber { background:var(--warn-soft); color:var(--amber); }
+.imp td.muted { color:var(--ink-3); }
+.imp .pill { display:inline-block; font:600 12px/1 var(--sans); letter-spacing:.06em; text-transform:uppercase; padding:5px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); margin-bottom:12px; }
+.imp .pill.green { background:var(--ok-soft); color:var(--ok); }
+.imp .pill.amber { background:var(--warn-soft); color:var(--warn); }
 .imp .card h3 { font:500 24px/1.2 var(--serif); margin:0 0 10px; }
 .imp .card ul { margin:8px 0 0; padding-left:18px; }
 .imp .card li { margin:4px 0; }
 .imp .quote-strip { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; }
-.imp .platform { border-left:4px solid var(--brand); padding-left:18px; }
 .imp .platform blockquote { font-size:20px; }
-.imp .assump { color:var(--grey); font-size:14px; }
+.imp .assump { color:var(--ink-3); font-size:14px; }
 .imp .assump li { margin:3px 0; }
-.imp footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line); color:var(--grey); font-size:13px; }
+.imp footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--line); color:var(--ink-3); font-size:13px; }
 .imp footer ol { columns:2; column-gap:40px; padding-left:18px; margin:8px 0 0; }
 .imp footer li { margin:2px 0; break-inside:avoid; }
-.imp footer a { color:var(--grey); }
+.imp footer a { color:var(--ink-3); }
 @media (max-width: 980px) { .imp .g4, .imp .g3, .imp .quote-strip { grid-template-columns:1fr 1fr; } }
 @media (max-width: 640px) { .imp .g4, .imp .g3, .imp .quote-strip { grid-template-columns:1fr; }
 .imp { padding:24px 20px; }
-.imp .ihead { flex-direction:column; }
-.imp .ihead .sub { text-align:left; } }
-/* our theme on top of Milos's layout: kickers, cards, pills */
-.imp h2 { font:500 13px/16px var(--sans); text-transform:none; letter-spacing:0; color:var(--ink-3); }
+.imp .ihead { flex-direction:column; } }
 .imp .num { width:auto; height:auto; padding:0; border:0; text-align:left; }
-.imp .card { border:1px solid var(--line); border-radius:10px; background:var(--surface); box-shadow:0 1px 2px rgba(15,15,15,.04); }
-.imp .card.fill { background:var(--fill); border-color:var(--line); box-shadow:none; }
-.imp .card.platform { border-left:4px solid var(--brand); }
 .imp .pill { border-radius:6px; background:var(--accent-soft); }
 .imp .pill.green { background:var(--ok-soft); }
 .imp .pill.amber { background:var(--warn-soft); }
@@ -119,13 +111,13 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .imp footer a:hover { color:var(--accent); }
 </style>
 </helmet>
-<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--haze); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
-<header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
+<header class="top">
 <a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
@@ -139,7 +131,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<div id="catalogue" class="pop" style="position: absolute; top: 100%; left: 24px; right: 24px; padding: 6px; border-radius:var(--r-card); background:var(--glass-menu); -webkit-backdrop-filter:var(--glass-strong-filter); backdrop-filter:var(--glass-strong-filter); border: 1px solid var(--line); box-shadow:var(--shadow-pop); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
 <section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
@@ -183,17 +175,17 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
       <p class="src"><a href="https://refundappeal.com/data/">RefundAppeal, Sep 2026, 1,979 apps</a></p>
     </div>
     <div class="card">
-      <p class="num">#1</p>
+      <p class="num brand">#1</p>
       <p class="lead">specific complaint: <b>a free trial that turned into a charge</b> (6,852 reviews, 4.5× the next). Then: refund refused, wrong amount, couldn't cancel, paid but locked.</p>
       <p class="src"><a href="https://refundappeal.com/data/">same dataset</a></p>
     </div>
     <div class="card">
-      <p class="num">6.4<small>%</small></p>
+      <p class="num brand">6.4<small>%</small></p>
       <p class="lead"><b>Photo &amp; Video</b> leads every category in trial refunds (14.1% in APAC). 35% of the category's bad reviews are about subscriptions.</p>
       <p class="src"><a href="https://adapty.io/blog/photo-video-app-subscription-benchmarks/">Adapty SOIS 2026</a> · <a href="https://sideradar.com/research/app-review-complaints">SideRadar, 247k reviews</a></p>
     </div>
     <div class="card">
-      <p class="num">½</p>
+      <p class="num brand">½</p>
       <p class="lead">of a real subscription app's support questions are <b>subscription management</b>: trials, devices, cancelling. 12–14k tickets a month, one full-time agent, 100-hour first reply.</p>
       <p class="src"><a href="https://appexchange.salesforce.com/partners/servlet/servlet.FileDownload?file=00P3A00000kFsjMUAS">Calm, support case study</a></p>
     </div>
@@ -204,7 +196,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
       <p class="src"><a href="https://appsigma.io/blog/app-store-reviews-data-study">AppSigma, 1.16M App Store reviews, Sep 2026</a> · billing is the most severe complaint type; pricing appears in 35% of negative reviews, more than all bug reports combined</p>
     </div>
     <div class="card fill">
-      <p class="num">3–4<small>%</small></p>
+      <p class="num brand">3–4<small>%</small></p>
       <p class="lead">median refund rate across categories (outliers 9–18%); each price tier adds ~1 pt; AI apps refund 20% more. <b>31%</b> of Google Play cancellations are involuntary billing failures (14% on the App Store).</p>
       <p class="src"><a href="https://www.revenuecat.com/state-of-subscription-apps/">RevenueCat SOSA 2026, 115k apps, $16B</a></p>
     </div>
@@ -254,17 +246,21 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
   </div>
 
   <h2>What the platform gets</h2>
-  <div class="grid g3">
-    <div class="card platform" style="grid-column:span 2">
+  <div class="card fill platform">
       <blockquote>“Users who are surprised by a charge are the ones who refund.” “If you're testing headline copy and color schemes while your trial refund rate is above 6%, you're testing the wrong things.” “Intercept refund requests <b>before they hit the store</b>.”</blockquote>
       <p class="src"><a href="https://adapty.io/blog/photo-video-app-subscription-benchmarks/">Adapty, Photo &amp; Video benchmarks, April 2026</a></p>
-      <p class="lead" style="margin-top:14px">The subscription platform earns <b>1% of tracked revenue</b> and already sells Refund Saver as paying for itself (up to 5% of MRR back). Resolve is the same play one step earlier, where the platform itself says to intercept; a Customer Center answer to RevenueCat that answers from the platform’s data instead of emailing a human; and support feeding experiments, the product the platform actually sells.</p>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card">
+      <p class="lead">The subscription platform earns <b>1% of tracked revenue</b> and already sells Refund Saver as paying for itself (up to 5% of MRR back). Resolve is the same play one step earlier, where the platform itself says to intercept; a Customer Center answer to RevenueCat that answers from the platform’s data instead of emailing a human; and support feeding experiments, the product the platform actually sells.</p>
     </div>
     <div class="card fill">
-      <p class="num">~$100M</p>
+      <p class="num brand">~$100M</p>
       <p class="lead">a year refunded across the $3B in the platform's own 2026 report (at ~3.5%). A fifth prevented is <b>$20M retained</b> for customers and about <b>$200k a year</b> for the platform at 1%. Small directly; large as a reason to choose and stay.</p>
       <p class="src">arithmetic on public numbers, not private data · <a href="https://adapty.io/pricing">pricing</a> · <a href="https://adapty.io/refund-saver/">Refund Saver</a></p>
-      <p class="num" style="margin-top:18px">14,700</p>
+    </div>
+    <div class="card fill">
+      <p class="num brand">14,700</p>
       <p class="lead">new subscription apps launch every month, <b>7×</b> 2022, built with AI, almost none with a support team. In-app purchases reached $167B in 2025; non-game apps overtook games for the first time.</p>
       <p class="src"><a href="https://www.revenuecat.com/state-of-subscription-apps/">RevenueCat SOSA 2026</a> · <a href="https://sensortower.com/press/press-release-boosted-by-gen-ai-services-consumers-spent-more-money-in-apps-than-games-for-first-time">Sensor Tower State of Mobile 2026</a></p>
     </div>
@@ -272,7 +268,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 
   <h2>Validate next</h2>
   <div class="card">
-    <ul class="assump" style="margin:0; font-size:16px; color:var(--ink)">
+    <ul class="assump" style="margin:0; font-size:15px; color:var(--ink)">
       <li>The share of the platform's <b>own</b> support tickets that are end users asking about charges and refunds.</li>
       <li>A 200-ticket eval; auto-accept of low-risk Level 1 options above a confidence threshold.</li>
       <li>One real app's inbox for a week; email and App Store reviews as channels.</li>

@@ -19,13 +19,14 @@ a:hover{color:var(--accent-2)}
 button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 input::placeholder,textarea::placeholder{color:var(--ink-3)}
-.btn-dark{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:6px;background:var(--ink);color:var(--surface);font-size:14px;font-weight:600;border:0;cursor:pointer}
-.btn-dark:hover{background:var(--ink)}
+.btn-dark{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:var(--r-ctl);background:var(--accent);color:var(--surface);font-size:14px;font-weight:600;border:0;cursor:pointer}
+.btn-dark:hover{background:var(--accent-2)}
+.btn-dark:disabled{background:var(--subtle);color:var(--ink-3);cursor:not-allowed}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-.dot-ready{background:var(--accent);box-shadow:0 0 0 3px rgba(91,60,240,.14)}
+.dot-ready{background:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
 .dot-closed{background:var(--ok)}
 .dot-dismissed{background:var(--ink-4)}
 .linkbtn{background:none;border:0;padding:0;color:var(--accent);font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
@@ -45,17 +46,9 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans:hover{background:var(--subtle)}
 .ans.sel{background:var(--accent-soft);box-shadow:none}
 .ans-main{display:grid;grid-template-columns:76px minmax(0,1fr) 96px;gap:18px;align-items:start;padding:16px 18px;cursor:pointer}
-.conf{display:flex;flex-direction:column;align-items:center;gap:7px}
-.ring{position:relative;width:54px;height:54px;display:flex;align-items:center;justify-content:center}
-.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
-.arc{transition:stroke-dasharray .5s cubic-bezier(.3,.7,.2,1)}
-.disc{position:relative;width:42px;height:42px;border-radius:50%;background:var(--subtle);box-shadow:inset 0 0 0 1px var(--line),0 1px 2px rgba(15,15,15,.04);display:flex;align-items:center;justify-content:center;transition:box-shadow .2s}
-.ans:hover .disc{box-shadow:inset 0 0 0 1px var(--line),0 2px 6px rgba(15,15,15,.06)}
 .emo{display:inline-block;align-self:center;font-size:20px;line-height:1;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
 .ans:hover .emo{transform:rotate(-8deg) scale(1.06)}
 .ans.sel .emo{transform:scale(1.08)}
-.pct{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;letter-spacing:-0.01em;font-variant-numeric:lining-nums tabular-nums}
-.pct small{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:500;margin-left:1px;opacity:.7}
 .found{flex:1 1 100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding:32px 40px 30px;border-radius:10px;background:var(--surface);box-shadow:none}
 .found-k{margin:0;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-3)}
 .found-h{margin:0;max-width:30em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:28px;font-weight:460;line-height:1.28;letter-spacing:-0.012em;color:var(--ink);text-wrap:balance}
@@ -68,9 +61,9 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans:hover .hov,.hov:focus-visible{opacity:1}
 .field{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-3);font-weight:500}
 .inp{height:36px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
-.inp:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.inp:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .ta{width:100%;min-height:92px;padding:10px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.5;resize:vertical}
-.ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 .vanish{animation:vanish .34s ease-in forwards}
 @keyframes vanish{to{opacity:0;transform:translateY(14px) scale(.98)}}
 .ballot{animation:unfold .26s ease-out;transform-origin:top center}
@@ -86,7 +79,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .sends{display:block;margin-top:6px;font-size:13px;font-weight:500;color:var(--accent)}
 
 /* The decision is still a dial and a stamp. The material is the system's: opaque paper, a hairline, a tonal fill, one ink. */
-.ans-main{grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;padding:14px}
+.ans-main{grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:center;padding:14px 16px}
 .dial{position:relative;flex:0 0 auto;width:64px;height:64px}
 .dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .dial svg line{transition:stroke .3s}
@@ -115,20 +108,18 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .postmark b{position:relative;font-family:var(--serif);font-size:15px;font-weight:600;letter-spacing:.08em;line-height:1}
 .postmark small{position:relative;font-size:12px;font-weight:500;line-height:1.1;white-space:nowrap}
 @keyframes postIn{from{opacity:0;transform:rotate(-24deg) scale(1.7)}}
-.b{border-radius:10px;font-size:14px}
-.b-u{background:var(--accent-soft);color:var(--ink);border-bottom-right-radius:12px}
-.b-a{background:var(--subtle);color:var(--ink);border-bottom-left-radius:12px}
+.b{font-size:14px}
 .found{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:32px;padding:var(--gutter);border-radius:var(--r-card);background:var(--surface);box-shadow:none;border:1px solid var(--line)}
 .found-k{font-size:13px;font-weight:500}
 .found-r{font-size:14px;line-height:1.55;color:var(--ink-2)}
 .ans{border-radius:var(--r-ctl);box-shadow:inset 0 0 0 1px transparent}
 .ans:hover{background:var(--bg)}
-.ans.sel,.ans.sel:hover{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line)}
+.ans.sel,.ans.sel:hover{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line),0 8px 20px -14px var(--accent)}
 .ans-main > span:nth-of-type(2) > span:first-child{padding-right:88px}
 .ttl{font-size:14px}
 .emo{font-size:20px}
 .pick-agent{color:var(--accent);font-weight:500}
-.risk-high,.risk-medium{display:block;flex-basis:100%;margin-top:2px;font-size:13px;line-height:1.45;font-weight:400}
+.risk-high,.risk-medium{display:block;flex-basis:calc(100% + 88px);width:calc(100% + 88px);margin-top:2px;margin-right:-88px;font-size:13px;line-height:1.45;font-weight:400}
 .risk-high{color:var(--bad)}
 .risk-medium{color:var(--warn)}
 .txt{margin-top:8px;font-size:14px;line-height:1.55;color:var(--ink-2)}
@@ -142,11 +133,11 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans > div{padding-left:14px!important}
 }
 html{scroll-padding-bottom:104px}
-.sendbar{position:sticky;bottom:12px;z-index:5;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--glass);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}
+.sendbar{position:sticky;bottom:12px;z-index:5;padding:10px var(--gutter);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow-float);background:var(--glass);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}
 .sendbar .quiet{color:var(--ink-2)}
 .sendbar .quiet:hover{color:var(--ink)}
 .sendmain{display:flex;align-items:center;gap:22px;min-width:0}
-@media (max-width:640px){.sendbar{bottom:8px}.sendbar .gstamp{width:120px;height:50px}.sendbar .gstamp .ink{font-size:17px}.sendmain{gap:12px}}
+@media (max-width:640px){.sendbar{bottom:8px;padding:10px 12px}.sendbar .gstamp{width:120px;height:50px}.sendbar .gstamp .ink{font-size:17px}.sendmain{gap:12px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.sendbar{background:var(--surface)}}
 @media (prefers-reduced-transparency:reduce){.sendbar{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (prefers-reduced-motion:reduce){
@@ -156,13 +147,13 @@ html{scroll-padding-bottom:104px}
 }
 </style>
 </helmet>
-<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--haze); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
-<header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
+<header class="top">
 <a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl on">Incoming</a>
@@ -176,7 +167,7 @@ html{scroll-padding-bottom:104px}
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<div id="catalogue" class="pop" style="position: absolute; top: 100%; left: 24px; right: 24px; padding: 6px; border-radius:var(--r-card); background:var(--glass-menu); -webkit-backdrop-filter:var(--glass-strong-filter); backdrop-filter:var(--glass-strong-filter); border: 1px solid var(--line); box-shadow:var(--shadow-pop); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
 <section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">

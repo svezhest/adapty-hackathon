@@ -55,7 +55,7 @@ button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-seri
 .ev li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;background:var(--accent);transform:rotate(45deg)}
 .lbl{font-size:14px;font-weight:500;color:var(--ink)}
 .ctl{width:100%;height:40px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
-.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
 textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resize:vertical}
 .bad{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;font-weight:500;line-height:1.45;color:var(--bad)}
 .bad svg{flex:0 0 auto;margin-top:1px}
@@ -73,7 +73,11 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 .live.off i{background:var(--ink-4);animation:none}
 .live.err{color:var(--bad)}
 .live.err i{background:var(--bad);animation:none}
-@keyframes beat{0%{box-shadow:0 0 0 0 rgba(61,107,82,.45)}70%{box-shadow:0 0 0 6px rgba(61,107,82,0)}100%{box-shadow:0 0 0 0 rgba(61,107,82,0)}}
+@keyframes beat{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 45%,transparent)}70%{box-shadow:0 0 0 6px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.thead,.trow{margin-left:0;margin-right:0;padding-left:0;padding-right:0}
+.trow.hl{margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}
+.pl{max-width:100%;min-width:0}
+.pl span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .fill{transition:width .3s cubic-bezier(.3,.7,.2,1),background-color .3s}
 .pl.chg{animation:chg .34s ease-out}
 .cnum.chg,.pl.chg b{animation:chgn .34s ease-out}
@@ -115,13 +119,13 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 .ev li::before{display:none}
 </style>
 </helmet>
-<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--haze); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
-<header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
+<header class="top">
 <a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
@@ -135,7 +139,7 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<div id="catalogue" class="pop" style="position: absolute; top: 100%; left: 24px; right: 24px; padding: 6px; border-radius:var(--r-card); background:var(--glass-menu); -webkit-backdrop-filter:var(--glass-strong-filter); backdrop-filter:var(--glass-strong-filter); border: 1px solid var(--line); box-shadow:var(--shadow-pop); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
 <section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
@@ -167,7 +171,7 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </header>
 
 
-<main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
+<main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-direction: column; gap: 6px">
 <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px">
 <h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Insights</h1>
