@@ -4,7 +4,7 @@ Design sources for the support web app: Incoming, Ticket, Chat, Agent settings, 
 
 ## What is in here
 
-The screens live in `resolve/static/ui/`, and `tokens.css` there is the one source of colours, type scale, grid and the shared header. The Ticket screen keeps its dials and stamps as the product's signature, in those same colours. This folder keeps the original brief and canvas layout, which predate that file.
+The screens live in `resolve/static/ui/`, and `tokens.css` there is the one source of colours, type scale, grid and the shared header. The Ticket screen keeps its dials and stamps as the product's signature, in those same colours. Glass is only for layers that float over content: the header, the Screens menu and the send bar. This folder keeps the original brief and canvas layout, which predate that file.
 
 - `project/*.dc.html` — one file per screen. The markup inside `<x-dc>` is plain HTML + inline CSS; page CSS is in `<helmet><style>`; the behaviour and mock data are in the `<script type="text/x-dc">` block at the bottom (`renderVals()` returns everything the template uses, `{{ name }}` = a value from it, `<sc-for>` = loop, `<sc-if>` = condition).
 - `project/canvas.json` — the canvas layout (which screen is where, titles).
