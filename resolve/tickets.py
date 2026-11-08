@@ -409,4 +409,7 @@ def closed_line(ticket: dict, options: list[dict]) -> str:
     if index is None:
         return "Closed without a reply" if ticket.get("status") == "dismissed" else "Closed"
     final = (ticket.get("action") or {}).get("final") or (options[index] if index < len(options) else {})
-    return "You've closed it without a reply" if final.get("action") == "no_reply" else "You've chosen an option"
+    if final.get("action") == "no_reply":
+        return "You've closed it without a reply"
+    edited = any(v is not None for v in (decision.get("edits") or {}).values())
+    return "You've chosen an option and edited it" if edited else "You've chosen an option"

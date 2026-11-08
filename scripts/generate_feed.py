@@ -28,6 +28,7 @@ import json
 import random
 import re
 import sqlite3
+import zlib
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -525,6 +526,9 @@ def unknown_ticket(scene: dict, cat: str, when: datetime, index: int, rng: rando
     }
 
 
+EDITED_ENDINGS = ("If anything still looks off, just reply here.", "Sorry for the trouble, and thanks for your patience.", "Thanks for bearing with us.")
+
+
 def close(ticket: dict, rng: random.Random) -> dict:
     """Some tickets are already closed, in the shape workflow.accept / reject leave behind; demo mode: no Adapty call."""
     tri = ticket["triage"]
@@ -539,12 +543,19 @@ def close(ticket: dict, rng: random.Random) -> dict:
     index = 0 if roll < 0.8 or len(tri["options"]) < 2 else 1
     chosen = tri["options"][index]
     final = {"action": chosen["action"], "params": chosen["params"], "reply": chosen["reply"]}
+    # A hash, not rng: edited rows must not shift the random numbers of the rows after them.
+    pick = zlib.crc32(chosen["reply"].encode())
+    touched = None
+    if chosen["reply"].strip() and not tri["user_language"] and pick % 4 == 0:
+        touched = chosen["reply"] + " " + EDITED_ENDINGS[pick % len(EDITED_ENDINGS)]
+        final["reply"] = touched
     if tri["user_language"]:
         final.update(language=tri["user_language"], reply_en=chosen.get("reply_en"))
     action = {"type": chosen["action"], "demo": True, "note": "Demo mode: no Adapty call was made; only the local ticket changed.", "option": index, "final": final, "approved_at": iso(closed_at)}
     if chosen["action"] == "grant_access":
         action.update(access_level="premium", days=chosen["params"]["days"])
     edits = dict.fromkeys(("action", "reply", "reply_en", "days", "kind", "store", "question"))
+    edits["reply"] = touched
     return dict(out, decision={"option": index, "edits": edits}, action=action, action_at=closed_at, reply_sent_at=closed_at if chosen["reply"].strip() else None)
 
 

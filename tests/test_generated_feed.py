@@ -236,9 +236,11 @@ def closed(decision, status="done", action=None, options=(OPTION, OPTION)):
     return action_line({"decision": decision, "action": action, "status": status}, status, {"options": list(options)}, list(options))
 
 
-def test_a_sent_option_reads_as_chosen_edited_or_not():
+def test_a_sent_option_says_whether_it_was_edited():
     assert closed({"option": 0, "edits": {}}) == "You've chosen an option"
-    assert closed({"option": 1, "edits": {"reply": "Changed by hand"}}) == "You've chosen an option"
+    assert closed({"option": 0, "edits": {"reply": None, "days": None}}) == "You've chosen an option"
+    assert closed({"option": 1, "edits": {"reply": "Changed by hand"}}) == "You've chosen an option and edited it"
+    assert closed({"option": 1, "edits": {"days": 3}}) == "You've chosen an option and edited it"
 
 
 def test_a_persons_own_reply():
@@ -262,7 +264,7 @@ def test_no_you_when_no_person_decided():
 def test_every_closed_ticket_in_the_snapshot_reads_as_its_decision(client):
     tickets = client.get("/api/tickets").json()
     lines = {t["action_title"] for t in tickets if t["status"] in ("done", "dismissed")}
-    assert {"You've chosen an option", "You've written your own reply", "You've closed it without a reply"} == lines
+    assert {"You've chosen an option", "You've chosen an option and edited it", "You've written your own reply", "You've closed it without a reply"} == lines
 
 
 def _numbers(path) -> dict:
