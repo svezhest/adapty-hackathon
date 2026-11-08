@@ -12,6 +12,8 @@
   /* каркас */
   --page:1200px; --gutter:24px; --gap:16px;
   --r-ctl:6px; --r-card:10px;
+  /* стекло: только для слоя, плавающего над содержимым */
+  --glass:rgba(255,255,255,.25); --glass-filter:blur(6px) saturate(1.5);
   --serif:Newsreader,Georgia,'Times New Roman',serif;
   --sans:Inter,system-ui,-apple-system,sans-serif;
 }

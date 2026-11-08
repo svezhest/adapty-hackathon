@@ -141,6 +141,14 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .risk-high,.risk-medium{flex:0 0 calc(100% + 88px);margin:8px -88px 0 0}
 .ans > div{padding-left:14px!important}
 }
+html{scroll-padding-bottom:104px}
+.sendbar{position:sticky;bottom:12px;z-index:5;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--glass);-webkit-backdrop-filter:var(--glass-filter);backdrop-filter:var(--glass-filter)}
+.sendbar .quiet{color:var(--ink-2)}
+.sendbar .quiet:hover{color:var(--ink)}
+.sendmain{display:flex;align-items:center;gap:22px;min-width:0}
+@media (max-width:640px){.sendbar{bottom:8px}.sendbar .gstamp{width:120px;height:50px}.sendbar .gstamp .ink{font-size:17px}.sendmain{gap:12px}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.sendbar{background:var(--surface)}}
+@media (prefers-reduced-transparency:reduce){.sendbar{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (prefers-reduced-motion:reduce){
 .dial svg line,.dial .rim,.okstamp,.letter,.flap path,.emo,.ans,.hov,.linkbtn svg{transition:none}
 .ans.sel .okstamp,.letter,.postmark,.vanish,.ballot,.pop,.toast{animation:none}
@@ -331,14 +339,14 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 </div>
 </section>
 
-<div style="display: flex; flex-direction: column; gap: 10px; padding: 0 4px">
+<div class="sendbar" style="display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px">
-<div style="display: flex; align-items: center; gap: 22px; min-width: 0">
+<div class="sendmain">
 <button type="button" class="{{ okCls }}" disabled="{{ cantSend }}" onClick="{{ send }}" aria-label="Stamp and send the picked answer"><span class="ink">SEND</span></button>
 <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
 <span style="display: flex; flex-direction: column; min-width: 0">
 <span style="font-size:14px; font-weight: 600">{{ summary }}</span>
-<span style="font-size:14px; color: var(--ink-3)">to {{ user }}{{ sendsSuffix }}</span>
+<span style="font-size:14px; color: var(--ink-2)">to {{ user }}{{ sendsSuffix }}</span>
 </span>
 </sc-if>
 </div>
