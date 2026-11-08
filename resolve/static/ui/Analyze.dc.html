@@ -39,6 +39,26 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 .tip{position:absolute;top:8px;min-width:210px;padding:12px 14px;border-radius:6px;background:var(--surface);border:1px solid var(--line);box-shadow:0 16px 40px -14px rgba(15,15,15,.28);font-size:13px;pointer-events:none;animation:pop .12s ease-out}
 .tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
 .endlbl{position:absolute;left:calc(100% + 8px);display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-2);white-space:nowrap;transform:translateY(-50%)}
+.duel{padding:22px var(--gutter) 8px;min-width:0}
+.duel-head{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px 20px;padding-bottom:16px;font-size:14px;font-weight:600;color:var(--ink)}
+.duel-head h2{margin:0;font-family:var(--serif);font-size:20px;font-weight:500;letter-spacing:-.01em;text-align:center}
+.vs-side{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px}
+.vs-side .sw{align-self:center}
+.vs-side.p{justify-content:flex-end}
+.src{font-size:13px;font-weight:400;color:var(--ink-3)}
+.duel-row{display:grid;grid-template-columns:96px minmax(0,1fr) 220px minmax(0,1fr) 96px;align-items:center;gap:8px 20px;padding:15px 0;border-top:1px solid var(--subtle)}
+.duel-l{font-size:14px;line-height:18px;color:var(--ink-2);text-align:center}
+.duel .v{font-family:var(--serif);font-size:24px;font-weight:500;line-height:1;letter-spacing:-.01em;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.duel .v:last-child{text-align:right}
+.duel .v.win{color:var(--ink)}
+.track2.rev{display:flex;justify-content:flex-end}
+@media (max-width:640px){
+.duel-head{grid-template-columns:1fr 1fr}
+.duel-head h2{grid-column:1 / -1;grid-row:1}
+.duel-row{grid-template-columns:52px minmax(0,1fr) minmax(0,1fr) 52px;gap:8px 10px;padding:12px 0}
+.duel-l{grid-column:1 / -1;grid-row:1}
+.duel .v{font-size:18px}
+}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
 .cards.four{grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))}
 .statcard{display:flex;flex-direction:column;gap:14px;padding:20px var(--gutter)}
@@ -64,23 +84,9 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 .task:hover{color:var(--ink)}
 .task:hover .tt{color:var(--accent)}
 .cell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cmp-head,.cmp{display:grid;grid-template-columns:minmax(130px,1fr) minmax(0,1.15fr) minmax(0,1.15fr);gap:8px 24px;align-items:center}
-.cmp-head{padding:16px 0 10px;border-bottom:1px solid var(--line);font-size:14px;font-weight:600}
-.who{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px}
-.src{flex-basis:100%;font-size:12px;font-weight:400;color:var(--ink-3)}
-.cmp{padding:12px 0;border-top:1px solid var(--subtle)}
-.cmp-head + .cmp{border-top:0}
-.cmp-l{font-size:14px;color:var(--ink-2)}
-.cmp-v{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:center}
 .v{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.v.win{color:var(--ink);font-weight:700}
 .track2{display:block;height:6px;border-radius:3px;background:var(--subtle);overflow:hidden}
 .fill2{display:block;height:100%;border-radius:3px}
-.lg{display:grid;grid-template-columns:18px minmax(0,1fr) 52px;gap:12px;align-items:start;padding:11px 0;border-top:1px solid var(--subtle)}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-3)}
-.o-ok{color:var(--ok);font-weight:700}
-.o-go{color:var(--ink-3);font-weight:700}
-.o-no{color:var(--bad);font-weight:700}
 
 .glass{border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none}
 .delta{height:auto;padding:0;background:none;font-size:13px;font-weight:500;color:var(--ink-2)}
@@ -222,45 +228,22 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 </section>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 16px">
-
-<section class="card" aria-labelledby="vs-h" style="padding: 20px var(--gutter) 8px; min-width: 0">
-<div class="ch">
-<div><h2 id="vs-h">Machines vs humans, reply by reply</h2></div>
-</div>
-<div class="cmp-head">
-<span></span>
-<span class="who"><span class="sw" style="background: var(--accent)"></span>Machines<span class="src">{{ agentReplies }} replies</span></span>
-<span class="who"><span class="sw" style="background: var(--ink-2)"></span>Humans<span class="src">{{ peopleReplies }} replies</span></span>
+<section class="card duel" aria-labelledby="vs-h">
+<div class="duel-head">
+<span class="vs-side"><span class="sw" style="background: var(--accent)"></span>Machines<span class="src">{{ agentReplies }} replies</span></span>
+<h2 id="vs-h">Reply by reply</h2>
+<span class="vs-side p"><span class="src">{{ peopleReplies }} replies</span>Humans<span class="sw" style="background: var(--ink-2)"></span></span>
 </div>
 <sc-for list="{{ vs }}" as="m" hint-placeholder-count="5">
-<div class="cmp">
-<span class="cmp-l">{{ m.label }}</span>
-<span class="cmp-v"><span class="{{ m.aCls }}">{{ m.a }}</span><span class="track2"><span class="fill2" style="width: {{ m.aPct }}%; background: var(--accent)"></span></span></span>
-<span class="cmp-v"><span class="{{ m.pCls }}">{{ m.p }}</span><span class="track2"><span class="fill2" style="width: {{ m.pPct }}%; background: var(--ink-2)"></span></span></span>
+<div class="duel-row">
+<span class="{{ m.aCls }}">{{ m.a }}</span>
+<span class="track2 rev"><span class="fill2" style="width: {{ m.aPct }}%; background: var(--accent)"></span></span>
+<span class="duel-l">{{ m.label }}</span>
+<span class="track2"><span class="fill2" style="width: {{ m.pPct }}%; background: var(--ink-2)"></span></span>
+<span class="{{ m.pCls }}">{{ m.p }}</span>
 </div>
 </sc-for>
 </section>
-
-<section class="card" aria-labelledby="log-h" style="padding: 20px var(--gutter) 8px; min-width: 0">
-<div class="ch">
-<div><h2 id="log-h" class="sr">Agent replies</h2></div>
-<a href="Chat.dc.html" style="font-size:14px; font-weight: 500">Try the agent</a>
-</div>
-<div role="list" style="margin-top: 10px">
-<sc-for list="{{ logs }}" as="l" hint-placeholder-count="6">
-<div role="listitem" class="lg">
-<span class="{{ l.cls }}" style="font-size:13px; line-height: 20px" aria-hidden="true">{{ l.mark }}</span>
-<span style="display: flex; flex-direction: column; min-width: 0">
-<span class="cell" style="font-size:14px; color: var(--ink)">{{ l.reply }}</span>
-<span class="cell mono" style="margin-top: 2px">{{ l.t }} · {{ l.user }} · {{ l.out }}</span>
-</span>
-<span class="mono" style="text-align: right; line-height: 20px">{{ l.lat }}</span>
-</div>
-</sc-for>
-</div>
-</section>
-</div>
 
 <div class="{{ cardsCls }}">
 
@@ -353,15 +336,6 @@ var VS = [
   { label: 'Passed on to someone else', a: '23%', p: '0%', av: 23, pv: 0, better: 'low' },
   { label: 'Free days given away', a: '52', p: '7', av: 52, pv: 7, better: 'low' }
 ];
-var LOGS = [
-  { t: '21:39:12', kind: 'go', out: 'handed off', user: 'lumen_443814_02380', reply: "I can't add more days myself, but I've sent your request to our support team.", lat: '2.1 s' },
-  { t: '21:31:40', kind: 'ok', out: 'resolved', user: 'lumen_660412_11902', reply: 'The yearly plan renews once a year. You can switch plans in Settings → Subscription.', lat: '1.4 s' },
-  { t: '21:24:03', kind: 'ok', out: 'resolved', user: 'lumen_314007_62518', reply: 'On the new phone, open Settings → Restore purchases while signed in to the same account.', lat: '3.2 s' },
-  { t: '21:10:55', kind: 'no', out: 'grant blocked', user: 'lumen_120977_44410', reply: "Your payment is still syncing with the store. I've asked support to check it.", lat: '2.6 s' },
-  { t: '20:58:31', kind: 'go', out: 'handed off', user: 'maria.k@example.com', reply: "I've passed this to our support team so a person can help with the refund.", lat: '1.7 s' },
-  { t: '20:44:09', kind: 'ok', out: 'resolved', user: 'lumen_903355_40018', reply: 'You can cancel any time: Google Play → Subscriptions → FitBuddy → Cancel.', lat: '1.2 s' }
-];
-var LOGMARK = { ok: '✓', go: '→', no: '✕' };
 var TASKS = [
   { label: 'Talking now', dot: 'pulse', items: [
     { title: 'Premium locked after update', user: 'lumen_209331_50127', note: 'checking the profile', age: 48, href: 'Chat.dc.html' },
@@ -386,7 +360,6 @@ var API_RANGE = { today: 'today', week: '7d', month: '30d' };
 var PREV_LABEL = { week: 'the week before', month: 'the 30 days before' };
 var REASONS = { refund: 'Refund', repeat_after_grant: 'Repeat after a grant', asks_for_human: 'Asks for a human', chargeback: 'Chargeback', threat: 'Threat', profile_mismatch: 'Profile does not match', other: 'Other' };
 var BLOCKS = { grant_limit_30d: 'Second grant within 30 days', over_max_days: 'More days than allowed', not_paid: 'Not paying now', lifetime: 'Lifetime user', already_granted_this_session: 'Already granted in this chat', tool_disabled: 'Grants switched off' };
-var OUTCOME = { resolved: ['ok', 'resolved'], granted: ['ok', 'granted'], answered: ['ok', 'answered'], with_teammate: ['go', 'with a teammate'], handed_off: ['go', 'handed off'], grant_blocked: ['no', 'grant blocked'] };
 var GROUPS = [['chat', 'Talking now', 'pulse'], ['triage', 'Being triaged', 'ring'], ['review', 'Waiting for a person', 'solid']];
 var LIVE_ITEMS = 5, REFRESH_MS = 15000;
 var NO_SIDE = { replies: 0, first_reply_median_s: null, closed_with_reply: null, came_back: null, passed_on: null, free_days: 0 };
@@ -412,6 +385,7 @@ function fmtAge(s) {
   s = Math.max(0, s);
   if (s >= 86400) { var d = Math.floor(s / 86400), dh = Math.floor((s % 86400) / 3600); return d + 'd ' + ('0' + dh).slice(-2) + 'h'; }
   if (s >= 3600) { var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60); return h + 'h ' + ('0' + m).slice(-2) + 'm'; }
+  if (s < 60) return s + 's';
   var mm = Math.floor(s / 60), ss = s % 60;
   return mm + 'm ' + ('0' + ss).slice(-2) + 's';
 }
@@ -421,7 +395,6 @@ function counted(obj, names) {
   return Object.keys(obj || {}).map(function (k) { return [names[k] || k, obj[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
 }
 function sum(list) { return list.reduce(function (a, b) { return a + b; }, 0); }
-function plural(n, word) { return n + ' ' + word + (n === 1 ? '' : 's'); }
 /** Seconds as the design writes them: '3.8 s', '18 min', '2.5 h', '3 d'; null → '—'. */
 function dur(sec) {
   if (sec === null || sec === undefined) return '—';
@@ -446,7 +419,7 @@ function mockView(range, tick) {
     grants: GRANTS,
     chartTitle: 'Conversations by hour', bucketHead: 'Hour',
     chartAria: 'Stacked area chart of chats per hour from 11:00 to 23:00: 19 kept by the agent, 7 handed to people, 5 closed by people, 4 other feedback.',
-    vs: VS, agentReplies: 96, peopleReplies: 7, logs: LOGS,
+    vs: VS, agentReplies: 96, peopleReplies: 7,
     donutParts: parts, donutTotal: 31, donutPct: '61%', donutAria: '31 chats: 19 resolved by the agent, 7 handed to people, 5 still open',
     reasons: bars([['Refund', 3], ['Repeat after a grant', 2], ['Asks for a human', 1], ['Chargeback', 1]]),
     blocked: bars([['Second grant within 30 days', 5], ['More days than allowed', 3], ['User never paid', 2], ['Lifetime user', 1]]),
@@ -520,10 +493,6 @@ function liveView(data, range, elapsed, updated, error) {
       vsRow('Free days given away', m.free_days, h.free_days, 'low', String, ident)
     ],
     agentReplies: m.replies, peopleReplies: h.replies,
-    logs: (data.agent_log || []).slice(0, 6).map(function (r) {
-      var o = OUTCOME[r.outcome] || ['ok', r.outcome];
-      return { t: API.hms(r.ts), kind: o[0], out: r.outcome === 'granted' && r.grant_days ? 'granted ' + plural(r.grant_days, 'day') : o[1], user: r.user || 'unknown user', reply: r.reply, lat: dur(r.latency_s) };
-    }),
     donutParts: [['Kept by the agent', ch.resolved, C.agent], ['Handed to people', ch.handed_off, C.handed], ['Still open', ch.open, C.open]],
     donutTotal: ch.total, donutPct: ch.total ? Math.round(ch.resolved / ch.total * 100) + '%' : '—',
     donutAria: ch.total + ' chats: ' + ch.resolved + ' resolved by the agent, ' + ch.handed_off + ' handed to people, ' + ch.open + ' still open',
@@ -656,9 +625,8 @@ class Component extends DCLogic {
         var max = Math.max(m.av || 0, m.pv || 0) || 1;
         var aWin = known && (m.better === 'low' ? m.av < m.pv : m.av > m.pv);
         var pWin = known && (m.better === 'low' ? m.pv < m.av : m.pv > m.av);
-        return { label: m.label, a: m.a, p: m.p, aPct: m.av === null ? 0 : Math.max(2, m.av / max * 100), pPct: m.pv === null ? 0 : Math.max(2, m.pv / max * 100), aCls: aWin ? 'v win' : 'v', pCls: pWin ? 'v win' : 'v' };
+        return { label: m.label, a: m.a, p: m.p, aPct: !m.av ? 0 : Math.max(2, m.av / max * 100), pPct: !m.pv ? 0 : Math.max(2, m.pv / max * 100), aCls: aWin ? 'v win' : 'v', pCls: pWin ? 'v win' : 'v' };
       }),
-      logs: v.logs.map(function (l) { return { t: l.t, out: l.out, user: l.user, reply: l.reply, lat: l.lat, mark: LOGMARK[l.kind], cls: 'o-' + l.kind }; }),
       donut: donut,
       reasons: v.reasons,
       blocked: v.blocked,
