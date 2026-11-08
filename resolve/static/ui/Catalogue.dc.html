@@ -10,37 +10,24 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-.nl{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:6px;font-size:15px;font-weight:500;color:#111114;transition:background .15s,color .15s}
-.nl:hover{background:#f0f0f2;color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04)}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b}
-.btn svg{color:#6247f5}
-.halftone{background:radial-gradient(rgba(255,255,255,.38) 0.8px, transparent 1.3px) 0 0/5px 5px, radial-gradient(circle at 30% 20%, #8e74ff, #4a22e0 60%, #2a0fa0)}
-.tile{flex:0 0 auto;width:44px;height:44px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:16px;padding:10px 12px;margin:0 -12px;border-radius:6px;color:#18181b;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.mi .name{font-size:16px;font-weight:500;color:#18181b}
-.mi .desc{font-size:13.5px;color:#6b6b75}
-.mi .route{margin-left:auto;font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#6b6b75;white-space:nowrap}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
-.badge-new{font-size:12px;font-weight:600;color:#5b3cf0;background:#efedfb;padding:2px 7px;border-radius:6px}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.halftone{background:var(--accent)}
+.mi .name{font-size:16px;font-weight:500;color:var(--ink)}
+.mi .desc{font-size:14px;color:var(--ink-3)}
+.mi .route{margin-left:auto;font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-3);white-space:nowrap}
+.badge-new{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:6px}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <header style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -53,21 +40,19 @@ a:hover{color:#4527d6}
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 </header>
 
-<section aria-labelledby="cat-title" style="position: relative; overflow: hidden; margin-top: 8px; padding: 72px 24px 240px; background: linear-gradient(180deg, #12064f 0%, #2a0fa0 38%, #4a22e0 70%, #7b5cff 92%, #9f88ff 100%)">
-<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,.30) 0.9px, transparent 1.4px) 0 0/7px 7px; -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 28%, transparent 72%, #000 100%); mask-image: linear-gradient(90deg, #000 0%, transparent 28%, transparent 72%, #000 100%)"></div>
-<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(60% 70% at 50% 100%, rgba(186,170,255,.45), transparent 70%)"></div>
+<section aria-labelledby="cat-title" style="position: relative; overflow: hidden; margin-top: 8px; padding: 72px 24px 240px; background:var(--accent)">
 <div style="position: relative; max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
-<p style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.72)">Hackathon project</p>
-<h1 id="cat-title" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 62px; font-weight: 400; letter-spacing: -0.018em; line-height: 1.05; color: #fff; text-wrap: balance">Every screen of the support desk</h1>
-<p style="margin: 0; max-width: 620px; font-size: 18px; color: rgba(255,255,255,.80); text-wrap: pretty">Two agents work on the user's live subscription profile. People only step in for what the agents should not decide alone.</p>
+<p style="margin: 0; font-size:12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.72)">Hackathon project</p>
+<h1 id="cat-title" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:62px; font-weight: 400; letter-spacing: -0.018em; line-height: 1.05; color: var(--surface); text-wrap: balance">Every screen of the support desk</h1>
+<p style="margin: 0; max-width: 620px; font-size:20px; color: rgba(255,255,255,.80); text-wrap: pretty">Two agents work on the user's live subscription profile. People only step in for what the agents should not decide alone.</p>
 </div>
 </section>
 
 <div style="position: relative; max-width: 1240px; margin: -190px auto 72px; padding: 0 24px">
-<div style="padding: 10px; border-radius: 14px; background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.45); box-shadow: 0 40px 90px -30px rgba(30,10,120,.45); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px)">
-<div style="padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 6px">
+<div style="padding: 10px; border-radius:10px; background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.45); box-shadow:none; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px)">
+<div style="padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 6px">
 
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 22px 26px 16px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 22px 26px 16px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 4px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Incoming</span><span class="desc">Open and closed tickets, full-text search</span></span><span class="route">#/incoming</span></a>
@@ -77,7 +62,7 @@ a:hover{color:#4527d6}
 </div>
 </section>
 
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 22px 26px 16px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 22px 26px 16px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 4px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Test chat</span><span class="desc">What the app's user sees, with a debug drawer</span></span><span class="route">#/chat/{session}</span></a>
@@ -85,7 +70,7 @@ a:hover{color:#4527d6}
 </div>
 </section>
 
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 22px 26px 16px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 22px 26px 16px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 4px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Analyze</span><span class="desc">Agents vs people, free days, blocked actions</span></span><span class="route">#/analyze</span></a>
@@ -95,10 +80,10 @@ a:hover{color:#4527d6}
 </div>
 </section>
 
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 22px 26px 16px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 22px 26px 16px">
 <p class="kicker">Hand-off to code</p>
 <div style="display: flex; flex-direction: column; gap: 4px">
-<div class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Static HTML, no build step</span><span class="desc">Vanilla JS with hash routes</span></span><span class="route">/static/ui-alex/</span></div>
+<div class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Static HTML, no build step</span><span class="desc">Vanilla JS with hash routes</span></span><span class="route">/static/ui/</span></div>
 <div class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h4"></path></svg></span><span style="display: flex; flex-direction: column; min-width: 0"><span class="name">Data contract</span><span class="desc">Tickets, chat, config and analytics endpoints</span></span><span class="route">docs/openapi.json</span></div>
 </div>
 </section>

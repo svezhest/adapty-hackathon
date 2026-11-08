@@ -10,107 +10,84 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:#3f3f46;cursor:pointer;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.nl svg{transition:transform .2s}
-.nl.open{background:rgba(24,24,27,.06);color:#18181b}
-.nl.open svg{transform:rotate(180deg)}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04);cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b;box-shadow:0 2px 6px rgba(15,15,15,.06)}
-.btn svg{color:#6247f5}
-.tile{flex:0 0 auto;width:40px;height:40px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:0 -10px;border-radius:6px;color:#18181b;font-size:15.5px;font-weight:500;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.card{background:linear-gradient(180deg,#faf8ff 0%,#ffffff 180px);border:1px solid #ebe8f6;border-radius:10px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
 .ch{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:8px 20px}
-.ch h2{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;letter-spacing:-0.005em;color:#18181b}
-.ch p{margin:2px 0 0;font-size:13px;color:#6b6b75}
-.meta{font-size:13px;color:#6b6b75;white-space:nowrap}
-.itile{flex:0 0 auto;width:32px;height:32px;border-radius:6px;border:1px solid #ececf0;background:#ffffff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(15,15,15,.04)}
+.ch h2{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;letter-spacing:-0.005em;color:var(--ink)}
+.ch p{margin:2px 0 0;font-size:13px;color:var(--ink-3)}
+.meta{font-size:13px;color:var(--ink-3);white-space:nowrap}
 .sw{display:inline-block;width:10px;height:10px;border-radius:3px;flex:0 0 auto}
 .num{font-variant-numeric:tabular-nums}
 .seg{display:inline-flex;padding:3px;border-radius:6px;gap:2px}
-.seg button{height:30px;padding:0 12px;border-radius:7px;border:0;background:transparent;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s,color .15s}
-.seg-dark{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16)}
-.seg-dark button{color:rgba(255,255,255,.78)}
-.seg-dark button:hover{color:#fff}
-.seg-dark button.on{background:#ffffff;color:#18181b}
-.seg-light{background:#f2f2f4}
-.seg-light button{color:#52525b}
-.seg-light button.on{background:#ffffff;color:#18181b;box-shadow:0 1px 2px rgba(15,15,15,.12)}
-.glass{border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.kpi-l{font-size:13px;color:rgba(255,255,255,.78)}
-.kpi-s{font-size:13px;color:rgba(255,255,255,.72)}
-.delta{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 7px;border-radius:6px;font-size:12px;font-weight:600;background:rgba(134,239,172,.16);color:#bbf7d0}
+.seg button{height:30px;padding:0 12px;border-radius:6px;border:0;background:transparent;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s,color .15s}
+.seg-light{background:var(--subtle)}
+.seg-light button{color:var(--ink-2)}
+.seg-light button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(15,15,15,.12)}
 .hit{flex:1 1 0;height:100%}
-.seam{filter:drop-shadow(0 0 6px rgba(255,255,255,.8)) drop-shadow(0 0 14px rgba(147,197,253,.6));animation:flick 2.6s ease-in-out infinite}
-@keyframes flick{0%,100%{opacity:1}44%{opacity:.78}48%{opacity:1}53%{opacity:.86}58%{opacity:1}}
-.side-l{font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(255,255,255,.78)}
-.side-v{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:36px;font-weight:500;letter-spacing:-0.01em;line-height:1.05;font-variant-numeric:tabular-nums}
-.tip{position:absolute;top:8px;min-width:210px;padding:12px 14px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 16px 40px -14px rgba(15,15,15,.28);font-size:13px;pointer-events:none;animation:pop .12s ease-out}
+.side-v{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:34px;font-weight:500;letter-spacing:-0.01em;line-height:1.05;font-variant-numeric:tabular-nums}
+.tip{position:absolute;top:8px;min-width:210px;padding:12px 14px;border-radius:6px;background:var(--surface);border:1px solid var(--line);box-shadow:0 16px 40px -14px rgba(15,15,15,.28);font-size:13px;pointer-events:none;animation:pop .12s ease-out}
 .tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
-.endlbl{position:absolute;left:calc(100% + 8px);display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#52525b;white-space:nowrap;transform:translateY(-50%)}
+.endlbl{position:absolute;left:calc(100% + 8px);display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink-2);white-space:nowrap;transform:translateY(-50%)}
 .bar-row{display:grid;grid-template-columns:minmax(0,1fr) 28px;gap:12px;align-items:center}
-.bar-lbl{font-size:13px;color:#3f3f46;margin-bottom:5px}
-.track{height:8px;border-radius:4px;background:#f2f2f4;overflow:hidden}
-.fill{height:100%;border-radius:4px}
-.pulse{position:relative;width:8px;height:8px;border-radius:50%;background:#2563eb;flex:0 0 auto}
+.bar-lbl{font-size:13px;color:var(--ink-2);margin-bottom:5px}
+.track{height:8px;border-radius:6px;background:var(--subtle);overflow:hidden}
+.fill{height:100%;border-radius:6px}
+.pulse{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
 .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,99,235,.45);animation:ring 1.6s ease-out infinite}
 @keyframes ring{from{transform:scale(.6);opacity:1}to{transform:scale(1.5);opacity:0}}
-.ring{width:9px;height:9px;border-radius:50%;border:1.5px solid #a1a1aa;flex:0 0 auto}
-.solid{width:8px;height:8px;border-radius:50%;background:#e5484d;box-shadow:0 0 0 3px rgba(229,72,77,.16);flex:0 0 auto}
-.task{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid #f2f2f4;color:#18181b}
-.task:hover{color:#18181b}
-.task:hover .tt{color:#5b3cf0}
+.ring{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink-4);flex:0 0 auto}
+.solid{width:8px;height:8px;border-radius:50%;background:var(--ink-2);box-shadow:0 0 0 3px rgba(229,72,77,.16);flex:0 0 auto}
+.task{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--subtle);color:var(--ink)}
+.task:hover{color:var(--ink)}
+.task:hover .tt{color:var(--accent)}
 .cell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cmp-head,.cmp{display:grid;grid-template-columns:minmax(130px,1fr) minmax(0,1.15fr) minmax(0,1.15fr);gap:8px 24px;align-items:center}
-.cmp-head{padding:16px 0 10px;border-bottom:1px solid #ececf0;font-size:13.5px;font-weight:600}
+.cmp-head{padding:16px 0 10px;border-bottom:1px solid var(--line);font-size:14px;font-weight:600}
 .who{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px}
-.src{flex-basis:100%;font-size:12px;font-weight:400;color:#6b6b75}
-.cmp{padding:12px 0;border-top:1px solid #f2f2f4}
+.src{flex-basis:100%;font-size:12px;font-weight:400;color:var(--ink-3)}
+.cmp{padding:12px 0;border-top:1px solid var(--subtle)}
 .cmp-head + .cmp{border-top:0}
-.cmp-l{font-size:13.5px;color:#3f3f46}
+.cmp-l{font-size:14px;color:var(--ink-2)}
 .cmp-v{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:center}
-.v{font-size:14.5px;color:#6b6b75;font-variant-numeric:tabular-nums}
-.v.win{color:#18181b;font-weight:700}
-.track2{display:block;height:6px;border-radius:3px;background:#f2f2f4;overflow:hidden}
+.v{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.v.win{color:var(--ink);font-weight:700}
+.track2{display:block;height:6px;border-radius:3px;background:var(--subtle);overflow:hidden}
 .fill2{display:block;height:100%;border-radius:3px}
-.lg{display:grid;grid-template-columns:18px minmax(0,1fr) 52px;gap:12px;align-items:start;padding:11px 0;border-top:1px solid #f2f2f4}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#6b6b75}
-.o-ok{color:#15803d;font-weight:700}
-.o-go{color:#b0306f;font-weight:700}
-.o-no{color:#d63a3f;font-weight:700}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th{font-weight:500;color:#6b6b75;text-align:right;padding:8px 10px;border-bottom:1px solid #ececf0}
-th:first-child,td:first-child{text-align:left}
-td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-variant-numeric:tabular-nums}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
+.lg{display:grid;grid-template-columns:18px minmax(0,1fr) 52px;gap:12px;align-items:start;padding:11px 0;border-top:1px solid var(--subtle)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-3)}
+.o-ok{color:var(--ok);font-weight:700}
+.o-go{color:var(--ink-3);font-weight:700}
+.o-no{color:var(--bad);font-weight:700}
+
+.glass{border-radius:var(--r-card);background:var(--surface);border:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none}
+.kpi-l,.kpi-s{font-size:13px;color:var(--ink-3)}
+.delta{height:auto;padding:0;background:none;font-size:13px;font-weight:500;color:var(--ink-2)}
+.delta:empty{display:none}
+.side{display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--surface);min-width:0}
+.side-l{font-size:13px;font-weight:500;letter-spacing:0;color:var(--surface)}
+.side-v{font-size:24px;line-height:1}
+.ch h2{font-size:20px}
+.solid{box-shadow:none}
+.pulse::after{border-color:var(--accent-line)}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
 <header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -123,8 +100,8 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span>Incoming</a>
@@ -133,14 +110,14 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 <a href="Reopen.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></span>Reopen ticket</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span>Test chat</a>
 <a href="Settings.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></span>Agent settings</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span>Analyze</a>
@@ -154,134 +131,105 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 </sc-if>
 </header>
 
-<section aria-labelledby="hero-h" style="position: relative; overflow: hidden; margin-top: 6px; padding: 40px 24px 150px; background: linear-gradient(180deg, #12064f 0%, #2a0fa0 42%, #4a22e0 76%, #7b5cff 96%, #9f88ff 100%); color: #fff">
-<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(rgba(255,255,255,.26) 0.9px, transparent 1.4px) 0 0/7px 7px; -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 26%, transparent 74%, #000 100%); mask-image: linear-gradient(90deg, #000 0%, transparent 26%, transparent 74%, #000 100%)"></div>
-<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(50% 70% at 25% 100%, rgba(186,170,255,.30), transparent 70%)"></div>
-<div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(42% 85% at 0% 55%, rgba(37,99,235,.55), transparent 70%), radial-gradient(38% 85% at 100% 55%, rgba(229,72,77,.42), transparent 70%)"></div>
-<div style="position: relative; max-width: 1152px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px">
+<section aria-labelledby="hero-h" style="padding: 28px 24px 0">
+<div style="position: relative; max-width: 1152px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
 
 <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px">
 <div style="display: flex; flex-direction: column; gap: 6px">
-<p style="margin: 0; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7)">Analyze · FitBuddy</p>
-<h1 id="hero-h" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Machines vs humans</h1>
-<p style="margin: 0; font-size: 14.5px; color: rgba(255,255,255,.75)">{{ rangeNote }}</p>
+<h1 id="hero-h" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Machines vs humans</h1>
+<p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ rangeNote }}</p>
 </div>
 <div style="display: flex; align-items: center; gap: 10px">
-<div class="seg seg-dark" role="tablist" aria-label="Date range">
+<div class="seg seg-light" role="tablist" aria-label="Date range">
 <sc-for list="{{ ranges }}" as="r" hint-placeholder-count="3"><button type="button" role="tab" aria-selected="{{ r.on }}" class="{{ r.cls }}" onClick="{{ r.pick }}">{{ r.label }}</button></sc-for>
 </div>
-<button type="button" style="height: 38px; padding: 0 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08); color: #fff; font-size: 13.5px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px" onClick="{{ exportCsv }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Export CSV</button>
+<button type="button" class="btn" onClick="{{ exportCsv }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Export CSV</button>
 </div>
 </div>
 
 <div style="display: flex; flex-direction: column; gap: 10px">
-<div role="img" aria-label="{{ hero.aria }}" style="position: relative; display: flex; height: 80px; border-radius: 10px; overflow: hidden; box-shadow: 0 24px 50px -24px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.14)">
-<div style="width: {{ hero.w }}%; display: flex; flex-direction: column; justify-content: center; padding: 0 24px; background: radial-gradient(rgba(255,255,255,.22) 0.9px, transparent 1.4px) 0 0/6px 6px, linear-gradient(90deg, #142a6e 0%, #1d4ed8 55%, #3b82f6 100%)">
-<span class="side-l">MACHINES</span>
+<div role="img" aria-label="{{ hero.aria }}" style="display: flex; height: 56px; border-radius:6px; overflow: hidden; gap: 2px">
+<div class="side" style="width: {{ hero.w }}%; background: var(--accent)">
+<span class="side-l">Machines</span>
 <span class="side-v">{{ hero.machines }}</span>
 </div>
-<div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding: 0 24px; background: radial-gradient(rgba(255,255,255,.22) 0.9px, transparent 1.4px) 0 0/6px 6px, linear-gradient(90deg, #f26b6f 0%, #e5484d 35%, #8f1d3a 100%)">
-<span class="side-l">HUMANS</span>
+<div class="side" style="flex: 1; justify-content: flex-end; background: var(--ink-2)">
+<span class="side-l">Humans</span>
 <span class="side-v">{{ hero.humans }}</span>
 </div>
-<svg class="seam" aria-hidden="true" viewBox="0 0 18 80" preserveAspectRatio="none" style="position: absolute; top: 0; left: calc({{ hero.w }}% - 1px); width: 20px; height: 100%; overflow: visible">
-<polygon points="0,0 10,0 18,10 8,20 18,30 8,40 18,50 8,60 18,70 10,80 0,80" fill="#3b82f6"></polygon>
-<polyline points="10,0 18,10 8,20 18,30 8,40 18,50 8,60 18,70 10,80" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"></polyline>
-</svg>
 </div>
-<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13.5px; color: rgba(255,255,255,.78)"><span class="delta">{{ hero.delta }}</span>{{ hero.line }}</p>
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size:14px; color: var(--ink-3)"><span class="delta">{{ hero.delta }}</span>{{ hero.line }}</p>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 12px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 16px">
 <div class="glass" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
 <span class="kpi-l">Chats with the agent</span>
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 40px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.chats }}</span>
+<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.chats }}</span>
 <span class="kpi-s">{{ kpi.chatsSub }}</span>
 </div>
 <div class="glass" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
 <span class="kpi-l">Median first reply</span>
-<span style="display: flex; align-items: center; gap: 10px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 40px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.first }}</span><span class="delta">{{ kpi.firstDelta }}</span></span>
+<span style="display: flex; align-items: center; gap: 10px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.first }}</span><span class="delta">{{ kpi.firstDelta }}</span></span>
 <span class="kpi-s">People: {{ kpi.people }}</span>
 </div>
 <div class="glass" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
 <span class="kpi-l">Free days granted</span>
-<span style="display: flex; align-items: flex-end; gap: 12px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 40px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.days }}</span><span aria-hidden="true" style="display: flex; align-items: flex-end; gap: 3px; height: 26px; padding-bottom: 4px"><sc-for list="{{ grantBars }}" as="g" hint-placeholder-count="7"><span style="width: 5px; height: {{ g.h }}px; border-radius: 2px; background: rgba(255,255,255,.7)"></span></sc-for></span></span>
+<span style="display: flex; align-items: flex-end; gap: 12px"><span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.days }}</span></span>
 <span class="kpi-s">{{ kpi.daysSub }}</span>
 </div>
 <div class="glass" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 8px; min-width: 0">
 <span class="kpi-l">Waiting for a person</span>
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 40px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.waiting }}</span>
-<span class="kpi-s">Oldest {{ kpi.oldest }} · <a href="Main.dc.html" style="color: #fff; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45)">Open Incoming</a></span>
+<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05">{{ kpi.waiting }}</span>
+<span class="kpi-s">Oldest {{ kpi.oldest }} · <a href="Main.dc.html" style="font-weight: 500">Open Incoming</a></span>
 </div>
 </div>
 </div>
 </section>
 
-<main style="position: relative; max-width: 1200px; margin: -110px auto 0; padding: 0 24px 72px; display: flex; flex-direction: column; gap: 16px">
+<main style="position: relative; max-width: 1200px; margin: 24px auto 0; padding: 0 24px 64px; display: flex; flex-direction: column; gap: 16px">
 
-<div style="padding: 8px; border-radius: 14px; background: rgba(255,255,255,.24); border: 1px solid rgba(255,255,255,.5); box-shadow: 0 40px 90px -40px rgba(30,10,120,.5); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px)">
-<section class="card" aria-labelledby="big-h" style="padding: 22px 24px 20px; border-radius: 10px">
+<div>
+<section class="card" aria-labelledby="big-h" style="padding: 22px 24px 20px; border-radius:10px">
 <div class="ch">
 <div><h2 id="big-h">{{ chartTitle }}</h2><p>Who closed each chat or ticket</p></div>
-<div class="seg seg-light" role="tablist" aria-label="View">
-<button type="button" role="tab" aria-selected="{{ chart }}" class="{{ chartCls }}" onClick="{{ showChart }}">Chart</button>
-<button type="button" role="tab" aria-selected="{{ table }}" class="{{ tableCls }}" onClick="{{ showTable }}">Table</button>
 </div>
-</div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 12px; font-size: 13px; color: #3f3f46">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 12px; font-size:13px; color: var(--ink-2)">
 <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
-<span style="display: inline-flex; align-items: center; gap: 8px"><span class="sw" style="background: {{ l.color }}; height: {{ l.h }}px"></span>{{ l.name }}<span class="num" style="font-weight: 600; color: #18181b">{{ l.total }}</span></span>
+<span style="display: inline-flex; align-items: center; gap: 8px"><span class="sw" style="background: {{ l.color }}; height: {{ l.h }}px"></span>{{ l.name }}<span class="num" style="font-weight: 600; color: var(--ink)">{{ l.total }}</span></span>
 </sc-for>
 </div>
 
-<sc-if value="{{ chart }}" hint-placeholder-val="{{ true }}">
-<div style="display: grid; grid-template-columns: 28px minmax(0,1fr) 64px; gap: 0 8px">
-<div style="position: relative; height: 280px; font-size: 11.5px; color: #6b6b75" aria-hidden="true">
+<div style="display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 0 8px">
+<div style="position: relative; height: 280px; font-size:12px; color: var(--ink-3)" aria-hidden="true">
 <sc-for list="{{ yTicks }}" as="y" hint-placeholder-count="3"><span class="num" style="position: absolute; right: 0; top: {{ y.top }}px; transform: translateY(-50%)">{{ y.v }}</span></sc-for>
 </div>
 <div style="position: relative; height: 280px" onMouseLeave="{{ unhover }}">
 <svg role="img" aria-label="{{ chartAria }}" viewBox="0 0 1000 280" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible">
-<defs><linearGradient id="agentFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f8bff"></stop><stop offset="1" stop-color="#2563eb"></stop></linearGradient></defs>
 <sc-for list="{{ yTicks }}" as="y"><line x1="0" x2="1000" y1="{{ y.top }}" y2="{{ y.top }}" stroke="{{ y.stroke }}" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-for>
-<path d="{{ areas.closed }}" fill="#8f1d3a" fill-opacity=".9" stroke="#ffffff" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.handed }}" fill="#e5484d" fill-opacity=".9" stroke="#ffffff" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.agent }}" fill="url(#agentFill)" stroke="#ffffff" stroke-width="2" vector-effect="non-scaling-stroke"></path>
-<path d="{{ areas.feedback }}" fill="none" stroke="#52525b" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"></path>
-<sc-if value="{{ hovering }}"><line x1="{{ hoverX }}" x2="{{ hoverX }}" y1="0" y2="280" stroke="#18181b" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-if>
+<path d="{{ areas.closed }}" fill="var(--ink-4)" fill-opacity=".9" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="{{ areas.handed }}" fill="var(--ink-2)" fill-opacity=".9" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="{{ areas.agent }}" fill="var(--accent)" stroke="var(--surface)" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<path d="{{ areas.feedback }}" fill="none" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"></path>
+<sc-if value="{{ hovering }}"><line x1="{{ hoverX }}" x2="{{ hoverX }}" y1="0" y2="280" stroke="var(--ink)" stroke-opacity=".35" stroke-width="1" vector-effect="non-scaling-stroke"></line></sc-if>
 </svg>
 <div style="position: absolute; inset: 0; display: flex">
 <sc-for list="{{ hits }}" as="h" hint-placeholder-count="13"><div class="hit" onMouseEnter="{{ h.enter }}"></div></sc-for>
 </div>
-<span class="endlbl" aria-hidden="true" style="top: {{ agentMid }}px"><span class="sw" style="background: #2563eb; width: 8px; height: 8px"></span>Machines</span>
-<span class="endlbl" aria-hidden="true" style="top: {{ peopleMid }}px"><span class="sw" style="background: #e5484d; width: 8px; height: 8px"></span>Humans</span>
 <sc-if value="{{ hovering }}">
 <div class="tip" style="left: {{ tipLeft }}%; transform: translateX({{ tipShift }}%)">
-<p style="margin: 0 0 8px; font-weight: 600; color: #18181b">{{ tip.label }}</p>
+<p style="margin: 0 0 8px; font-weight: 600; color: var(--ink)">{{ tip.label }}</p>
 <div style="display: flex; flex-direction: column; gap: 5px">
-<sc-for list="{{ tip.rows }}" as="r"><div class="r"><span style="display: inline-flex; align-items: center; gap: 8px; color: #3f3f46"><span class="sw" style="background: {{ r.color }}"></span>{{ r.name }}</span><span class="num" style="font-weight: 600; color: #18181b">{{ r.v }}</span></div></sc-for>
+<sc-for list="{{ tip.rows }}" as="r"><div class="r"><span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2)"><span class="sw" style="background: {{ r.color }}"></span>{{ r.name }}</span><span class="num" style="font-weight: 600; color: var(--ink)">{{ r.v }}</span></div></sc-for>
 </div>
 </div>
 </sc-if>
 </div>
 <div></div>
-<div></div>
-<div style="display: flex; justify-content: space-between; padding-top: 8px; font-size: 11.5px; color: #6b6b75" aria-hidden="true">
+<div style="display: flex; justify-content: space-between; padding-top: 8px; font-size:12px; color: var(--ink-3)" aria-hidden="true">
 <sc-for list="{{ xLabels }}" as="x" hint-placeholder-count="7"><span class="num">{{ x }}</span></sc-for>
 </div>
-<div></div>
 </div>
-</sc-if>
 
-<sc-if value="{{ table }}" hint-placeholder-val="{{ false }}">
-<div style="overflow-x: auto">
-<table>
-<thead><tr><th scope="col">{{ bucketHead }}</th><th scope="col">Kept by the agent</th><th scope="col">Handed to people</th><th scope="col">Closed by people</th><th scope="col">Other feedback</th></tr></thead>
-<tbody>
-<sc-for list="{{ rows }}" as="r" hint-placeholder-count="13"><tr><td>{{ r.label }}</td><td>{{ r.agent }}</td><td>{{ r.handed }}</td><td>{{ r.closed }}</td><td>{{ r.feedback }}</td></tr></sc-for>
-</tbody>
-</table>
-</div>
-</sc-if>
 </section>
 </div>
 
@@ -290,18 +238,18 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 
 <section class="card" aria-labelledby="vs-h" style="padding: 20px 22px 8px; min-width: 0">
 <div class="ch">
-<div><h2 id="vs-h">Machines vs humans, reply by reply</h2><p>Same measures for both. The better side is in bold.</p></div>
+<div><h2 id="vs-h">Machines vs humans, reply by reply</h2></div>
 </div>
 <div class="cmp-head">
 <span></span>
-<span class="who"><span class="sw" style="background: #2563eb"></span>Machines<span class="src">{{ agentReplies }} replies · from app logs</span></span>
-<span class="who"><span class="sw" style="background: #e5484d"></span>Humans<span class="src">{{ peopleReplies }} replies · from Incoming</span></span>
+<span class="who"><span class="sw" style="background: var(--accent)"></span>Machines<span class="src">{{ agentReplies }} replies · from app logs</span></span>
+<span class="who"><span class="sw" style="background: var(--ink-2)"></span>Humans<span class="src">{{ peopleReplies }} replies · from Incoming</span></span>
 </div>
 <sc-for list="{{ vs }}" as="m" hint-placeholder-count="5">
 <div class="cmp">
 <span class="cmp-l">{{ m.label }}</span>
-<span class="cmp-v"><span class="{{ m.aCls }}">{{ m.a }}</span><span class="track2"><span class="fill2" style="width: {{ m.aPct }}%; background: #2563eb"></span></span></span>
-<span class="cmp-v"><span class="{{ m.pCls }}">{{ m.p }}</span><span class="track2"><span class="fill2" style="width: {{ m.pPct }}%; background: #e5484d"></span></span></span>
+<span class="cmp-v"><span class="{{ m.aCls }}">{{ m.a }}</span><span class="track2"><span class="fill2" style="width: {{ m.aPct }}%; background: var(--accent)"></span></span></span>
+<span class="cmp-v"><span class="{{ m.pCls }}">{{ m.p }}</span><span class="track2"><span class="fill2" style="width: {{ m.pPct }}%; background: var(--ink-2)"></span></span></span>
 </div>
 </sc-for>
 </section>
@@ -309,14 +257,14 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 <section class="card" aria-labelledby="log-h" style="padding: 20px 22px 8px; min-width: 0">
 <div class="ch">
 <div><h2 id="log-h">Agent replies from the app logs</h2><p>Latest lines of the FitBuddy chat log</p></div>
-<a href="Chat.dc.html" style="font-size: 13.5px; font-weight: 500">Try the agent</a>
+<a href="Chat.dc.html" style="font-size:14px; font-weight: 500">Try the agent</a>
 </div>
 <div role="list" style="margin-top: 10px">
 <sc-for list="{{ logs }}" as="l" hint-placeholder-count="6">
 <div role="listitem" class="lg">
-<span class="{{ l.cls }}" style="font-size: 13px; line-height: 20px" aria-hidden="true">{{ l.mark }}</span>
+<span class="{{ l.cls }}" style="font-size:13px; line-height: 20px" aria-hidden="true">{{ l.mark }}</span>
 <span style="display: flex; flex-direction: column; min-width: 0">
-<span class="cell" style="font-size: 14px; color: #18181b">{{ l.reply }}</span>
+<span class="cell" style="font-size:14px; color: var(--ink)">{{ l.reply }}</span>
 <span class="cell mono" style="margin-top: 2px">{{ l.t }} · {{ l.user }} · {{ l.out }}</span>
 </span>
 <span class="mono" style="text-align: right; line-height: 20px">{{ l.lat }}</span>
@@ -331,55 +279,55 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 
 <section class="card" aria-labelledby="c1" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
-<span class="itile" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 8 8h-8z"></path></svg></span>
-<div style="flex: 1; min-width: 0"><h2 id="c1" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 500">Chat outcomes</h2></div>
+
+<div style="flex: 1; min-width: 0"><h2 id="c1" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Chat outcomes</h2></div>
 <span class="meta num">{{ donutTotal }} chats</span>
 </div>
 <div style="position: relative; width: 140px; height: 140px; align-self: center">
 <svg role="img" aria-label="{{ donutAria }}" width="140" height="140" viewBox="0 0 148 148" style="transform: rotate(-90deg)">
-<circle cx="74" cy="74" r="56" fill="none" stroke="#f2f2f4" stroke-width="14"></circle>
+<circle cx="74" cy="74" r="56" fill="none" stroke="var(--subtle)" stroke-width="14"></circle>
 <sc-for list="{{ donut }}" as="d"><circle cx="74" cy="74" r="56" fill="none" stroke="{{ d.color }}" stroke-width="14" stroke-dasharray="{{ d.dash }}" stroke-dashoffset="{{ d.offset }}"></circle></sc-for>
 </svg>
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center">
-<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.01em; line-height: 1">{{ donutPct }}</span>
-<span style="font-size: 11.5px; color: #6b6b75; margin-top: 4px">by the agent</span>
+<span class="num" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.01em; line-height: 1">{{ donutPct }}</span>
+<span style="font-size:12px; color: var(--ink-3); margin-top: 4px">by the agent</span>
 </div>
 </div>
-<div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px">
-<sc-for list="{{ donut }}" as="d"><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px"><span style="display: inline-flex; align-items: center; gap: 8px; color: #3f3f46"><span class="sw" style="background: {{ d.color }}"></span>{{ d.name }}</span><span class="num" style="font-weight: 600">{{ d.v }}</span></div></sc-for>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size:13px">
+<sc-for list="{{ donut }}" as="d"><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px"><span style="display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2)"><span class="sw" style="background: {{ d.color }}"></span>{{ d.name }}</span><span class="num" style="font-weight: 600">{{ d.v }}</span></div></sc-for>
 </div>
 </section>
 
 <section class="card" aria-labelledby="c2" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
-<span class="itile" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e5484d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
-<div style="flex: 1; min-width: 0"><h2 id="c2" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 500">Why chats went to people</h2></div>
+
+<div style="flex: 1; min-width: 0"><h2 id="c2" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Why chats went to people</h2></div>
 <span class="meta num">{{ reasonsTotal }}</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ reasons }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: #e5484d"></div></div><span class="num" style="font-size: 13.5px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<sc-for list="{{ reasons }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-2)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
 </div>
 </section>
 
-<section class="card" aria-labelledby="c3" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+<sc-if value="{{ hasBlocked }}"><section class="card" aria-labelledby="c3" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
-<span class="itile" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"></path></svg></span>
-<div style="flex: 1; min-width: 0"><h2 id="c3" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 500">Blocked by limits</h2></div>
+
+<div style="flex: 1; min-width: 0"><h2 id="c3" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Blocked by limits</h2></div>
 <span class="meta num">{{ blockedTotal }}</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ blocked }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: #2563eb"></div></div><span class="num" style="font-size: 13.5px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<sc-for list="{{ blocked }}" as="b" hint-placeholder-count="4"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--accent)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
 </div>
-</section>
+</section></sc-if>
 
 <section class="card" aria-labelledby="c4" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; align-items: center; gap: 12px">
-<span class="itile" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8f1d3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7v6l-4 2v-8z"></path></svg></span>
-<div style="flex: 1; min-width: 0"><h2 id="c4" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 500">Level 1 decisions</h2></div>
+
+<div style="flex: 1; min-width: 0"><h2 id="c4" style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Level 1 decisions</h2></div>
 <span class="meta num">{{ triagedTotal }} triaged</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px">
-<sc-for list="{{ funnel }}" as="b" hint-placeholder-count="5"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: #8f1d3a"></div></div><span class="num" style="font-size: 13.5px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
+<sc-for list="{{ funnel }}" as="b" hint-placeholder-count="5"><div><div class="bar-lbl">{{ b.name }}</div><div class="bar-row"><div class="track"><div class="fill" style="width: {{ b.pct }}%; background: var(--ink-4)"></div></div><span class="num" style="font-size:14px; font-weight: 600; text-align: right">{{ b.v }}</span></div></div></sc-for>
 </div>
 </section>
 </div>
@@ -387,23 +335,23 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 <p class="kicker" style="margin-top: 16px">Live</p>
 <section class="card" aria-labelledby="work-h" style="padding: 20px 22px 10px">
 <div class="ch" style="margin-bottom: 12px">
-<div><h2 id="work-h">Agents at work</h2><p>Updates every second</p></div>
+<div><h2 id="work-h">Agents at work</h2></div>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 8px 32px">
 <sc-for list="{{ work }}" as="g" hint-placeholder-count="3">
 <div style="display: flex; flex-direction: column">
-<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #ececf0">
-<span style="font-size: 13px; font-weight: 600; color: #3f3f46">{{ g.label }}</span>
+<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--line)">
+<span style="font-size:13px; font-weight: 600; color: var(--ink-2)">{{ g.label }}</span>
 <span class="meta num">{{ g.count }}</span>
 </div>
 <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="4">
 <a href="{{ t.href }}" class="{{ t.cls }}">
 <span class="{{ g.dot }}"></span>
 <span style="display: flex; flex-direction: column; min-width: 0">
-<span class="cell tt" style="font-size: 14px; font-weight: 500; transition: color .15s">{{ t.title }}</span>
-<span class="cell" style="font-size: 12.5px; color: #6b6b75">{{ t.user }} · {{ t.note }}</span>
+<span class="cell tt" style="font-size:14px; font-weight: 500; transition: color .15s">{{ t.title }}</span>
+<span class="cell" style="font-size:13px; color: var(--ink-3)">{{ t.user }} · {{ t.note }}</span>
 </span>
-<span class="num" style="font-size: 12.5px; color: #6b6b75; white-space: nowrap">{{ t.age }}</span>
+<span class="num" style="font-size:13px; color: var(--ink-3); white-space: nowrap">{{ t.age }}</span>
 </a>
 </sc-for>
 </div>
@@ -411,7 +359,6 @@ td{padding:7px 10px;border-bottom:1px solid #f3f3f5;text-align:right;font-varian
 </div>
 </section>
 
-<p style="margin: 8px 0 0; font-size: 12.5px; color: #6b6b75">Agent data comes from the FitBuddy app's chat logs; people's from tickets answered in Incoming. Updated {{ updated }}.</p>
 </main>
 </div>
 </x-dc>
@@ -422,7 +369,7 @@ var HANDED =   [0,0,1,0,1,0,1,1,0,1,1,0,1];
 var CLOSED =   [0,0,0,1,0,1,0,1,0,0,1,1,0];
 var FEEDBACK = [0,1,0,0,1,0,0,1,0,0,1,0,0];
 var YMAX = 5, H = 280, W = 1000;
-var C = { agent: '#2563eb', handed: '#e5484d', closed: '#8f1d3a', open: '#c2770f', feedback: '#52525b' };
+var C = { agent: 'var(--accent)', handed: 'var(--ink-2)', closed: 'var(--ink-4)', open: 'var(--warn)', feedback: 'var(--ink-2)' };
 var GRANTS = [7, 7, 14, 3, 7, 7, 7];
 var RANGES = [
   { id: 'today', label: 'Today', note: 'Nov 7, 11:00–23:00 · compared with Nov 6' },
@@ -534,7 +481,7 @@ function mockView(range, tick) {
     reasons: bars([['Refund', 3], ['Repeat after a grant', 2], ['Asks for a human', 1], ['Chargeback', 1]]),
     blocked: bars([['Second grant within 30 days', 5], ['More days than allowed', 3], ['User never paid', 2], ['Lifetime user', 1]]),
     funnel: bars([['Decided', 10], ['Took the 1st answer', 6], ['Took the 2nd or 3rd', 2], ['Edited before sending', 3], ['Wrote their own', 2]]),
-    reasonsTotal: 7, blockedTotal: 11, triagedTotal: 12,
+    reasonsTotal: 7, hasBlocked: true, blockedTotal: 11, triagedTotal: 12,
     work: TASKS.map(function (g) { return { label: g.label, dot: g.dot, count: g.items.length, items: g.items.map(function (t) { return { title: t.title, user: t.user, note: t.note, href: t.href, age: fmtAge(t.age + tick) }; }) }; }),
     updated: '23:00'
   };
@@ -590,13 +537,13 @@ function liveView(data, range, elapsed, updated, error) {
       w: share === null ? 50 : Math.min(88, Math.max(12, Math.round(share * 100))),
       machines: pct(share), humans: share === null ? '—' : (100 - Math.round(share * 100)) + '%',
       aria: share === null ? 'No closed chats in this period' : 'Of ' + closedChats + ' closed chats, machines closed ' + pct(share) + ' and humans ' + (100 - Math.round(share * 100)) + '%',
-      delta: dShare === null ? '—' : (dShare > 0 ? '▲ ' : dShare < 0 ? '▼ ' : '± ') + Math.abs(dShare) + ' pts for the machines',
+      delta: dShare === null ? '' : (dShare > 0 ? '▲ ' : dShare < 0 ? '▼ ' : '± ') + Math.abs(dShare) + ' pts for the machines',
       line: 'vs ' + prevLabel + ' · ' + (closedChats ? ch.resolved + ' of ' + closedChats + ' closed chats ended without a human, ' + ch.handed_off + ' needed one' : 'no closed chats in this period')
     },
     kpi: {
       chats: ch.total, chatsSub: closedChats + ' closed · ' + ch.open + ' still open',
       first: dur(m.first_reply_median_s),
-      firstDelta: dFirst === null ? '—' : (dFirst < 0 ? '▼ ' : dFirst > 0 ? '▲ ' : '± ') + dur(Math.abs(dFirst)),
+      firstDelta: dFirst === null ? '' : (dFirst < 0 ? '▼ ' : dFirst > 0 ? '▲ ' : '± ') + dur(Math.abs(dFirst)),
       people: dur(h.first_reply_median_s),
       days: cur.grants.days, daysSub: plural(cur.grants.count, 'grant') + ' · ' + blockedTotal + ' blocked by limits',
       waiting: counts.review, oldest: oldest === null ? '—' : fmtAge(oldest)
@@ -622,7 +569,7 @@ function liveView(data, range, elapsed, updated, error) {
     reasons: liveBars(counted(cur.handoff_reasons, REASONS)),
     blocked: liveBars(counted(cur.blocked, BLOCKS)),
     funnel: liveBars([['Decided', d.decided], ['Took the 1st answer', d.first], ['Took the 2nd or 3rd', d.second_third], ['Edited before sending', d.edited], ['Wrote their own', d.own_reply], ['Closed without a reply', d.no_reply]]),
-    reasonsTotal: reasonsTotal, blockedTotal: blockedTotal, triagedTotal: d.triaged,
+    reasonsTotal: reasonsTotal, hasBlocked: blockedTotal > 0, blockedTotal: blockedTotal, triagedTotal: d.triaged,
     work: GROUPS.map(function (g) {
       var items = tasks.filter(function (t) { return t.kind === g[0]; }).sort(function (a, b) { return (a.age_s || 0) - (b.age_s || 0); }).slice(0, LIVE_ITEMS);
       return { label: g[1], dot: g[2], count: counts[g[0]], items: items.map(function (t) {
@@ -685,7 +632,6 @@ class Component extends DCLogic {
       acc += len;
       return seg;
     });
-    var isTable = !!s.table;
     var menu = !!s.menu;
     var agentMid = (yAt(l3[last], ymax) + yAt(l2[last], ymax)) / 2;
     var peopleMid = (yAt(l2[last], ymax) + yAt(0, ymax)) / 2;
@@ -699,7 +645,7 @@ class Component extends DCLogic {
       chartTitle: v.chartTitle, chartAria: v.chartAria, bucketHead: v.bucketHead,
       agentReplies: v.agentReplies, peopleReplies: v.peopleReplies,
       donutTotal: v.donutTotal, donutPct: v.donutPct, donutAria: v.donutAria,
-      reasonsTotal: v.reasonsTotal, blockedTotal: v.blockedTotal, triagedTotal: v.triagedTotal,
+      reasonsTotal: v.reasonsTotal, hasBlocked: v.hasBlocked, blockedTotal: v.blockedTotal, triagedTotal: v.triagedTotal,
       updated: v.updated,
       exportCsv: function () {
         var head = [API.mock ? v.bucketHead : v.bucketHead + ' start (UTC)', 'Kept by the agent', 'Handed to people', 'Closed by people', 'Other feedback'];
@@ -718,11 +664,7 @@ class Component extends DCLogic {
         { name: 'Closed by people', total: v.totals[2], color: C.closed, h: 10 },
         { name: 'Other feedback', total: v.totals[3], color: C.feedback, h: 2 }
       ],
-      chart: !isTable, table: isTable,
-      chartCls: isTable ? '' : 'on', tableCls: isTable ? 'on' : '',
-      showChart: function () { self.setState({ table: false }); },
-      showTable: function () { self.setState({ table: true, hover: null }); },
-      yTicks: [0, 1, 2, 3, 4, 5].map(function (k) { var y = k * v.step; return { v: y, top: yAt(y, ymax), stroke: k === 0 ? '#d9d9de' : '#f2f2f4' }; }),
+      yTicks: [0, 1, 2, 3, 4, 5].map(function (k) { var y = k * v.step; return { v: y, top: yAt(y, ymax), stroke: k === 0 ? 'var(--line)' : 'var(--subtle)' }; }),
       xLabels: v.xLabels,
       areas: { closed: band(zero, l1, ymax), handed: band(l1, l2, ymax), agent: band(l2, l3, ymax), feedback: feedback },
       agentMid: Math.round(agentMid),

@@ -1,0 +1,44 @@
+/* Единственный источник цвета, шкалы и каркаса экранов Resolve. Новый оттенок сюда добавляют, в экран — нет. */
+:root{
+  /* нейтрали */
+  --ink:#18181b; --ink-2:#52525b; --ink-3:#6b6b75; --ink-4:#a1a1aa;
+  --line:#e4e4e8; --subtle:#f2f2f4; --bg:#fafafa; --surface:#ffffff;
+  /* один акцент: действие, выбор, навигация */
+  --accent:#5b3cf0; --accent-2:#4527d6; --accent-line:#cbc3fb; --accent-soft:#f3f0ff;
+  /* состояние: только статус, не украшение и не категория */
+  --ok:#15803d; --ok-soft:#e9f3ec;
+  --warn:#8a6a2e; --warn-soft:#fbf3db;
+  --bad:#d63a3f; --bad-soft:#fbeced;
+  /* каркас */
+  --page:1200px; --gutter:24px; --gap:16px;
+  --r-ctl:6px; --r-card:10px;
+  --serif:Newsreader,Georgia,'Times New Roman',serif;
+  --sans:Inter,system-ui,-apple-system,sans-serif;
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* шапка: одна на все экраны */
+.nl{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:var(--r-ctl);border:0;background:transparent;font-size:14px;font-weight:500;line-height:1;color:var(--ink-2);cursor:pointer;transition:background .15s,color .15s}
+.nl:hover{background:var(--subtle);color:var(--ink)}
+.nl.on{background:var(--accent-soft);color:var(--accent)}
+.nl svg{transition:transform .2s}
+.nl.open{background:var(--subtle);color:var(--ink)}
+.nl.open svg{transform:rotate(180deg)}
+
+/* кнопки: обычная и главная, без третьей */
+.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:var(--r-ctl);background:var(--surface);color:var(--ink);font-size:14px;font-weight:500;border:1px solid var(--line);cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{background:var(--subtle);color:var(--ink)}
+.btn svg{color:var(--ink-3)}
+.btn.nf{border-color:var(--accent);background:var(--accent);color:#fff}
+.btn.nf svg{color:#fff}
+.btn.nf:hover{border-color:var(--accent-2);background:var(--accent-2);color:#fff}
+
+/* меню экранов */
+.tile{flex:0 0 auto;width:36px;height:36px;border-radius:var(--r-ctl);background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink-2);transition:border-color .15s,color .15s}
+.mi{display:flex;align-items:center;gap:12px;padding:8px 10px;margin:0 -10px;border-radius:var(--r-ctl);color:var(--ink);font-size:14px;font-weight:500;transition:background .15s}
+.mi:hover{background:var(--subtle);color:var(--ink)}
+.mi:hover .tile{border-color:var(--accent-line);color:var(--accent)}
+
+/* поверхности и подпись секции */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card)}
+.kicker{margin:0;font-family:var(--sans);font-size:13px;font-weight:500;font-style:normal;letter-spacing:0;color:var(--ink-3)}

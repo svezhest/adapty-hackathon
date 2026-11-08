@@ -162,7 +162,7 @@ python scripts/eval.py --yes        # calls a real model, costs money
 | `resolve/workflow.py` | Accept, reject, reopen |
 | `resolve/api.py`, `resolve/analytics.py` | JSON API and the numbers behind Analyze |
 | `resolve/llm*.py` | One tool-calling interface for both providers |
-| `resolve/static/ui/` | The web screens; `?mock=1` shows sample data with no requests |
+| `resolve/static/ui/` | The web screens, styled from `tokens.css`; `?mock=1` shows sample data with no requests |
 
 **Docs:** [how the agents work](docs/agents.md) · [API schema](docs/openapi.json) · [design brief and tokens](docs/design/README.md) · [market research](docs/market-research/README.md) · [how AI was used to build this](docs/history/AI_LOG.md) · [rules for coding agents](AGENTS.md)
 

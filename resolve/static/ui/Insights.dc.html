@@ -10,116 +10,119 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:#3f3f46;cursor:pointer;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.nl svg{transition:transform .2s}
-.nl.open{background:rgba(24,24,27,.06);color:#18181b}
-.nl.open svg{transform:rotate(180deg)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04);cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b;box-shadow:0 2px 6px rgba(15,15,15,.06)}
-.btn svg{color:#6247f5}
-.btn:disabled,.btn:disabled:hover{background:#ffffff;color:#a1a1aa;border-color:#ececf0;box-shadow:none;cursor:not-allowed}
-.btn:disabled svg{color:#a1a1aa}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
-.btn.nf:disabled,.btn.nf:disabled:hover{color:#e4defc;background:radial-gradient(130% 160% at 18% -10%,#8f80d6 0%,#6d5fae 50%,#5c5194 100%);box-shadow:none;filter:saturate(.55);cursor:not-allowed}
-.btn.nf:disabled svg{color:#e4defc}
-.btn.big{height:46px;width:100%;font-size:15px;font-weight:600;border-radius:8px}
-.tile{flex:0 0 auto;width:40px;height:40px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:0 -10px;border-radius:6px;color:#18181b;font-size:15.5px;font-weight:500;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn:disabled,.btn:disabled:hover{background:var(--surface);color:var(--ink-4);border-color:var(--line);box-shadow:none;cursor:not-allowed}
+.btn:disabled svg{color:var(--ink-4)}
+.btn.big{height:46px;width:100%;font-size:14px;font-weight:600;border-radius:6px}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.card{background:linear-gradient(180deg,#faf8ff 0%,#ffffff 180px);border:1px solid #ebe8f6;border-radius:10px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
-.ct{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:21px;font-weight:500;letter-spacing:-0.008em;line-height:1.2;color:#18181b}
+.ct{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;letter-spacing:-0.008em;line-height:1.2;color:var(--ink)}
 .badge{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:27px;padding:0 10px 0 9px;border-radius:6px;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .badge i{flex:0 0 auto;width:7px;height:7px;border-radius:50%}
 .crow{display:grid;grid-template-columns:minmax(0,224px) 36px minmax(0,1fr);align-items:center;column-gap:16px;min-height:42px}
-.cnum{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:19px;font-weight:500;line-height:1;text-align:right;font-variant-numeric:lining-nums tabular-nums;color:#18181b}
-.track{height:6px;border-radius:3px;background:#f1eff8;overflow:hidden}
+.cnum{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;text-align:right;font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.track{height:6px;border-radius:3px;background:var(--subtle);overflow:hidden}
 .fill{height:100%;border-radius:3px;animation:grow .6s cubic-bezier(.3,.7,.2,1) both;transform-origin:left center}
 @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.thead{display:grid;grid-template-columns:minmax(0,224px) minmax(0,1fr);column-gap:16px;padding:0 12px 9px;margin:0 -12px;border-bottom:1px solid #ececf0;font-size:12.5px;font-weight:500;color:#6b6b75}
-.trow{display:grid;grid-template-columns:minmax(0,224px) minmax(0,1fr);align-items:start;column-gap:16px;padding:11px 12px;margin:0 -12px;border-bottom:1px solid #f2f2f4}
+.thead{display:grid;grid-template-columns:minmax(0,224px) minmax(0,1fr);column-gap:16px;padding:0 12px 9px;margin:0 -12px;border-bottom:1px solid var(--line);font-size:13px;font-weight:500;color:var(--ink-3)}
+.trow{display:grid;grid-template-columns:minmax(0,224px) minmax(0,1fr);align-items:start;column-gap:16px;padding:11px 12px;margin:0 -12px;border-bottom:1px solid var(--subtle)}
 .trow .cat{padding-top:2px}
-.trow.hl{position:relative;margin:6px -12px;border-bottom-color:transparent;border-radius:10px;background:radial-gradient(130% 240% at 0% 0%,#ebe4ff 0%,#f5f2ff 38%,#fcfbff 75%,#ffffff 100%);box-shadow:inset 0 0 0 1px #e1d9fc,0 14px 32px -24px rgba(70,40,200,.35)}
+.trow.hl{position:relative;margin:6px -12px;border-bottom-color:transparent;border-radius:10px;background:var(--accent-soft);box-shadow:none}
 .pills{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.pl{display:inline-flex;align-items:center;gap:8px;height:27px;padding:0 9px;border-radius:6px;border:1px solid #e8e6f2;background:#ffffff;font-size:13px;color:#3f3f46;white-space:nowrap}
-.pl b{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;line-height:1;color:#18181b;font-variant-numeric:lining-nums tabular-nums}
-.pl.code span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#3f3f46}
-.pl.unk{border-style:dashed;border-color:#cfcbe0;background:rgba(255,255,255,.6)}
-.pl.unk span{font-family:Newsreader,Georgia,'Times New Roman',serif;font-style:italic;font-size:14.5px;color:#52525b}
-.pl.top{height:34px;padding:0 13px;gap:10px;border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 12px 26px -12px rgba(42,15,160,.6),inset 0 1px 0 rgba(255,255,255,.14)}
-.pl.top span{font-size:13.5px;font-weight:500;color:#fff}
-.pl.top b{font-size:21px;color:#fff}
-.pl.top em{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:14px;color:#cfc3ff;margin-left:-5px}
-.code-t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78em;padding:2px 6px;border-radius:5px;background:#f0edff;color:#4527d6;white-space:nowrap}
+.pl{display:inline-flex;align-items:center;gap:8px;height:27px;padding:0 9px;border-radius:6px;border:1px solid var(--line);background:var(--surface);font-size:13px;color:var(--ink-2);white-space:nowrap}
+.pl b{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:16px;font-weight:600;line-height:1;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.pl.code span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--ink-2)}
+.pl.unk{border-style:dashed;border-color:var(--ink-4);background:rgba(255,255,255,.6)}
+.pl.unk span{font-family:Newsreader,Georgia,'Times New Roman',serif;font-style:italic;font-size:14px;color:var(--ink-2)}
+.pl.top{height:34px;padding:0 13px;gap:10px;border-color:transparent;color:var(--surface);background:var(--accent);box-shadow:none}
+.pl.top span{font-size:14px;font-weight:500;color:var(--surface)}
+.pl.top b{font-size:20px;color:var(--surface)}
+.pl.top em{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:14px;color:var(--accent-line);margin-left:-5px}
+.code-t{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78em;padding:2px 6px;border-radius:6px;background:var(--accent-soft);color:var(--accent-2);white-space:nowrap}
 .kv{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px 16px;margin:0}
-.kv dt{font-family:Newsreader,Georgia,'Times New Roman',serif;font-style:italic;font-size:15.5px;line-height:1.4;color:#6b6b75}
-.kv dd{margin:0;font-size:14.5px;line-height:1.55;color:#18181b;text-wrap:pretty}
+.kv dt{font-family:Newsreader,Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;line-height:1.4;color:var(--ink-3)}
+.kv dd{margin:0;font-size:14px;line-height:1.55;color:var(--ink);text-wrap:pretty}
 .ev{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
 .ev li{position:relative;padding-left:16px}
-.ev li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;background:#6247f5;transform:rotate(45deg)}
-.lbl{font-size:13.5px;font-weight:500;color:#18181b}
-.ctl{width:100%;height:40px;padding:0 12px;border-radius:6px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:14.5px}
-.ctl:focus{outline:none;border-color:#b9aefb;box-shadow:0 0 0 3px rgba(98,71,245,.10)}
+.ev li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;background:var(--accent);transform:rotate(45deg)}
+.lbl{font-size:14px;font-weight:500;color:var(--ink)}
+.ctl{width:100%;height:40px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
+.ctl:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
 textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resize:vertical}
-.bad{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:13.5px;font-weight:500;line-height:1.45;color:#8e3b36}
+.bad{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;font-weight:500;line-height:1.45;color:var(--bad)}
 .bad svg{flex:0 0 auto;margin-top:1px}
-.muted{margin:0;font-size:13px;color:#6b6b75}
+.muted{margin:0;font-size:13px;color:var(--ink-3)}
 .spin{animation:spin .9s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.sk{height:12px;border-radius:6px;background:linear-gradient(90deg,#f1eef9 0%,#e6e0fb 40%,#f1eef9 80%);background-size:300% 100%;animation:sk 1.4s ease-in-out infinite}
+.sk{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--subtle) 0%,var(--line) 40%,var(--subtle) 80%);background-size:300% 100%;animation:sk 1.4s ease-in-out infinite}
 @keyframes sk{from{background-position:100% 0}to{background-position:-50% 0}}
-.dr{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid #f2f2f4}
+.dr{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-top:1px solid var(--subtle)}
 .dr.new{animation:pop .3s ease-out}
-.st{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:5px;background:#edf3ef;color:#3d6b52;font-size:12px;font-weight:600}
-.st i{width:6px;height:6px;border-radius:50%;background:#3d6b52}
-.uid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#52525b;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:640px){.crow{grid-template-columns:minmax(0,1fr) 32px;row-gap:6px}.crow .track{grid-column:1 / -1}.thead,.trow{grid-template-columns:minmax(0,1fr)}.thead span:last-child{display:none}.trow{row-gap:8px}.kv{grid-template-columns:minmax(0,1fr);gap:2px 0}.kv dd{margin-bottom:10px}}
 /* added for the live screen (not in the hand-off): live dot, change flash, sliding rows, updating, before */
-.live{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#6b6b75;font-variant-numeric:tabular-nums}
-.live i{width:7px;height:7px;border-radius:50%;background:#3d6b52;animation:beat 2.4s ease-out infinite}
-.live.off i{background:#a1a1aa;animation:none}
-.live.err{color:#8e3b36}
-.live.err i{background:#8e3b36;animation:none}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:beat 2.4s ease-out infinite}
+.live.off i{background:var(--ink-4);animation:none}
+.live.err{color:var(--bad)}
+.live.err i{background:var(--bad);animation:none}
 @keyframes beat{0%{box-shadow:0 0 0 0 rgba(61,107,82,.45)}70%{box-shadow:0 0 0 6px rgba(61,107,82,0)}100%{box-shadow:0 0 0 0 rgba(61,107,82,0)}}
 .fill{transition:width .3s cubic-bezier(.3,.7,.2,1),background-color .3s}
 .pl.chg{animation:chg .34s ease-out}
 .cnum.chg,.pl.chg b{animation:chgn .34s ease-out}
-@keyframes chg{from{box-shadow:0 0 0 4px rgba(98,71,245,.22)}to{box-shadow:0 0 0 0 rgba(98,71,245,0)}}
+@keyframes chg{from{box-shadow:0 0 0 4px rgba(91,60,240,.22)}to{box-shadow:0 0 0 0 rgba(91,60,240,0)}}
 @keyframes chgn{from{transform:translateY(-3px);opacity:.35}to{transform:none;opacity:1}}
 .trow{transition:background .3s,box-shadow .3s}
 .upd{opacity:.45;transition:opacity .2s}
 .swap{animation:pop .3s ease-out}
-.note{display:flex;align-items:center;gap:8px;margin:0;font-size:13.5px;font-weight:500;line-height:1.45;color:#5b3cf0}
-.note.quiet{font-weight:400;color:#6b6b75}
+.note{display:flex;align-items:center;gap:8px;margin:0;font-size:14px;font-weight:500;line-height:1.45;color:var(--accent)}
+.note.quiet{font-weight:400;color:var(--ink-3)}
 .note svg{flex:0 0 auto}
-.before{display:flex;flex-direction:column;gap:4px;padding:2px 0 2px 14px;border-left:2px solid #e1d9fc}
-.before .ph{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:16px;line-height:1.4;color:#52525b;text-wrap:pretty}
+.before{display:flex;flex-direction:column;gap:4px;padding:2px 0 2px 14px;border-left:2px solid var(--line)}
+.before .ph{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:16px;line-height:1.4;color:var(--ink-2);text-wrap:pretty}
+
+.two{display:grid;grid-template-columns:minmax(0,2fr) minmax(320px,1fr);gap:24px;align-items:start}
+@media (max-width:980px){.two{grid-template-columns:minmax(0,1fr)}}
+.ct{font-size:20px}
+.badge{height:auto;padding:0;border-radius:0;color:var(--ink);font-size:14px;font-weight:400}
+.crow{grid-template-columns:minmax(0,200px) 32px minmax(0,1fr);min-height:36px}
+.cnum{font-family:var(--sans);font-size:14px;font-weight:500}
+.track{background:var(--subtle)}
+.fill{background:var(--ink-4)}
+.crow:first-child .fill{background:var(--accent)}
+.thead,.trow{grid-template-columns:minmax(0,200px) minmax(0,1fr)}
+.pl{height:26px;gap:6px;padding:0 8px;border-color:var(--line);font-size:13px;color:var(--ink-2)}
+.pl b{font-family:var(--sans);font-size:13px;font-weight:600}
+.pl.code span{font-family:var(--sans);font-size:13px;color:var(--ink-2)}
+.pl.top{height:26px;padding:0 8px;gap:6px;background:var(--accent);box-shadow:none}
+.pl.top span{font-size:13px}
+.pl.top b{font-size:13px}
+.pl.top em{font-family:var(--sans);font-style:normal;font-size:13px;color:var(--surface);margin-left:-2px;opacity:.85}
+.trow.hl{margin:0 -12px;padding:11px 12px;border-radius:0;background:var(--accent-soft);box-shadow:none}
+.kv{grid-template-columns:minmax(0,1fr);gap:4px 0}
+.kv dt{font-family:var(--sans);font-style:normal;font-size:13px;font-weight:500;color:var(--ink-3)}
+.kv dd{margin:0 0 14px;font-size:14px}
+.kv dd:last-child{margin-bottom:0}
+.ev{gap:3px}
+.ev li{padding-left:0;color:var(--ink-2)}
+.ev li::before{display:none}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
-<header style="position: relative; z-index: 30; max-width: 1280px; margin: 0 auto; padding: 14px 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -132,8 +135,8 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 48px; right: 48px; padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span>Incoming</a>
@@ -142,14 +145,14 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 <a href="Reopen.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></span>Reopen ticket</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span>Test chat</a>
 <a href="Settings.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></span>Agent settings</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span>Analyze</a>
@@ -164,45 +167,45 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </header>
 
 
-<main style="max-width: 1280px; margin: 0 auto; padding: 28px 48px 96px; display: flex; flex-direction: column; gap: 22px">
+<main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
 <div style="display: flex; flex-direction: column; gap: 6px">
 <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px">
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Insights</h1>
-<span style="font-size: 15px; color: #6b6b75; font-variant-numeric: tabular-nums">{{ triaged }} of {{ total }} tickets triaged</span>
+<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Insights</h1>
+<span style="font-size:14px; color: var(--ink-3); font-variant-numeric: tabular-nums">{{ triaged }} of {{ total }} tickets triaged</span>
 <sc-if value="{{ showLive }}"><span class="{{ liveCls }}" aria-live="off"><i></i>{{ liveText }}</span></sc-if>
 </div>
-<p style="margin: 0; max-width: 760px; color: #52525b; font-size: 15px; text-wrap: pretty">Complaints grouped by the paywall the user saw. The paywall and A/B arm come from the offline dataset, not from the live profile.</p>
+<p style="margin: 0; max-width: 760px; color: var(--ink-2); font-size:14px; text-wrap: pretty">Complaints grouped by the paywall the user saw. The paywall and A/B arm come from the offline dataset, not from the live profile.</p>
 </div>
 
-<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px">
+<div class="two">
 
-<div style="flex: 999 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 24px">
 
-<section class="card" aria-labelledby="h-cat" style="padding: 22px 26px 20px; display: flex; flex-direction: column; gap: 14px">
+<section class="card" aria-labelledby="h-cat" style="padding: var(--gutter); display: flex; flex-direction: column; gap: 14px">
 <h2 id="h-cat" class="ct">By category</h2>
 <sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}">
 <div role="list" data-sec="cat" style="display: flex; flex-direction: column">
 <sc-for list="{{ cats }}" as="c" hint-placeholder-count="7">
 <div role="listitem" class="crow" data-k="{{ c.key }}">
-<span style="min-width: 0"><span class="badge" style="color: {{ c.color }}; background: {{ c.tint }}"><i style="background: {{ c.color }}"></i>{{ c.name }}</span></span>
+<span style="min-width: 0"><span class="badge">{{ c.name }}</span></span>
 <span class="{{ c.numCls }}">{{ c.shown }}</span>
-<span class="track" aria-hidden="true"><span class="fill" style="display: block; width: {{ c.w }}; background: {{ c.color }}"></span></span>
+<span class="track" aria-hidden="true"><span class="fill" style="display: block; width: {{ c.w }}"></span></span>
 </div>
 </sc-for>
 </div>
 </sc-if>
 <sc-if value="{{ noData }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; padding: 22px 0 18px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.45; color: #52525b; text-wrap: pretty">No triaged tickets yet. Open tickets in the inbox; each open runs Level 1 triage.</p>
+<p style="margin: 0; padding: 22px 0 18px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">No triaged tickets yet. Open tickets in the inbox; each open runs Level 1 triage.</p>
 </sc-if>
 </section>
 
-<section class="card" aria-labelledby="h-prod" style="padding: 22px 26px 14px; display: flex; flex-direction: column; gap: 14px">
+<section class="card" aria-labelledby="h-prod" style="padding: var(--gutter) var(--gutter) 8px; display: flex; flex-direction: column; gap: 14px">
 <h2 id="h-prod" class="ct">Category × product</h2>
 <div role="table" aria-labelledby="h-prod" data-sec="prod">
 <div role="row" class="thead"><span role="columnheader">Category</span><span role="columnheader">Products</span></div>
 <sc-for list="{{ rows }}" as="c" hint-placeholder-count="7">
 <div role="row" class="trow" data-k="{{ c.key }}">
-<span role="rowheader" class="cat" style="min-width: 0"><span class="badge" style="color: {{ c.color }}; background: {{ c.tint }}"><i style="background: {{ c.color }}"></i>{{ c.name }}</span></span>
+<span role="rowheader" class="cat" style="min-width: 0"><span class="badge">{{ c.name }}</span></span>
 <span role="cell" class="pills">
 <sc-for list="{{ c.products }}" as="p"><span class="{{ p.cls }}"><span>{{ p.k }}</span><b>{{ p.n }}</b></span></sc-for>
 </span>
@@ -211,16 +214,15 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </div>
 </section>
 
-<section class="card" aria-labelledby="h-flow" style="padding: 22px 26px 14px; display: flex; flex-direction: column; gap: 14px">
+<section class="card" aria-labelledby="h-flow" style="padding: var(--gutter) var(--gutter) 8px; display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px">
 <h2 id="h-flow" class="ct">Category × paywall seen</h2>
-<sc-if value="{{ hasData }}" hint-placeholder-val="{{ true }}"><p class="kicker" style="font-size: 15px">Impact builds on the marked cell</p></sc-if>
 </div>
 <div role="table" aria-labelledby="h-flow" data-sec="flow">
 <div role="row" class="thead"><span role="columnheader">Category</span><span role="columnheader">Flows</span></div>
 <sc-for list="{{ rows }}" as="c" hint-placeholder-count="7">
 <div role="row" class="{{ c.rowCls }}" data-k="{{ c.key }}">
-<span role="rowheader" class="cat" style="min-width: 0"><span class="badge" style="color: {{ c.color }}; background: {{ c.tint }}"><i style="background: {{ c.color }}"></i>{{ c.name }}</span></span>
+<span role="rowheader" class="cat" style="min-width: 0"><span class="badge">{{ c.name }}</span></span>
 <span role="cell" class="pills">
 <sc-for list="{{ c.flows }}" as="f">
 <span class="{{ f.cls }}" title="{{ f.key }}"><span>{{ f.name }}</span><b>{{ f.n }}</b><sc-if value="{{ f.top }}"><em>of {{ c.n }}</em></sc-if><span class="sr"> · flow key {{ f.key }}</span></span>
@@ -232,9 +234,9 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </section>
 </div>
 
-<div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 24px">
 
-<section class="card" aria-labelledby="h-hyp" style="padding: 22px 26px 20px; display: flex; flex-direction: column; gap: 16px">
+<section class="card" aria-labelledby="h-hyp" style="padding: var(--gutter); display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px">
 <h2 id="h-hyp" class="ct">Hypothesis</h2>
 <sc-if value="{{ showRun }}" hint-placeholder-val="{{ true }}">
@@ -258,15 +260,14 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 
 <sc-if value="{{ hasResult }}" hint-placeholder-val="{{ true }}">
 <div class="{{ resCls }}" style="display: flex; flex-direction: column; gap: 18px">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 450; line-height: 1.36; letter-spacing: -0.005em; color: #18181b; text-wrap: pretty"><sc-for list="{{ head }}" as="h"><sc-if value="{{ h.code }}"><span class="code-t">{{ h.t }}</span></sc-if><sc-if value="{{ h.plain }}">{{ h.t }}</sc-if></sc-for></p>
+<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 450; line-height: 1.36; letter-spacing: -0.005em; color: var(--ink); text-wrap: pretty"><sc-for list="{{ head }}" as="h"><sc-if value="{{ h.code }}"><span class="code-t">{{ h.t }}</span></sc-if><sc-if value="{{ h.plain }}">{{ h.t }}</sc-if></sc-for></p>
 <dl class="kv">
-<dt>Hypothesis</dt><dd>{{ r.hypothesis }}<sc-if value="{{ r.hasCaveat }}"><span class="muted" style="display: block; margin-top: 6px; line-height: 1.5">{{ r.caveat }}</span></sc-if></dd>
+<dt>Claim</dt><dd>{{ r.hypothesis }}<sc-if value="{{ r.hasCaveat }}"><span class="muted" style="display: block; margin-top: 6px; line-height: 1.5">{{ r.caveat }}</span></sc-if></dd>
 <dt>Placement</dt><dd>{{ r.placement }} · control: {{ r.control }}</dd>
 <dt>Variant</dt><dd>{{ r.variant }}<sc-if value="{{ r.hasArm }}"><span class="muted" style="display: block; margin-top: 6px; line-height: 1.5">{{ r.arm }}</span></sc-if></dd>
 <dt>Measure</dt><dd><sc-for list="{{ measure }}" as="h"><sc-if value="{{ h.code }}"><span class="code-t">{{ h.t }}</span></sc-if><sc-if value="{{ h.plain }}">{{ h.t }}</sc-if></sc-for></dd>
 <dt>Evidence</dt><dd><ul class="ev"><sc-for list="{{ r.evidence }}" as="e"><li>{{ e }}</li></sc-for></ul><sc-if value="{{ r.hasTickets }}"><p class="muted" style="margin-top: 8px; line-height: 1.9">Read from <sc-for list="{{ r.tickets }}" as="t"><a href="{{ t.href }}" class="code-t">{{ t.id }}</a> </sc-for></p></sc-if></dd>
 </dl>
-<p class="muted" style="padding-top: 12px; border-top: 1px solid #f2f2f4">{{ generated }}</p>
 <sc-if value="{{ hasPrev }}">
 <div class="before">
 <p class="kicker">Before · {{ prev.when }}</p>
@@ -288,15 +289,15 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </sc-if>
 
 <sc-if value="{{ notRun }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.45; color: #52525b; text-wrap: pretty">Not run yet. One model call reads the aggregates and writes a single hypothesis you can test.</p>
+<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2); text-wrap: pretty">Not run yet. One model call reads the aggregates and writes a single hypothesis you can test.</p>
 </sc-if>
 
 <sc-if value="{{ demoNoCache }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.45; color: #52525b">No cached analysis in the snapshot.</p>
+<p style="margin: 0; padding: 6px 0 4px; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; line-height: 1.45; color: var(--ink-2)">No cached analysis in the snapshot.</p>
 </sc-if>
 </section>
 
-<section class="card" aria-labelledby="h-ab" style="padding: 22px 26px 8px; display: flex; flex-direction: column; gap: 16px">
+<section class="card" aria-labelledby="h-ab" style="padding: var(--gutter) var(--gutter) 8px; display: flex; flex-direction: column; gap: 16px">
 <h2 id="h-ab" class="ct">Draft A/B test</h2>
 <div style="display: flex; flex-direction: column; gap: 7px">
 <label for="plc" class="lbl">Placement</label>
@@ -320,27 +321,7 @@ textarea.ctl{height:auto;min-height:96px;padding:10px 12px;line-height:1.5;resiz
 </sc-if>
 </div>
 
-<sc-if value="{{ hasDrafts }}" hint-placeholder-val="{{ true }}">
-<div style="display: flex; flex-direction: column; margin-top: 6px">
-<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 8px">
-<p class="kicker">Drafts created</p>
-<a href="https://app.adapty.io/ab-tests/flows" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 5px; font-size: 13.5px; font-weight: 500">Open the dashboard<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
-</div>
-<sc-for list="{{ drafts }}" as="d" hint-placeholder-count="1">
-<div class="{{ d.cls }}">
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px">
-<span style="font-size: 14.5px; font-weight: 600; color: #18181b">{{ d.name }}</span>
-<span class="st"><i></i>{{ d.state }}</span>
-</div>
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13px; color: #52525b">
-<span>{{ d.placement }}</span><span aria-hidden="true" style="color: #d4d4d8">·</span><span class="uid" title="{{ d.id }}">{{ d.id }}</span><span aria-hidden="true" style="color: #d4d4d8">·</span><span>{{ d.date }}</span>
-</div>
-<p class="muted">{{ d.arms }}</p>
-</div>
-</sc-for>
-</div>
-</sc-if>
-<sc-if value="{{ noDrafts }}" hint-placeholder-val="{{ false }}"><div style="height: 12px"></div></sc-if>
+<sc-if value="{{ hasFresh }}" hint-placeholder-val="{{ false }}"><p class="muted" role="status">Draft created: {{ freshName }}.</p></sc-if>
 </section>
 </div>
 </div>
@@ -394,7 +375,7 @@ var SIM = [['refund_request', 'annual', 'main'], ['refund_request', 'monthly', '
 
 // --- shared ---------------------------------------------------------------------------------------
 var LABELS = { charged_after_trial: 'Charged after trial', refund_request: 'Refund request', billing_issue: 'Billing issue', no_access_after_purchase: 'No access after purchase', cancel_how: 'How to cancel', price_complaint: 'Price complaint', other: 'Other' };
-var COLORS = { charged_after_trial: ['#5b3cf0', '#efebff'], refund_request: ['#8e3b36', '#f8eceb'], billing_issue: ['#86641f', '#f6f0e3'], no_access_after_purchase: ['#2c6a88', '#e8f1f5'], cancel_how: ['#3d6b52', '#eaf2ed'], price_complaint: ['#9a4572', '#f7ebf2'], other: ['#5f5f69', '#f1f1f4'] };
+var COLORS = { other: ['var(--ink)', 'transparent'] };
 var POLL_MS = 2500, ANIM_MS = 300, FLASH_MS = 340, MOCK_DEBOUNCE_MS = 3000, MOCK_RUN_MS = 2600, SHARE = 0.05;
 
 function label(k) { return LABELS[k] || String(k || '').replace(/_/g, ' '); }
@@ -420,12 +401,6 @@ function reportRows(report) {
     caveat: report.caveat, hasCaveat: !!report.caveat, variant: report.variant, arm: arm, hasArm: !!arm, evidence: report.evidence,
     hasTickets: ids.length > 0,
     tickets: ids.map(function (id) { return { id: id, href: API.mock ? 'Ticket.dc.html' : 'Ticket.dc.html?id=' + encodeURIComponent(id) }; }) };
-}
-/** "Updated on its own … · 1 model call, 4.8 s. Kept the test on …" — what changed is computed from counts on the server; the trigger reason only when there is none. */
-function generatedLine(report) {
-  var calls = report.model_calls ? report.model_calls + ' model call' + (report.model_calls > 1 ? 's' : '') + (report.latency_s != null ? ', ' + Number(report.latency_s).toFixed(1) + ' s' : '') : '';
-  var changed = report.what_changed && !/^first analysis/i.test(report.what_changed) ? report.what_changed : report.trigger === 'auto' ? report.reason : '';
-  return (report.trigger === 'auto' ? 'Updated on its own ' : 'Generated ') + when(report.created_at) + (calls ? ' · ' + calls : '') + '.' + (changed ? ' ' + sentence(changed) : '');
 }
 function countsOf(d) {
   var out = {};
@@ -690,7 +665,6 @@ class Component extends DCLogic {
       resCls: running ? 'upd' : (s.swapUntil || 0) > now ? 'swap' : '',
       head: report ? marked(report.headline) : [], measure: report ? marked(report.expected_effect) : [],
       r: report ? reportRows(report) : {},
-      generated: report ? generatedLine(report) : '',
       hasPrev: !!(report && prev), prev: prev ? { when: when(prev.created_at), headline: prev.headline, hypothesis: prev.hypothesis } : {},
       hasPending: !!pending, pendText: pendText, pendCls: pending && pending.blocked ? 'note quiet' : 'note',
       notRun: !!d && !report && !running && !demo && !runErr,
@@ -733,11 +707,7 @@ class Component extends DCLogic {
           self.apply(v, false);
         }).catch(function (e) { self.setState({ creating: false, draftError: e.message }); });
       },
-      hasDrafts: drafts.length > 0, noDrafts: drafts.length === 0,
-      drafts: drafts.map(function (x) {
-        return { name: x.title, state: x.state || 'draft', placement: x.placement, id: x.ab_test_id, date: API.day(x.created_at),
-          arms: x.arms.map(function (a) { return a.title + ' ' + a.weight + '%'; }).join(' · '), cls: x.ab_test_id === s.fresh ? 'dr new' : 'dr' };
-      })
+      hasFresh: !!(s.fresh && drafts.length), freshName: drafts.length ? drafts[0].title : ''
     };
   }
 }

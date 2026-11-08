@@ -10,35 +10,26 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-textarea::placeholder{color:#7b7b85}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;font-size:14.5px;font-weight:500;color:#3f3f46;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04)}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b}
-.btn svg{color:#6247f5}
-.card{background:linear-gradient(180deg,#faf8ff 0%,#ffffff 180px);border:1px solid #ebe8f6;border-radius:10px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
-.ta{width:100%;min-height:120px;padding:12px 14px;border-radius:6px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:15px;line-height:1.55;resize:vertical}
-.ta:focus{outline:none;border-color:#b9aefb;box-shadow:0 0 0 3px rgba(98,71,245,.10)}
-.dark{height:40px;padding:0 20px;border-radius:6px;border:0;background:#18181b;color:#fff;font-size:14.5px;font-weight:600;cursor:pointer}
-.dark:hover{background:#111114}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+textarea::placeholder{color:var(--ink-3)}
+.ta{width:100%;min-height:120px;padding:12px 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.55;resize:vertical}
+.ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.dark{height:40px;padding:0 20px;border-radius:6px;border:0;background:var(--ink);color:var(--surface);font-size:14px;font-weight:600;cursor:pointer}
+.dark:hover{background:var(--ink)}
 .done{animation:in .24s ease-out}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 <header style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl on">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -52,31 +43,31 @@ textarea::placeholder{color:#7b7b85}
 </header>
 
 <main style="max-width: 680px; margin: 0 auto; padding: 20px 24px 80px; display: flex; flex-direction: column; gap: 18px">
-<a href="{{ ticketHref }}" style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size: 13.5px; font-weight: 500; color: #52525b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Ticket</a>
+<a href="{{ ticketHref }}" style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size:14px; font-weight: 500; color: var(--ink-2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Ticket</a>
 <div style="display: flex; flex-direction: column; gap: 6px">
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.2; text-wrap: balance">{{ subject }}</h1>
-<p style="margin: 0; display: inline-flex; align-items: center; gap: 8px; color: #52525b; font-size: 14px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{ dotColor }}"></span>{{ closedLine }}</p>
+<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.2; text-wrap: balance">{{ subject }}</h1>
+<p style="margin: 0; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font-size:14px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{ dotColor }}"></span>{{ closedLine }}</p>
 </div>
 
 <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
 <form class="card" onSubmit="{{ submit }}" style="padding: 24px; display: flex; flex-direction: column; gap: 16px">
-<p style="margin: 0; display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 6px; background: #fbf3db; color: #7a4a06; font-size: 14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c2770f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>Access granted earlier stays on the account. Reopening does not take it back.</p>
-<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; font-weight: 500; color: #3f3f46">Note
+<p style="margin: 0; display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius:6px; background: var(--warn-soft); color: var(--warn); font-size:14px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>Access granted earlier stays on the account. Reopening does not take it back.</p>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size:14px; font-weight: 500; color: var(--ink-2)">Note
 <textarea class="ta" placeholder="Why it needs another look, optional" value="{{ note }}" onChange="{{ onNote }}"></textarea>
 </label>
 <div style="display: flex; align-items: center; gap: 16px">
 <button type="submit" class="dark">Reopen ticket</button>
-<a href="{{ ticketHref }}" style="font-size: 14px; font-weight: 500; color: #6b6b75">Cancel</a>
+<a href="{{ ticketHref }}" style="font-size:14px; font-weight: 500; color: var(--ink-3)">Cancel</a>
 </div>
 </form>
 </sc-if>
 
-<sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 14px; font-weight: 500; color: #d63a3f">{{ error }}</p></sc-if>
+<sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size:14px; font-weight: 500; color: var(--bad)">{{ error }}</p></sc-if>
 
 <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
 <section class="card done" style="padding: 24px; display: flex; flex-direction: column; gap: 8px">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 500">Reopened</p>
-<p style="margin: 0; color: #52525b">The ticket is back in Incoming, waiting for you.</p>
+<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Reopened</p>
+<p style="margin: 0; color: var(--ink-2)">The ticket is back in Incoming, waiting for you.</p>
 <a href="Main.dc.html" style="font-weight: 500; margin-top: 6px">Open Incoming</a>
 </section>
 </sc-if>
@@ -136,7 +127,7 @@ class Component extends DCLogic {
     return {
       subject: live ? (t ? t.title : '') : 'Wants another free week after compensation',
       closedLine: live ? line : 'Closed Nov 7 · Granted 7 days',
-      dotColor: !live ? '#16a34a' : !closed ? 'transparent' : t.status === 'dismissed' ? '#d4d4d8' : '#16a34a',
+      dotColor: !live ? 'var(--ok)' : !closed ? 'transparent' : t.status === 'dismissed' ? 'var(--ink-4)' : 'var(--ok)',
       ticketHref: live && id ? 'Ticket.dc.html?id=' + encodeURIComponent(id) : 'Ticket.dc.html',
       editing: live ? closed && !s.done : !s.done, done: !!s.done,
       hasError: !!s.error, error: s.error || '',

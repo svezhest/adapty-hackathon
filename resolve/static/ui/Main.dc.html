@@ -10,74 +10,69 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-input::placeholder{color:#7b7b85}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:#3f3f46;cursor:pointer;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.nl svg{transition:transform .2s}
-.nl.open{background:rgba(24,24,27,.06);color:#18181b}
-.nl.open svg{transform:rotate(180deg)}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04);transition:border-color .15s,box-shadow .15s}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b;box-shadow:0 2px 6px rgba(15,15,15,.06)}
-.btn svg{color:#6247f5}
-.tile{flex:0 0 auto;width:40px;height:40px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:0 -10px;border-radius:6px;color:#18181b;font-size:15.5px;font-weight:500;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input::placeholder{color:var(--ink-3)}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.tab{position:relative;height:36px;background:none;border:0;padding:0;color:#6b6b75;font-size:15px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:color .15s}
-.tab:hover{color:#18181b}
-.tab.on{color:#18181b;font-weight:600}
-.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:#6247f5}
-.cnt-red{color:#d63a3f;font-weight:600;font-variant-numeric:tabular-nums}
-.cnt-green{color:#15803d;font-weight:600;font-variant-numeric:tabular-nums}
-.find{display:flex;align-items:center;gap:10px;width:300px;max-width:100%;height:40px;padding:0 6px 0 13px;border-radius:6px;background:#ffffff;border:1px solid #e4e4e8;color:#6b6b75;transition:width .22s ease, border-color .15s, box-shadow .15s}
-.find:focus-within{width:420px;border-color:#cbc3fb;box-shadow:0 0 0 4px rgba(98,71,245,.10);color:#6247f5}
-.row{display:grid;grid-template-columns:10px minmax(120px,200px) minmax(0,1fr) 44px;align-items:center;column-gap:18px;height:50px;padding:0 24px;border-top:1px solid #f2f2f4;color:#52525b;font-size:14.5px;font-weight:400;transition:background .12s}
-.row:hover{background:linear-gradient(90deg,#f5f2ff 0%,#fbfaff 45%,#ffffff 100%);color:#52525b}
-.row.bold{color:#18181b;font-weight:600}
-.row .subj{color:#111114}
-.row.bold .subj{color:#18181b}
-.row .age{font-size:13px;color:#7b7b85;font-weight:500;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-.row.bold .age{color:#18181b;font-weight:600}
-.row .cont{color:#7b7b85;font-weight:400}
-.row .src{color:#a1a1aa;display:flex}
+.tab{position:relative;height:36px;background:none;border:0;padding:0;color:var(--ink-3);font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:color .15s}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--ink);font-weight:600}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--accent)}
+.cnt-red{color:var(--bad);font-weight:600;font-variant-numeric:tabular-nums}
+.cnt-green{color:var(--ok);font-weight:600;font-variant-numeric:tabular-nums}
+.find{display:flex;align-items:center;gap:10px;width:300px;max-width:100%;height:40px;padding:0 6px 0 13px;border-radius:6px;background:var(--surface);border:1px solid var(--line);color:var(--ink-3);transition:width .22s ease, border-color .15s, box-shadow .15s}
+.find:focus-within{width:420px;border-color:var(--accent-line);box-shadow:0 0 0 4px rgba(91,60,240,.10);color:var(--accent)}
+.row{display:grid;grid-template-columns:10px minmax(120px,200px) minmax(0,1fr) 44px;align-items:center;column-gap:18px;height:50px;padding:0 24px;border-top:1px solid var(--subtle);color:var(--ink-2);font-size:14px;font-weight:400;transition:background .12s}
+.row:hover{background:var(--subtle);color:var(--ink-2)}
+.row.bold{color:var(--ink);font-weight:600}
+.row .subj{color:var(--ink)}
+.row.bold .subj{color:var(--ink)}
+.row .age{font-size:13px;color:var(--ink-3);font-weight:500;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.row.bold .age{color:var(--ink);font-weight:600}
+.row .cont{color:var(--ink-3);font-weight:400}
+.row .src{color:var(--ink-4);display:flex}
 .cell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-.dot-ready{background:#6247f5;box-shadow:0 0 0 3px rgba(98,71,245,.14)}
-.dot-triage{border:1.5px solid #a1a1aa}
-.dot-closed{background:#16a34a}
-.dot-dismissed{background:#d4d4d8}
-mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
-.linkbtn{background:none;border:0;padding:0;color:#5b3cf0;font-size:14px;font-weight:500;cursor:pointer}
-.linkbtn:hover{color:#4527d6}
+.dot-ready{background:var(--accent);box-shadow:0 0 0 3px rgba(91,60,240,.14)}
+.dot-triage{border:1.5px solid var(--ink-4)}
+.dot-closed{background:var(--ok)}
+.dot-dismissed{background:var(--ink-4)}
+mark{background:var(--accent-soft);color:var(--accent-2);border-radius:6px;padding:0 2px}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font-size:14px;font-weight:500;cursor:pointer}
+.linkbtn:hover{color:var(--accent-2)}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.sk{height:10px;border-radius:5px;background:linear-gradient(90deg,#f0f0f2 0%,#fafafa 40%,#f0f0f2 80%);background-size:200% 100%;animation:sh 1.4s linear infinite}
+.sk{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--subtle) 0%,var(--bg) 40%,var(--subtle) 80%);background-size:200% 100%;animation:sh 1.4s linear infinite}
 @keyframes sh{from{background-position:100% 0}to{background-position:-100% 0}}
-.skrow{display:grid;grid-template-columns:10px 160px minmax(0,1fr) 40px;gap:18px;align-items:center;height:50px;padding:0 24px;border-top:1px solid #f2f2f4}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
+.skrow{display:grid;grid-template-columns:10px 160px minmax(0,1fr) 40px;gap:18px;align-items:center;height:50px;padding:0 24px;border-top:1px solid var(--subtle)}
+
+/* сетка строки: состояние, подзаголовок-клиент, суть, следующий шаг, возраст. Жирным только суть. */
+.cnt{color:var(--ink-3);font-weight:500;font-variant-numeric:tabular-nums}
+.row{grid-template-columns:8px 168px minmax(0,1fr) 288px 48px;column-gap:16px;height:48px;padding:0 var(--gutter);border-top:1px solid var(--subtle);color:var(--ink-3);font-size:14px;font-weight:400}
+.row:hover{color:var(--ink-3)}
+.row.bold{color:var(--ink-3);font-weight:400}
+.row .subj,.row.bold .subj{color:var(--ink);font-weight:500}
+.row.bold .age,.row .age{color:var(--ink-3);font-size:13px;font-weight:400}
+.dot-ready{box-shadow:none}
+.dot-closed{background:var(--ok)}
+.find{width:280px;height:36px}
+.find:focus-within{width:280px}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
 <header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl on" aria-current="page">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -90,8 +85,8 @@ mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span>Incoming</a>
@@ -100,14 +95,14 @@ mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
 <a href="Reopen.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></span>Reopen ticket</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span>Test chat</a>
 <a href="Settings.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></span>Agent settings</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span>Analyze</a>
@@ -124,33 +119,33 @@ mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
 <main style="max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 32px">
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Incoming</h1>
+<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:34px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.1">Incoming</h1>
 <div role="tablist" aria-label="Ticket status" style="display: flex; align-items: center; gap: 22px">
-<button type="button" role="tab" aria-selected="{{ openSel }}" class="{{ openCls }}" onClick="{{ toOpen }}">Open <span class="cnt-red">{{ openCount }}</span></button>
-<button type="button" role="tab" aria-selected="{{ closedSel }}" class="{{ closedCls }}" onClick="{{ toClosed }}">Closed <span class="cnt-green">{{ closedCount }}</span></button>
+<button type="button" role="tab" aria-selected="{{ openSel }}" class="{{ openCls }}" onClick="{{ toOpen }}">Open <span class="cnt">{{ openCount }}</span></button>
+<button type="button" role="tab" aria-selected="{{ closedSel }}" class="{{ closedCls }}" onClick="{{ toClosed }}">Closed <span class="cnt">{{ closedCount }}</span></button>
 </div>
 </div>
 <form role="search" class="find" onSubmit="{{ noSubmit }}">
 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
 <label for="q" class="sr">Search tickets and chats</label>
-<input id="q" type="text" autocomplete="off" placeholder="Search tickets and chats" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" style="flex: 1; min-width: 0; height: 100%; background: transparent; border: 0; outline: none; color: #18181b; font-size: 14.5px">
+<input id="q" type="text" autocomplete="off" placeholder="Search tickets and chats" value="{{ q }}" onChange="{{ onQ }}" onKeyDown="{{ onKey }}" style="flex: 1; min-width: 0; height: 100%; background: transparent; border: 0; outline: none; color: var(--ink); font-size:14px">
 <sc-if value="{{ hasQ }}" hint-placeholder-val="{{ false }}">
-<button type="button" aria-label="Clear search" onClick="{{ clearQ }}" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius: 7px; border: 0; background: #f3f3f5; color: #52525b; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<button type="button" aria-label="Clear search" onClick="{{ clearQ }}" style="flex: 0 0 auto; width: 28px; height: 28px; border-radius:6px; border: 0; background: var(--subtle); color: var(--ink-2); cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
 </sc-if>
 </form>
 </div>
 
-<section aria-label="Tickets" style="background: #ffffff; border: 1px solid #ebebef; border-radius: 10px; box-shadow: 0 1px 2px rgba(15,15,15,.04); overflow: hidden">
+<section aria-label="Tickets" style="background: var(--surface); border: 1px solid var(--line); border-radius:10px; box-shadow: 0 1px 2px rgba(15,15,15,.04); overflow: hidden">
 <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-<p role="alert" style="margin: 0; padding: 18px 24px; font-size: 14px; font-weight: 500; color: #d63a3f">{{ error }}</p>
+<p role="alert" style="margin: 0; padding: 18px 24px; font-size:14px; font-weight: 500; color: var(--bad)">{{ error }}</p>
 </sc-if>
 <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
 <div aria-busy="true" style="padding-top: 8px">
 <div style="padding: 10px 24px"><div class="sk" style="width: 120px"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ececf0"></span><div class="sk" style="width: 130px"></div><div class="sk" style="width: 78%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ececf0"></span><div class="sk" style="width: 110px"></div><div class="sk" style="width: 64%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ececf0"></span><div class="sk" style="width: 140px"></div><div class="sk" style="width: 86%"></div><div class="sk"></div></div>
-<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: #ececf0"></span><div class="sk" style="width: 100px"></div><div class="sk" style="width: 58%"></div><div class="sk"></div></div>
+<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 130px"></div><div class="sk" style="width: 78%"></div><div class="sk"></div></div>
+<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 110px"></div><div class="sk" style="width: 64%"></div><div class="sk"></div></div>
+<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 140px"></div><div class="sk" style="width: 86%"></div><div class="sk"></div></div>
+<div class="skrow"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--line)"></span><div class="sk" style="width: 100px"></div><div class="sk" style="width: 58%"></div><div class="sk"></div></div>
 </div>
 </sc-if>
 <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
@@ -161,7 +156,7 @@ mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
 <a href="{{ t.href }}" role="listitem" class="{{ t.cls }}">
 <span class="{{ t.dotCls }}"><span class="sr">{{ t.stateWord }}</span></span>
 <span class="cell">{{ t.user }}</span>
-<span class="cell"><span class="subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="cont">  ·  <sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span></span>
+<span class="cell subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="cell cont"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span>
 <span class="age">{{ t.age }}</span>
 </a>
 </sc-for>
@@ -171,14 +166,14 @@ mark{background:#ece7ff;color:#3b1fc2;border-radius:4px;padding:0 2px}
 
 <sc-if value="{{ emptyOpen }}" hint-placeholder-val="{{ false }}">
 <div style="padding: 80px 24px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 21px; font-weight: 500">Nothing waiting.</p>
-<p style="margin: 0; color: #6b6b75">Level 2 is handling the chats.</p>
+<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">Nothing waiting.</p>
+<p style="margin: 0; color: var(--ink-3)">Level 2 is handling the chats.</p>
 </div>
 </sc-if>
 <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
 <div style="padding: 72px 24px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
-<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 21px; font-weight: 500">No tickets match “{{ q }}”</p>
-<p style="margin: 0; color: #6b6b75">Search looks in subjects, users, messages and chat text.</p>
+<p style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:20px; font-weight: 500">No tickets match “{{ q }}”</p>
+<p style="margin: 0; color: var(--ink-3)">Search looks in subjects, users, messages and chat text.</p>
 <button type="button" class="linkbtn" onClick="{{ clearQ }}">Clear search</button>
 </div>
 </sc-if>

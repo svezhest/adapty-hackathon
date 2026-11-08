@@ -9,144 +9,153 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;family=Bodoni+Moda:ital,opsz,wght@1,6..96,500..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-input::placeholder,textarea::placeholder{color:#7b7b85}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:#3f3f46;cursor:pointer;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.nl svg{transition:transform .2s}
-.nl.open{background:rgba(24,24,27,.06);color:#18181b}
-.nl.open svg{transform:rotate(180deg)}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04);cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b;box-shadow:0 2px 6px rgba(15,15,15,.06)}
-.btn svg{color:#6247f5}
-.btn-dark{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:6px;background:#18181b;color:#fff;font-size:13.5px;font-weight:600;border:0;cursor:pointer}
-.btn-dark:hover{background:#111114}
-.tile{flex:0 0 auto;width:40px;height:40px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:0 -10px;border-radius:6px;color:#18181b;font-size:15.5px;font-weight:500;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input::placeholder,textarea::placeholder{color:var(--ink-3)}
+.btn-dark{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:6px;background:var(--ink);color:var(--surface);font-size:14px;font-weight:600;border:0;cursor:pointer}
+.btn-dark:hover{background:var(--ink)}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.card{background:linear-gradient(180deg,#faf8ff 0%,#ffffff 180px);border:1px solid #ebe8f6;border-radius:10px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%}
-.dot-ready{background:#6247f5;box-shadow:0 0 0 3px rgba(98,71,245,.14)}
-.dot-closed{background:#16a34a}
-.dot-dismissed{background:#d4d4d8}
-.linkbtn{background:none;border:0;padding:0;color:#5b3cf0;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
-.linkbtn:hover{color:#4527d6}
+.dot-ready{background:var(--accent);box-shadow:0 0 0 3px rgba(91,60,240,.14)}
+.dot-closed{background:var(--ok)}
+.dot-dismissed{background:var(--ink-4)}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.linkbtn:hover{color:var(--accent-2)}
 .linkbtn svg{transition:transform .2s}
 .linkbtn.open svg{transform:rotate(180deg)}
-.quiet{background:none;border:0;padding:0;color:#6b6b75;font-size:13.5px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:#d9d9de;text-underline-offset:3px}
-.quiet:hover{color:#18181b}
-.kv{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:6px 16px;margin:12px 0 0;padding:12px 0 0;border-top:1px solid #f2f2f4;font-size:13px}
-.kv dt{color:#6b6b75;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
-.kv dd{margin:0;color:#18181b}
-.b{position:relative;max-width:78%;padding:8px 12px 8px 14px;border-radius:18px;font-size:14.5px;line-height:1.45}
-.b-u{background:#6247f5;color:#fff;border-bottom-right-radius:5px}
-.b-a{background:#f2f2f5;color:#18181b;border-bottom-left-radius:5px}
-.b .t{float:right;margin:7px -2px -5px 12px;font-size:11px;opacity:.72;font-variant-numeric:tabular-nums}
+.quiet{background:none;border:0;padding:0;color:var(--ink-3);font-size:14px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.quiet:hover{color:var(--ink)}
+.kv{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:6px 16px;margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--subtle);font-size:13px}
+.kv dt{color:var(--ink-3);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.kv dd{margin:0;color:var(--ink)}
+.b{position:relative;max-width:78%;padding:8px 12px 8px 14px;border-radius:18px;font-size:14px;line-height:1.45}
+.b-u{background:var(--accent);color:var(--surface);border-bottom-right-radius:5px}
+.b-a{background:var(--subtle);color:var(--ink);border-bottom-left-radius:5px}
+.b .t{float:right;margin:7px -2px -5px 12px;font-size:12px;opacity:.72;font-variant-numeric:tabular-nums}
 .ans{position:relative;border-radius:6px;transition:background .15s, box-shadow .15s}
-.ans:hover{background:#fafafb}
-.ans.sel{background:linear-gradient(120deg,#f1ecff 0%,#f8f6ff 50%,#ffffff 100%);box-shadow:inset 0 0 0 1px #d4c9fd,0 10px 28px -18px rgba(98,71,245,.45)}
+.ans:hover{background:var(--subtle)}
+.ans.sel{background:var(--accent-soft);box-shadow:none}
 .ans-main{display:grid;grid-template-columns:76px minmax(0,1fr) 96px;gap:18px;align-items:start;padding:16px 18px;cursor:pointer}
 .conf{display:flex;flex-direction:column;align-items:center;gap:7px}
 .ring{position:relative;width:54px;height:54px;display:flex;align-items:center;justify-content:center}
 .ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
 .arc{transition:stroke-dasharray .5s cubic-bezier(.3,.7,.2,1)}
-.disc{position:relative;width:42px;height:42px;border-radius:50%;background:#fafafb;box-shadow:inset 0 0 0 1px #ececf0,0 1px 2px rgba(15,15,15,.04);display:flex;align-items:center;justify-content:center;transition:box-shadow .2s}
-.ans:hover .disc{box-shadow:inset 0 0 0 1px #e2e2e8,0 2px 6px rgba(15,15,15,.06)}
-.emo{display:inline-block;align-self:center;font-size:18px;line-height:1;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.disc{position:relative;width:42px;height:42px;border-radius:50%;background:var(--subtle);box-shadow:inset 0 0 0 1px var(--line),0 1px 2px rgba(15,15,15,.04);display:flex;align-items:center;justify-content:center;transition:box-shadow .2s}
+.ans:hover .disc{box-shadow:inset 0 0 0 1px var(--line),0 2px 6px rgba(15,15,15,.06)}
+.emo{display:inline-block;align-self:center;font-size:20px;line-height:1;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
 .ans:hover .emo{transform:rotate(-8deg) scale(1.06)}
 .ans.sel .emo{transform:scale(1.08)}
-.pct{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:19px;font-weight:500;line-height:1;letter-spacing:-0.01em;font-variant-numeric:lining-nums tabular-nums}
-.pct small{font-family:Inter,system-ui,sans-serif;font-size:10.5px;font-weight:500;margin-left:1px;opacity:.7}
-.star{display:inline-flex;align-self:center}
+.pct{font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;letter-spacing:-0.01em;font-variant-numeric:lining-nums tabular-nums}
+.pct small{font-family:Inter,system-ui,sans-serif;font-size:12px;font-weight:500;margin-left:1px;opacity:.7}
 .dial{position:relative;flex:0 0 auto;width:76px;height:76px;display:flex;align-items:center;justify-content:center;transition:filter .25s}
 .dial svg{position:absolute;inset:0}
 .dial svg line{transition:stroke .3s}
-.ans.sel .dial{filter:drop-shadow(0 6px 14px rgba(98,71,245,.18))}
+.ans.sel .dial{filter:drop-shadow(0 6px 14px rgba(91,60,240,.18))}
 .dnum{position:absolute;left:0;right:0;top:50%;height:1em;margin-top:-.5em;transform:translateY(.1em);text-align:center;white-space:nowrap;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:500;line-height:1;letter-spacing:0;font-variant-numeric:lining-nums tabular-nums;pointer-events:none}
 .dial-xl{width:132px;height:132px}
-.dial-xl .dnum{font-size:40px}
-.found{flex:1 1 100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding:32px 40px 30px;border-radius:12px;background:radial-gradient(120% 170% at 0% 0%,#ece5ff 0%,#f6f3ff 34%,#fdfcff 70%,#ffffff 100%);box-shadow:inset 0 0 0 1px #e7e2fd,0 1px 2px rgba(15,15,15,.03),0 22px 48px -32px rgba(70,40,200,.16)}
-.found-k{margin:0;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#6b6b75}
-.found-h{margin:0;max-width:30em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:28px;font-weight:460;line-height:1.28;letter-spacing:-0.012em;color:#111114;text-wrap:balance}
-.found-r{margin:0;max-width:62ch;font-size:15px;line-height:1.6;color:#52525b;text-wrap:pretty}
-@media (max-width:640px){.found{padding:24px 20px}.found-h{font-size:23px}}
-.ttl{font-size:15px;font-weight:600;color:#18181b}
-.pick{font-size:12.5px;color:#6b6b75;font-weight:500}
-.risk-high,.risk-medium{display:inline-block;font-family:'Bodoni Moda',Didot,'Bodoni 72',Georgia,serif;font-style:italic;font-size:16px;font-weight:600;line-height:1.15;letter-spacing:.01em;padding-bottom:1px;border-bottom:3px double currentColor;transform:skewX(-8deg);transform-origin:left bottom}
-.risk-high{color:#9c2b22}
-.risk-medium{color:#86641f}
-.txt{display:block;margin-top:4px;color:#3f3f46;font-size:14.5px;line-height:1.55;text-wrap:pretty}
-.okstamp{align-self:center;justify-self:end;display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 8px;border:4px double #16a34a;border-radius:6px;color:#15803d;font-size:16px;font-weight:800;letter-spacing:.14em;line-height:1.2;white-space:nowrap;transform:rotate(-11deg);opacity:0;transition:opacity .15s;-webkit-mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);-webkit-mask-size:3px 3px;mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);mask-size:3px 3px}
+.dial-xl .dnum{font-size:34px}
+.found{flex:1 1 100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding:32px 40px 30px;border-radius:10px;background:var(--surface);box-shadow:none}
+.found-k{margin:0;display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-3)}
+.found-h{margin:0;max-width:30em;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:28px;font-weight:460;line-height:1.28;letter-spacing:-0.012em;color:var(--ink);text-wrap:balance}
+.found-r{margin:0;max-width:62ch;font-size:14px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+@media (max-width:640px){.found{padding:24px 20px}.found-h{font-size:24px}}
+.ttl{font-size:14px;font-weight:600;color:var(--ink)}
+.pick{font-size:13px;color:var(--ink-3);font-weight:500}
+.txt{display:block;margin-top:4px;color:var(--ink-2);font-size:14px;line-height:1.55;text-wrap:pretty}
+.okstamp{align-self:center;justify-self:end;display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 8px;border:4px double var(--ok);border-radius:6px;color:var(--ok);font-size:16px;font-weight:800;letter-spacing:.14em;line-height:1.2;white-space:nowrap;transform:rotate(-11deg);opacity:0;transition:opacity .15s;-webkit-mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);-webkit-mask-size:3px 3px;mask-image:radial-gradient(circle,#000 58%,rgba(0,0,0,.7) 62%);mask-size:3px 3px}
 .ans:hover .okstamp{opacity:.16}
 .ans.sel .okstamp{opacity:.95;animation:stampIn .3s cubic-bezier(.2,1.5,.4,1)}
 @keyframes stampIn{0%{opacity:0;transform:rotate(-26deg) scale(2.4)}70%{opacity:.95;transform:rotate(-9deg) scale(.94)}100%{opacity:.95;transform:rotate(-11deg) scale(1)}}
-.hov{position:absolute;top:13px;right:124px;height:30px;padding:0 12px;border-radius:8px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:13px;font-weight:500;cursor:pointer;opacity:0;transition:opacity .15s}
+.hov{position:absolute;top:13px;right:124px;height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;font-weight:500;cursor:pointer;opacity:0;transition:opacity .15s}
 .ans:hover .hov,.hov:focus-visible{opacity:1}
-.field{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:#6b6b75;font-weight:500}
-.inp{height:36px;padding:0 10px;border-radius:8px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:14px}
-.inp:focus{outline:none;border-color:#b9aefb;box-shadow:0 0 0 3px rgba(98,71,245,.10)}
-.ta{width:100%;min-height:92px;padding:10px 12px;border-radius:6px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:14.5px;line-height:1.5;resize:vertical}
-.ta:focus{outline:none;border-color:#b9aefb;box-shadow:0 0 0 3px rgba(98,71,245,.10)}
-.stamp{position:relative;flex:0 0 auto;width:128px;height:128px;border-radius:50%;border:0;background:#e5484d;color:#fff;cursor:pointer;transform:rotate(-8deg);box-shadow:0 12px 28px -10px rgba(229,72,77,.6), inset 0 -3px 0 rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;letter-spacing:.14em;transition:transform .15s ease, box-shadow .15s ease, opacity .2s}
-.stamp::before{content:"";position:absolute;inset:9px;border-radius:50%;border:2px dashed rgba(255,255,255,.62)}
-.stamp:hover{transform:rotate(-8deg) scale(1.03)}
-.stamp:active{transform:rotate(-8deg) scale(.9);box-shadow:0 4px 10px -6px rgba(229,72,77,.6)}
-.stamp:disabled{opacity:.28;cursor:not-allowed;transform:rotate(-8deg);box-shadow:none}
-.gstamp{position:relative;flex:0 0 auto;width:184px;height:64px;border-radius:10px;border:2.5px solid #16a34a;background:#ffffff;color:#15803d;cursor:pointer;transform:rotate(-4deg);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 24px -16px rgba(21,128,61,.65);transition:transform .15s, background .15s, color .15s, border-color .15s}
+.field{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-3);font-weight:500}
+.inp{height:36px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
+.inp:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.ta{width:100%;min-height:92px;padding:10px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.5;resize:vertical}
+.ta:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px rgba(91,60,240,.10)}
+.gstamp{position:relative;flex:0 0 auto;width:184px;height:64px;border-radius:10px;border:2.5px solid var(--ok);background:var(--surface);color:var(--ok);cursor:pointer;transform:rotate(-4deg);display:flex;align-items:center;justify-content:center;box-shadow:none;transition:transform .15s, background .15s, color .15s, border-color .15s}
 .gstamp::before{content:"";position:absolute;inset:4px;border-radius:6px;border:1px dashed currentColor;opacity:.7}
-.gstamp .ink{display:flex;align-items:center;gap:14px;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:22px;font-weight:600;letter-spacing:.42em;margin-right:-.42em}
+.gstamp .ink{display:flex;align-items:center;gap:14px;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:20px;font-weight:600;letter-spacing:.42em;margin-right:-.42em}
 .gstamp .ink::before,.gstamp .ink::after{content:"";width:18px;height:1px;background:currentColor;opacity:.55}
 .gstamp .ink::after{margin-left:-.42em}
-.gstamp:hover{transform:rotate(-4deg) scale(1.04);box-shadow:0 0 0 6px rgba(22,163,74,.08), 0 12px 24px -16px rgba(21,128,61,.65)}
+.gstamp:hover{transform:rotate(-4deg) scale(1.04);box-shadow:none}
 .gstamp:active{transform:rotate(-4deg) scale(.9)}
-.gstamp:disabled{border-color:#d9d9de;color:#a1a1aa;cursor:not-allowed;box-shadow:none;transform:rotate(-4deg)}
-.gstamp.on{background:#16a34a;color:#fff;animation:press .32s ease-out}
+.gstamp:disabled{border-color:var(--line);color:var(--ink-4);cursor:not-allowed;box-shadow:none;transform:rotate(-4deg)}
+.gstamp.on{background:var(--ok);color:var(--surface);animation:press .32s ease-out}
 @keyframes press{0%{transform:rotate(-4deg) scale(1)}35%{transform:rotate(-4deg) scale(.86)}100%{transform:rotate(-4deg) scale(1)}}
 .vanish{animation:vanish .34s ease-in forwards}
 @keyframes vanish{to{opacity:0;transform:translateY(14px) scale(.98)}}
-.letter{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;width:100%;padding:18px 22px;border-radius:10px;border:1px solid #ebe8f6;background:linear-gradient(160deg,#f6f2ff 0%,#ffffff 62%);box-shadow:0 1px 2px rgba(15,15,15,.04), 0 12px 30px -18px rgba(15,15,15,.25);cursor:pointer;text-align:left;color:#18181b;font-size:14.5px;animation:fold .3s ease-out}
-.letter:hover{border-color:#dcdce1}
+.letter{position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;width:100%;padding:18px 22px;border-radius:10px;border:1px solid var(--line);background:var(--surface);box-shadow:none;cursor:pointer;text-align:left;color:var(--ink);font-size:14px;animation:fold .3s ease-out}
+.letter:hover{border-color:var(--line)}
 @keyframes fold{from{opacity:0;transform:scaleY(1.8) translateY(-24px)}to{opacity:1;transform:none}}
-.postmark{flex:0 0 auto;width:62px;height:62px;border-radius:50%;border:2px solid #16a34a;color:#16a34a;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);font-size:12px;font-weight:700;letter-spacing:.1em;line-height:1.1;opacity:.9}
-.postmark small{font-size:9px;letter-spacing:.06em;font-weight:600}
+.postmark{flex:0 0 auto;width:62px;height:62px;border-radius:50%;border:2px solid var(--ok);color:var(--ok);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);font-size:12px;font-weight:700;letter-spacing:.1em;line-height:1.1;opacity:.9}
+.postmark small{font-size:12px;letter-spacing:.06em;font-weight:600}
 .ballot{animation:unfold .26s ease-out;transform-origin:top center}
 @keyframes unfold{from{opacity:0;transform:scaleY(.85)}to{opacity:1;transform:none}}
-.bl{display:grid;grid-template-columns:36px minmax(0,1fr) 22px;gap:12px;align-items:start;padding:12px 4px;border-top:1px solid #f2f2f4}
+.bl{display:grid;grid-template-columns:36px minmax(0,1fr) 22px;gap:12px;align-items:start;padding:12px 4px;border-top:1px solid var(--subtle)}
 .bl:first-child{border-top:0}
 .bl.off{opacity:.45}
-.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:11px 16px;border-radius:6px;background:#18181b;color:#fff;font-size:14px;font-weight:500;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);animation:toast .22s ease-out;z-index:40}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:11px 16px;border-radius:6px;background:var(--ink);color:var(--surface);font-size:14px;font-weight:500;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);animation:toast .22s ease-out;z-index:40}
 @keyframes toast{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
-.trl{font-size:12px;color:#6b6b75}
-.orig{font-size:13.5px;line-height:1.5;color:#3f3f46;max-width:78%;padding:6px 12px;border-left:2px solid #d4c9fd;background:#faf8ff}
+.trl{font-size:12px;color:var(--ink-3)}
+.orig{font-size:14px;line-height:1.5;color:var(--ink-2);max-width:78%;padding:6px 12px;border-left:2px solid var(--accent-line);background:var(--accent-soft)}
 .trl.l,.orig.l{margin-left:14px;align-self:flex-start}
-.sends{display:block;margin-top:6px;font-size:12.5px;font-weight:500;color:#5b3cf0}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
+.sends{display:block;margin-top:6px;font-size:13px;font-weight:500;color:var(--accent)}
+
+/* The decision is still a stamp on a dial. The material is the system's: one green, flat paper, a soft press. */
+.b{border-radius:10px;font-size:14px}
+.b-u{background:var(--accent-soft);color:var(--ink);border-bottom-right-radius:12px}
+.b-a{background:var(--subtle);color:var(--ink);border-bottom-left-radius:12px}
+.found{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:32px;padding:var(--gutter);border-radius:var(--r-card);background:var(--surface);box-shadow:none;border:1px solid var(--line)}
+.found-k{font-size:13px;font-weight:500}
+.found-r{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.ans{border-radius:var(--r-ctl);box-shadow:inset 0 0 0 1px transparent}
+.ans:hover{background:var(--bg)}
+.ans.sel,.ans.sel:hover{background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent-line)}
+.ans-main{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:14px}
+.ans-main > span:nth-of-type(2) > span:first-child{padding-right:88px}
+.dial{width:64px;height:64px}
+.dial svg{width:100%;height:100%}
+.dial .dnum{font-size:20px}
+.dial-xl{width:112px;height:112px}
+.dial-xl .dnum{font-size:34px}
+.ans.sel .dial{filter:none}
+.ttl{font-size:14px}
+.emo{font-size:20px}
+.pick-agent{color:var(--accent);font-weight:500}
+.risk-high,.risk-medium{display:block;flex-basis:100%;margin-top:2px;font-size:13px;line-height:1.45;font-weight:400}
+.risk-high{color:var(--bad)}
+.risk-medium{color:var(--warn)}
+.txt{margin-top:8px;font-size:14px;line-height:1.55;color:var(--ink-2)}
+.hov{top:10px;right:96px;border-radius:var(--r-ctl)}
+.okstamp{position:absolute;top:12px;right:14px;border:3px double var(--ok);color:var(--ok);font-size:14px}
+.gstamp{width:168px;height:58px;border:2px solid var(--ok);border-radius:var(--r-card);background:var(--surface);box-shadow:0 1px 2px rgba(15,15,15,.06)}
+.gstamp .ink{font-family:var(--serif);font-size:20px}
+.gstamp:hover{box-shadow:0 0 0 5px var(--ok-soft)}
+.gstamp:active{box-shadow:none}
+.gstamp:disabled{border-color:var(--line);color:var(--ink-4);background:var(--surface);box-shadow:none}
+.gstamp.on{background:var(--ok);color:var(--surface)}
+.letter{box-shadow:none;border-color:var(--line)}
+.postmark{border-color:var(--ok);color:var(--ok)}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
 <header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl on">Incoming</a>
 <a href="Chat.dc.html" class="nl">Chat</a>
@@ -159,8 +168,8 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span>Incoming</a>
@@ -169,14 +178,14 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <a href="Reopen.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></span>Reopen ticket</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span>Test chat</a>
 <a href="Settings.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></span>Agent settings</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span>Analyze</a>
@@ -193,62 +202,62 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <main style="max-width: 1200px; margin: 0 auto; padding: 20px 24px 80px; display: flex; flex-direction: column; gap: 22px">
 
 <div style="display: flex; flex-direction: column; gap: 10px">
-<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size: 13.5px; font-weight: 500; color: #52525b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Incoming</a>
-<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.2; text-wrap: balance">{{ title }}</h1>
-<p style="margin: 0; font-size: 14px; color: #6b6b75">{{ meta }}</p>
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; font-size:14px; font-weight: 500; color: var(--ink-2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Incoming</a>
+<h1 style="margin: 0; font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:28px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.25; text-wrap: balance; max-width: 34em">{{ heading }}</h1>
+<p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ meta }}</p>
 </div>
 
 <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}">
-<div class="{{ openCls }}" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px">
+<div class="{{ openCls }}" style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px">
 
 <section class="found" aria-labelledby="h-found">
 <div style="flex: 999 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
-<p id="h-found" class="found-k"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l1.9 6.6 6.6 1.9-6.6 1.9L12 19.5l-1.9-6.6L3.5 11l6.6-1.9z" fill="#6247f5"></path></svg>What we found<sc-if value="{{ hasCategory }}"><span aria-hidden="true" style="color: #c9c3ee">·</span><span style="font-weight: 500">{{ category }}</span></sc-if></p>
-<p class="found-h">{{ foundSummary }}</p>
+<p id="h-found" class="found-k">What we found<sc-if value="{{ hasCategory }}"><span aria-hidden="true" style="color: var(--ink-4)">·</span><span style="font-weight: 500">{{ category }}</span></sc-if></p>
+<sc-if value="{{ showFoundH }}"><p class="found-h">{{ foundSummary }}</p></sc-if>
 <sc-if value="{{ canTriage }}" hint-placeholder-val="{{ false }}"><p style="margin: 8px 0 0"><button type="button" class="quiet" onClick="{{ runTriage }}">{{ triageLabel }}</button></p></sc-if>
-<sc-if value="{{ hasTriageFail }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 6px 0 0; font-size: 13px; color: #8e3b36">{{ triageFail }}</p></sc-if>
+<sc-if value="{{ hasTriageFail }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 6px 0 0; font-size:13px; color: var(--bad)">{{ triageFail }}</p></sc-if>
 <sc-if value="{{ hasCause }}"><p class="found-r">{{ foundCause }}</p></sc-if>
-<sc-if value="{{ hasEvidence }}"><div><button type="button" class="{{ evCls }}" style="font-size: 13.5px" aria-expanded="{{ evidence }}" onClick="{{ toggleEvidence }}">Evidence<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button></div></sc-if>
+<sc-if value="{{ hasEvidence }}"><div><button type="button" class="{{ evCls }}" style="font-size:14px" aria-expanded="{{ evidence }}" onClick="{{ toggleEvidence }}">Evidence<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button></div></sc-if>
 <sc-if value="{{ evidence }}" hint-placeholder-val="{{ false }}">
-<dl class="kv ballot" style="margin-top: 0; border-top-color: #e9e5fb; max-width: 560px">
+<dl class="kv ballot" style="margin-top: 0; border-top-color: var(--line); max-width: 560px">
 <sc-for list="{{ evidenceRows }}" as="e"><dt style="overflow-wrap: anywhere">{{ e.k }}</dt><dd style="overflow-wrap: anywhere">{{ e.v }}</dd></sc-for>
 </dl>
 </sc-if>
 </div>
 <div style="flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px">
 <div role="img" aria-label="{{ foundLabel }}" class="dial dial-xl">
-<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true"><circle cx="66" cy="66" r="64.5" fill="none" stroke="#e2ddf7" stroke-width=".75"></circle><circle cx="66" cy="66" r="45" fill="none" stroke="#ebe8f8" stroke-width=".75"></circle><circle cx="66" cy="66" r="41" fill="none" stroke="#f1eefb" stroke-width=".75"></circle><sc-for list="{{ foundTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ foundMark.x }}" cy="{{ foundMark.y }}" r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle></svg>
+<svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true"><circle cx="66" cy="66" r="64.5" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="66" cy="66" r="45" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="66" cy="66" r="41" fill="none" stroke="var(--accent-soft)" stroke-width=".75"></circle><sc-for list="{{ foundTicks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ foundMark.x }}" cy="{{ foundMark.y }}" r="{{ foundMark.r }}" fill="{{ foundTone }}"></circle></svg>
 <span class="dnum" style="color: {{ foundTone }}">{{ foundNum }}</span>
 </div>
 </div>
 </section>
 
-<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
 
-<section class="card" aria-labelledby="h-wrote" style="padding: 20px 24px 18px; display: flex; flex-direction: column; gap: 14px">
+<section class="card" aria-labelledby="h-wrote" style="padding: var(--gutter); display: flex; flex-direction: column; gap: 14px">
 <p id="h-wrote" class="sr">The user wrote</p>
 <div style="display: flex; flex-direction: column; gap: 12px">
 <sc-for list="{{ messages }}" as="m">
 <sc-if value="{{ m.isUser }}">
 <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
-<div class="b b-u">{{ m.text }}<span class="t">{{ m.time }}</span><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; right: -5px; bottom: 0"><path d="M0 0 Q0 12 11 16 L0 16 Z" fill="#6247f5"></path></svg></div>
-<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size: 12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
+<div class="b b-u">{{ m.text }}<span class="t">{{ m.time }}</span></div>
+<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
 </div>
 </sc-if>
 <sc-if value="{{ m.labelled }}">
 <div style="display: flex; align-items: flex-end; gap: 8px">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: #efedfb; color: #5b3cf0; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ m.avatar }}</span>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size:12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ m.avatar }}</span>
 <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1">
-<span style="font-size: 12px; color: #6b6b75; padding-left: 14px">{{ m.label }}</span>
-<div class="b b-a">{{ m.text }}<span class="t">{{ m.time }}</span><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; left: -5px; bottom: 0"><path d="M11 0 Q11 12 0 16 L11 16 Z" fill="#f2f2f5"></path></svg></div>
-<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size: 12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
+<span style="font-size:12px; color: var(--ink-3); padding-left: 14px">{{ m.label }}</span>
+<div class="b b-a">{{ m.text }}<span class="t">{{ m.time }}</span></div>
+<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
 </div>
 </div>
 </sc-if>
 <sc-if value="{{ m.plain }}">
 <div style="display: flex; align-items: flex-end; gap: 8px">
-<span aria-hidden="true" style="flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: #efedfb; color: #5b3cf0; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ m.avatar }}</span>
-<div style="display: flex; flex-direction: column; gap: 3px; min-width: 0"><div class="b b-a" style="max-width: 100%; align-self: flex-start">{{ m.text }}<span class="t">{{ m.time }}</span><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; left: -5px; bottom: 0"><path d="M11 0 Q11 12 0 16 L11 16 Z" fill="#f2f2f5"></path></svg></div><sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size: 12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if></div>
+<span aria-hidden="true" style="flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size:12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ m.avatar }}</span>
+<div style="display: flex; flex-direction: column; gap: 3px; min-width: 0"><div class="b b-a" style="max-width: 100%; align-self: flex-start">{{ m.text }}<span class="t">{{ m.time }}</span></div><sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if></div>
 </div>
 </sc-if>
 </sc-for>
@@ -263,19 +272,19 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <label class="ans-main">
 <input type="radio" name="answer" class="sr" checked="{{ a.selected }}" onChange="{{ a.pick }}">
 <span class="dial">
-<svg width="76" height="76" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="37.25" fill="none" stroke="#e6e3f3" stroke-width=".75"></circle><circle cx="38" cy="38" r="25.5" fill="none" stroke="#eeecf7" stroke-width=".75"></circle><sc-for list="{{ a.ticks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ a.mx }}" cy="{{ a.my }}" r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path d="{{ a.inf }}" fill="none" stroke="#7b7b85" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+<svg width="76" height="76" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="37.25" fill="none" stroke="var(--line)" stroke-width=".75"></circle><circle cx="38" cy="38" r="25.5" fill="none" stroke="var(--line)" stroke-width=".75"></circle><sc-for list="{{ a.ticks }}" as="k"><line x1="{{ k.x1 }}" y1="{{ k.y1 }}" x2="{{ k.x2 }}" y2="{{ k.y2 }}" stroke="{{ k.c }}" stroke-width="{{ k.w }}" stroke-linecap="round"></line></sc-for><circle cx="{{ a.mx }}" cy="{{ a.my }}" r="{{ a.mr }}" fill="{{ a.tone }}"></circle><path d="{{ a.inf }}" fill="none" stroke="var(--ink-3)" stroke-width="1.3" stroke-linejoin="round"></path></svg>
 <span class="dnum" style="color: {{ a.tone }}">{{ a.confText }}</span>
 <sc-if value="{{ a.hasConf }}"><span class="sr">{{ a.conf }}% confidence</span></sc-if>
 </span>
 <span style="min-width: 0">
 <span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px">
 <span class="emo" aria-hidden="true">{{ a.emoji }}</span><span class="ttl">{{ a.title }}</span>
-<sc-if value="{{ a.isPick }}"><span class="star" title="Agent's pick"><svg width="13" height="13" viewBox="0 0 24 24" role="img" aria-label="Agent's pick"><path d="M12 2.8l2.7 6.1 6.6.6-5 4.4 1.5 6.5L12 17l-5.8 3.4 1.5-6.5-5-4.4 6.6-.6z" fill="#b08d4a"></path></svg></span></sc-if>
+<sc-if value="{{ a.isPick }}"><span class="pick pick-agent">Agent's pick</span></sc-if>
 <sc-if value="{{ a.edited }}"><span class="pick">edited</span></sc-if>
 <sc-if value="{{ a.hasRisk }}"><span class="{{ a.riskCls }}">{{ a.risk }}</span></sc-if>
 </span>
 <sc-if value="{{ a.showText }}"><span class="txt">{{ a.reply }}</span></sc-if>
-<sc-if value="{{ a.hasLang }}"><span class="sends">{{ a.sendsWord }} · <button type="button" class="quiet" style="font-size: 12.5px" onClick="{{ a.toggleOrig }}">{{ a.origWord }}</button></span></sc-if>
+<sc-if value="{{ a.hasLang }}"><span class="sends">{{ a.sendsWord }} · <button type="button" class="quiet" style="font-size:13px" onClick="{{ a.toggleOrig }}">{{ a.origWord }}</button></span></sc-if>
 <sc-if value="{{ a.showOrig }}"><span class="orig" style="display: block; max-width: 100%; margin-top: 4px">{{ a.origText }}</span></sc-if>
 </span>
 <span class="okstamp" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>OK</span>
@@ -284,15 +293,15 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <sc-if value="{{ a.showScratchBtn }}"><button type="button" class="hov" onClick="{{ a.pick }}">Write from scratch</button></sc-if>
 
 <sc-if value="{{ a.showOwnBox }}">
-<div style="padding: 0 18px 16px 98px">
+<div style="padding: 0 14px 14px 92px">
 <label for="own" class="sr">Your reply</label>
 <textarea id="own" class="ta" placeholder="{{ ownPh }}" value="{{ own }}" onChange="{{ onOwn }}"></textarea>
-<sc-if value="{{ hasLang }}"><span style="display: block; margin-top: 6px; font-size: 12.5px; color: #6b6b75">{{ ownHint }} <button type="button" class="quiet" style="font-size: 12.5px" onClick="{{ toggleOwnDirect }}">{{ ownDirectWord }}</button></span></sc-if>
+<sc-if value="{{ hasLang }}"><span style="display: block; margin-top: 6px; font-size:13px; color: var(--ink-3)">{{ ownHint }} <button type="button" class="quiet" style="font-size:13px" onClick="{{ toggleOwnDirect }}">{{ ownDirectWord }}</button></span></sc-if>
 </div>
 </sc-if>
 
 <sc-if value="{{ a.editing }}">
-<div style="padding: 2px 18px 18px 98px; display: flex; flex-direction: column; gap: 12px">
+<div style="padding: 2px 14px 14px 92px; display: flex; flex-direction: column; gap: 12px">
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <label class="field">Action
 <select class="inp" value="{{ a.action }}" onChange="{{ a.onAction }}">
@@ -309,7 +318,7 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <sc-if value="{{ a.isAsk }}"><label class="field" style="flex: 1 1 260px">Question<input class="inp" type="text" value="{{ a.question }}" onChange="{{ a.onQuestion }}"></label></sc-if>
 </div>
 <label class="field">{{ a.replyLabel }}<textarea class="ta" value="{{ a.reply }}" onChange="{{ a.onReply }}"></textarea></label>
-<sc-if value="{{ a.hasLang }}"><span style="font-size: 12.5px; color: #6b6b75">Your English is translated to {{ lang }} when you send. <button type="button" class="quiet" style="font-size: 12.5px" onClick="{{ a.toggleDirect }}">{{ a.directWord }}</button></span></sc-if>
+<sc-if value="{{ a.hasLang }}"><span style="font-size:13px; color: var(--ink-3)">Your English is translated to {{ lang }} when you send. <button type="button" class="quiet" style="font-size:13px" onClick="{{ a.toggleDirect }}">{{ a.directWord }}</button></span></sc-if>
 <sc-if value="{{ a.direct }}"><label class="field">{{ lang }} text, sent exactly as written<textarea class="ta" value="{{ a.orig }}" onChange="{{ a.onOrig }}"></textarea></label></sc-if>
 <div style="display: flex; align-items: center; gap: 16px">
 <button type="button" class="btn-dark" onClick="{{ a.done }}">Done</button>
@@ -328,27 +337,27 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <button type="button" class="{{ okCls }}" disabled="{{ cantSend }}" onClick="{{ send }}" aria-label="Stamp and send the picked answer"><span class="ink">SEND</span></button>
 <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
 <span style="display: flex; flex-direction: column; min-width: 0">
-<span style="font-size: 15px; font-weight: 600">{{ summary }}</span>
-<span style="font-size: 13.5px; color: #6b6b75">to {{ user }}{{ sendsSuffix }}</span>
+<span style="font-size:14px; font-weight: 600">{{ summary }}</span>
+<span style="font-size:14px; color: var(--ink-3)">to {{ user }}{{ sendsSuffix }}</span>
 </span>
 </sc-if>
 </div>
 <button type="button" class="quiet" onClick="{{ dismiss }}">Close without a reply</button>
 </div>
 <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-<p role="alert" style="margin: 0 0 0 4px; font-size: 14px; font-weight: 500; color: #d63a3f">{{ error }}</p>
+<p role="alert" style="margin: 0 0 0 4px; font-size:14px; font-weight: 500; color: var(--bad)">{{ error }}</p>
 </sc-if>
 </div>
 </div>
 
 <aside style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 
-<section class="card" aria-labelledby="h-acc" style="padding: 20px 22px; display: flex; flex-direction: column; gap: 6px">
+<section class="card" aria-labelledby="h-acc" style="padding: var(--gutter); display: flex; flex-direction: column; gap: 6px">
 <p id="h-acc" class="kicker" style="margin-bottom: 4px">Account</p>
-<p style="margin: 0; font-size: 15px; font-weight: 500; color: #18181b">{{ acc1 }}</p>
-<p style="margin: 0; font-size: 13.5px; color: #52525b">{{ acc2 }}</p>
-<p style="margin: 0; font-size: 13.5px; color: #6b6b75">{{ acc3 }}</p>
-<button type="button" class="{{ detCls }}" style="font-size: 13.5px; align-self: flex-start; margin-top: 4px" aria-expanded="{{ details }}" onClick="{{ toggleDetails }}">Details<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<p style="margin: 0; font-size:14px; font-weight: 500; color: var(--ink)">{{ acc1 }}</p>
+<p style="margin: 0; font-size:14px; color: var(--ink-2)">{{ acc2 }}</p>
+<p style="margin: 0; font-size:14px; color: var(--ink-3)">{{ acc3 }}</p>
+<button type="button" class="{{ detCls }}" style="font-size:14px; align-self: flex-start; margin-top: 4px" aria-expanded="{{ details }}" onClick="{{ toggleDetails }}">Details<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
 <sc-if value="{{ details }}" hint-placeholder-val="{{ false }}">
 <dl class="kv ballot">
 <sc-for list="{{ accountRows }}" as="e"><dt>{{ e.k }}</dt><dd>{{ e.v }}</dd></sc-for>
@@ -361,36 +370,36 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 
 <sc-if value="{{ isClosed }}" hint-placeholder-val="{{ false }}">
 <div style="max-width: 760px; display: flex; flex-direction: column; gap: 18px">
-<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 15px; color: #18181b">
-<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>Ticket closed</span>
-<span style="color: #52525b">{{ outcome }} · {{ closedAt }}</span>
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size:14px; color: var(--ink)">
+<span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>Ticket closed</span>
+<span style="color: var(--ink-2)">{{ outcome }} · {{ closedAt }}</span>
 <a href="{{ reopenHref }}" style="font-weight: 500">Reopen</a>
 </p>
 <button type="button" class="letter" aria-expanded="{{ ballot }}" onClick="{{ toggleBallot }}">
-<svg aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0; width: 100%; height: 26px"><path d="M0 0 L50 18 L100 0" fill="none" stroke="#ececf0" stroke-width="1" vector-effect="non-scaling-stroke"></path></svg>
-<span aria-hidden="true" style="font-size: 26px; line-height: 1">{{ chosenEmoji }}</span>
+<svg aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none" style="position: absolute; left: 0; top: 0; width: 100%; height: 26px"><path d="M0 0 L50 18 L100 0" fill="none" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"></path></svg>
+<span aria-hidden="true" style="font-size:28px; line-height: 1">{{ chosenEmoji }}</span>
 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 6px">
-<span style="font-size: 13px; color: #6b6b75">Sent to {{ user }} · {{ sentTime }}</span>
-<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #18181b; font-weight: 500">{{ firstLine }}</span>
+<span style="font-size:13px; color: var(--ink-3)">Sent to {{ user }} · {{ sentTime }}</span>
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-weight: 500">{{ firstLine }}</span>
 </span>
 <span class="postmark" aria-hidden="true">SENT<small>{{ postmark }}</small></span>
 </button>
 <sc-if value="{{ sentLang }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-label="What was sent" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 10px">
-<div><p class="kicker" style="margin-bottom: 4px">Sent in {{ sentLang }}</p><p style="margin: 0; font-size: 14.5px; line-height: 1.55; white-space: pre-wrap">{{ sentOrig }}</p></div>
-<div><p class="kicker" style="margin-bottom: 4px">In English</p><p style="margin: 0; font-size: 14.5px; line-height: 1.55; color: #3f3f46; white-space: pre-wrap">{{ sentEn }}</p></div>
+<div><p class="kicker" style="margin-bottom: 4px">Sent in {{ sentLang }}</p><p style="margin: 0; font-size:14px; line-height: 1.55; white-space: pre-wrap">{{ sentOrig }}</p></div>
+<div><p class="kicker" style="margin-bottom: 4px">In English</p><p style="margin: 0; font-size:14px; line-height: 1.55; color: var(--ink-2); white-space: pre-wrap">{{ sentEn }}</p></div>
 </section>
 </sc-if>
 <sc-if value="{{ ballot }}" hint-placeholder-val="{{ false }}">
 <section class="card ballot" aria-label="All answers" style="padding: 10px 20px">
 <sc-for list="{{ ballotRows }}" as="r" hint-placeholder-count="4">
 <div class="{{ r.cls }}">
-<span aria-hidden="true" style="font-size: 22px; line-height: 1.2">{{ r.emoji }}</span>
+<span aria-hidden="true" style="font-size:20px; line-height: 1.2">{{ r.emoji }}</span>
 <span style="min-width: 0">
-<span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px"><span style="font-weight: 600; color: #18181b">{{ r.title }}</span><sc-if value="{{ r.edited }}"><span class="pick">edited</span></sc-if></span>
-<span style="display: block; margin-top: 2px; color: #3f3f46; font-size: 14px; line-height: 1.5">{{ r.text }}</span>
+<span style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px"><span style="font-weight: 600; color: var(--ink)">{{ r.title }}</span><sc-if value="{{ r.edited }}"><span class="pick">edited</span></sc-if></span>
+<span style="display: block; margin-top: 2px; color: var(--ink-2); font-size:14px; line-height: 1.5">{{ r.text }}</span>
 </span>
-<sc-if value="{{ r.chosen }}"><span aria-label="Sent" style="width: 22px; height: 22px; border-radius: 50%; background: #6247f5; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg></span></sc-if>
+<sc-if value="{{ r.chosen }}"><span aria-label="Sent" style="width: 22px; height: 22px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--surface)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg></span></sc-if>
 </div>
 </sc-for>
 </section>
@@ -399,9 +408,9 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 </sc-if>
 
 <sc-if value="{{ isDismissed }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 15px; color: #18181b">
+<p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size:14px; color: var(--ink)">
 <span style="font-weight: 600">Closed without a reply</span>
-<span style="color: #52525b">{{ closedAt }}</span>
+<span style="color: var(--ink-2)">{{ closedAt }}</span>
 <a href="{{ reopenHref }}" style="font-weight: 500">Reopen</a>
 </p>
 </sc-if>
@@ -409,11 +418,11 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <sc-if value="{{ jiraShow }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-labelledby="h-jira" style="margin-top: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
 <p id="h-jira" class="kicker">For the engineers</p>
-<sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14.5px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a> · {{ jiraTitle }} <span style="color: #52525b">· {{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
-<sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14.5px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
+<sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a> · {{ jiraTitle }} <span style="color: var(--ink-2)">· {{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
+<sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
 <sc-if value="{{ jiraOffer }}" hint-placeholder-val="{{ false }}"><p style="margin: 0"><button type="button" class="quiet" onClick="{{ openJira }}">Send to a team in Jira</button></p></sc-if>
 <sc-if value="{{ jiraForm }}" hint-placeholder-val="{{ false }}">
-<sc-if value="{{ jiraProposed }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 14px; color: #3f3f46">The agent thinks this is a bug in the product and wrote a report for the team. Sending an answer also creates this issue.</p></sc-if>
+<sc-if value="{{ jiraProposed }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; color: var(--ink-2)">The agent thinks this is a bug in the product and wrote a report for the team. Sending an answer also creates this issue.</p></sc-if>
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <label class="field">Team<select class="inp" value="{{ jiraTeamV }}" onChange="{{ onJiraTeam }}"><sc-for list="{{ jiraTeams }}" as="o"><option>{{ o.name }}</option></sc-for></select></label>
 <label class="field">Priority<select class="inp" value="{{ jiraPriority }}" onChange="{{ onJiraPriority }}"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
@@ -422,10 +431,10 @@ input::placeholder,textarea::placeholder{color:#7b7b85}
 <label class="field">Details<textarea class="ta" style="min-height: 170px" value="{{ jiraDetails }}" onChange="{{ onJiraDetails }}"></textarea></label>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px">
 <button type="button" class="btn-dark" disabled="{{ jiraOff }}" onClick="{{ createJira }}">{{ jiraLabel }}</button>
-<sc-if value="{{ jiraNoSite }}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #52525b">Jira is not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.</span></sc-if>
+<sc-if value="{{ jiraNoSite }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; color: var(--ink-2)">Jira is not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.</span></sc-if>
 </div>
 </sc-if>
-<sc-if value="{{ hasJiraErr }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 13px; color: #8e3b36">{{ jiraErr }}</p></sc-if>
+<sc-if value="{{ hasJiraErr }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size:13px; color: var(--bad)">{{ jiraErr }}</p></sc-if>
 </section>
 </sc-if>
 
@@ -449,7 +458,7 @@ var BASE = {
 var ORDER = ['reply', 'steps', 'grant'];
 var CONF = { reply: 85, steps: 64, grant: 38 };
 var CIRC = 2 * Math.PI * 25.5;
-function toneOf(c) { return c >= 75 ? '#3d6b52' : (c >= 55 ? '#8a6a2e' : '#8e3b36'); }
+function toneOf(c) { return c >= 75 ? 'var(--ok)' : (c >= 55 ? 'var(--warn)' : 'var(--bad)'); }
 function dashOf(c) { return (c / 100 * CIRC).toFixed(1) + ' ' + CIRC.toFixed(1); }
 function ticksFor(conf, c, rMaj, rMin, rOut, tone) {
   var lit = Math.round((conf || 0) / 100 * 60), out = [];
@@ -458,13 +467,13 @@ function ticksFor(conf, c, rMaj, rMin, rOut, tone) {
     out.push({
       x1: (c + r1 * Math.cos(a)).toFixed(2), y1: (c + r1 * Math.sin(a)).toFixed(2),
       x2: (c + rOut * Math.cos(a)).toFixed(2), y2: (c + rOut * Math.sin(a)).toFixed(2),
-      c: i < lit ? tone : (major ? '#cdc8e2' : '#e4e1f0'), w: major ? 1.3 : 0.8
+      c: i < lit ? tone : (major ? 'var(--accent-line)' : 'var(--line)'), w: major ? 1.3 : 0.8
     });
   }
   return out;
 }
 function markAt(conf, c, r) { var a = (-90 + (conf || 0) / 100 * 360) * Math.PI / 180; return { x: (c + r * Math.cos(a)).toFixed(2), y: (c + r * Math.sin(a)).toFixed(2) }; }
-var EMPTY = '#a1a1aa';
+var EMPTY = 'var(--ink-4)';
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var MOCK = {
   base: BASE, order: ORDER, conf: CONF, user: USER, phase: null, closed: null, actionError: null, action: null,
@@ -845,7 +854,7 @@ class Component extends DCLogic {
       cls: selected === 'own' ? 'ans sel' : 'ans',
       selected: selected === 'own',
       emoji: '🧠', title: 'Write your own',
-      conf: '', confText: '', hasConf: false, tone: '#a1a1aa', ticks: ticksFor(0, 38, 28, 30.5, 34, '#a1a1aa'), mx: 38, my: 0.75, mr: 0, inf: 'M38 38 C35.4 34.4 30.2 34.2 30.2 38 C30.2 41.8 35.4 41.6 38 38 C40.6 34.4 45.8 34.2 45.8 38 C45.8 41.8 40.6 41.6 38 38 Z',
+      conf: '', confText: '', hasConf: false, tone: 'var(--ink-4)', ticks: ticksFor(0, 38, 28, 30.5, 34, 'var(--ink-4)'), mx: 38, my: 0.75, mr: 0, inf: 'M38 38 C35.4 34.4 30.2 34.2 30.2 38 C30.2 41.8 35.4 41.6 38 38 C40.6 34.4 45.8 34.2 45.8 38 C45.8 41.8 40.6 41.6 38 38 Z',
       isPick: false, edited: false, hasRisk: false, risk: '', riskCls: '',
       showText: false, reply: '', editing: false, hasLang: false, showOrig: false, direct: false,
       showEditBtn: false,
@@ -876,6 +885,8 @@ class Component extends DCLogic {
     return {
       live: LIVE,
       title: m ? m.title : (s.loadError ? 'Could not open the ticket' : ''),
+      heading: m ? (m.hasTriage && m.foundSummary ? m.foundSummary : m.title) : (s.loadError ? 'Could not open the ticket' : ''),
+      showFoundH: !(m && m.hasTriage && m.foundSummary),
       meta: m ? m.meta : (s.loadError || 'Loading…'),
       lang: lang, hasLang: !!lang,
       messages: (m ? m.messages : []).map(function (x, i) {

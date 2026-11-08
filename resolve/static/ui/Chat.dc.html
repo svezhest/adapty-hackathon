@@ -10,91 +10,73 @@
 <x-dc>
 <helmet>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="./tokens.css" rel="stylesheet">
 <style>
-body{margin:0;background:#fafafa}
+body{margin:0;background:var(--bg)}
 *{box-sizing:border-box}
-a{color:#5b3cf0;text-decoration:none}
-a:hover{color:#4527d6}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
 button,input,select,textarea{font-family:Inter,system-ui,-apple-system,sans-serif}
-:focus-visible{outline:2px solid #6247f5;outline-offset:2px}
-input::placeholder{color:#7b7b85}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.nl{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:6px;border:0;background:transparent;font-size:14.5px;font-weight:500;color:#3f3f46;cursor:pointer;transition:background .15s,color .15s}
-.nl:hover{background:rgba(24,24,27,.06);color:#18181b}
-.nl.on{background:linear-gradient(135deg,#ece6ff 0%,#f5f2ff 100%);color:#5b3cf0}
-.nl svg{transition:transform .2s}
-.nl.open{background:rgba(24,24,27,.06);color:#18181b}
-.nl.open svg{transform:rotate(180deg)}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 12px;border-radius:6px;background:#ffffff;color:#18181b;font-size:14px;font-weight:500;border:1px solid #e4e4e8;box-shadow:0 1px 2px rgba(15,15,15,.04);cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.btn:hover{background:linear-gradient(180deg,#ffffff 0%,#f6f3ff 100%);border-color:#d9d9de;color:#18181b;box-shadow:0 2px 6px rgba(15,15,15,.06)}
-.btn svg{color:#6247f5}
-.tile{flex:0 0 auto;width:40px;height:40px;border-radius:6px;background:#ffffff;border:1px solid #e8e8ec;box-shadow:0 1px 2px rgba(15,15,15,.05);display:flex;align-items:center;justify-content:center;color:#3f3f46;transition:border-color .15s,color .15s}
-.mi{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:0 -10px;border-radius:6px;color:#18181b;font-size:15.5px;font-weight:500;transition:background .15s}
-.mi:hover{background:linear-gradient(90deg,#f3efff 0%,#faf9ff 100%);color:#18181b}
-.mi:hover .tile{border-color:#d9d6f5;color:#5b3cf0}
-.kicker{margin:0;font-family:Newsreader,Georgia,'Times New Roman',serif;font-size:15.5px;font-style:italic;font-weight:400;letter-spacing:0;color:#6b6b75}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input::placeholder{color:var(--ink-3)}
 .pop{animation:pop .18s ease-out}
 @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .backdrop{position:fixed;inset:0;border:0;padding:0;background:transparent;cursor:default;z-index:20}
-.card{background:linear-gradient(180deg,#faf8ff 0%,#ffffff 180px);border:1px solid #ebe8f6;border-radius:10px;box-shadow:0 1px 2px rgba(15,15,15,.04)}
-.linkbtn{background:none;border:0;padding:0;color:#5b3cf0;font-size:14px;font-weight:500;cursor:pointer;text-align:left}
-.linkbtn:hover{color:#4527d6}
-.idf{height:34px;width:240px;padding:0 10px;border-radius:6px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;outline:none}
-.idf:focus{border-color:#cbc3fb;box-shadow:0 0 0 4px rgba(98,71,245,.10)}
-.ro{font-size:12.5px;color:#8a6a2e;background:#fbf3db;border-radius:6px;padding:4px 9px}
-.pick{height:34px;padding:0 30px 0 10px;border-radius:6px;border:1px solid #e4e4e8;background:#ffffff;color:#18181b;font-size:14px;font-weight:500}
-.sw{position:relative;width:38px;height:22px;border-radius:999px;border:0;background:#d9d9de;cursor:pointer;transition:background .18s;flex:0 0 auto}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#ffffff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .18s}
-.sw.on{background:#6247f5}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font-size:14px;font-weight:500;cursor:pointer;text-align:left}
+.linkbtn:hover{color:var(--accent-2)}
+.idf{height:34px;width:240px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;outline:none}
+.idf:focus{border-color:var(--accent-line);box-shadow:0 0 0 4px rgba(91,60,240,.10)}
+.ro{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:4px 9px}
+.pick{height:34px;padding:0 30px 0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px;font-weight:500}
+.sw{position:relative;width:38px;height:22px;border-radius:999px;border:0;background:var(--line);cursor:pointer;transition:background .18s;flex:0 0 auto}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .18s}
+.sw.on{background:var(--accent)}
 .sw.on::after{transform:translateX(16px)}
 .msg{display:flex;align-items:flex-end;gap:8px}
 .msg.u{justify-content:flex-end}
 .msg.gap{margin-top:12px}
 .msg.tight{margin-top:2px}
-.av{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#efedfb;color:#5b3cf0;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.av{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .av.hide{visibility:hidden}
-.b{position:relative;max-width:min(78%,520px);padding:8px 12px 8px 14px;border-radius:18px;font-size:15px;line-height:1.45;text-wrap:pretty}
-.b-user{background:#6247f5;color:#fff}
-.b-assistant{background:#f2f2f5;color:#18181b}
-.b-support{background:#ebe7fd;color:#18181b}
+.b{position:relative;max-width:min(78%,520px);padding:8px 12px 8px 14px;border-radius:18px;font-size:14px;line-height:1.45;text-wrap:pretty}
+.b-user{background:var(--accent);color:var(--surface)}
+.b-assistant{background:var(--subtle);color:var(--ink)}
+.b-support{background:var(--accent-soft);color:var(--ink)}
 .b-user.last{border-bottom-right-radius:5px}
 .b-assistant.last,.b-support.last{border-bottom-left-radius:5px}
-.b .t{float:right;margin:7px -2px -5px 12px;font-size:11px;opacity:.7;font-variant-numeric:tabular-nums}
+.b .t{float:right;margin:7px -2px -5px 12px;font-size:12px;opacity:.7;font-variant-numeric:tabular-nums}
 .typing{display:inline-flex;gap:4px;padding:13px 14px}
-.typing i{width:6px;height:6px;border-radius:50%;background:#a1a1aa;animation:blink 1s infinite ease-in-out}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--ink-4);animation:blink 1s infinite ease-in-out}
 .typing i:nth-child(2){animation-delay:.15s}
 .typing i:nth-child(3){animation-delay:.3s}
 @keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-2px)}}
 .in{animation:in .2s ease-out}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.composer{display:flex;align-items:center;gap:8px;height:50px;padding:0 5px 0 18px;border-radius:999px;background:#f3f3f5;border:1px solid #ececf0;transition:border-color .15s, box-shadow .15s, background .15s}
-.composer:focus-within{background:#ffffff;border-color:#cbc3fb;box-shadow:0 0 0 4px rgba(98,71,245,.10)}
-.send{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:0;background:#6247f5;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s, transform .15s}
-.send:hover{background:#5638ee}
+.composer{display:flex;align-items:center;gap:8px;height:50px;padding:0 5px 0 18px;border-radius:999px;background:var(--subtle);border:1px solid var(--line);transition:border-color .15s, box-shadow .15s, background .15s}
+.composer:focus-within{background:var(--surface);border-color:var(--accent-line);box-shadow:0 0 0 4px rgba(91,60,240,.10)}
+.send{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s, transform .15s}
+.send:hover{background:var(--accent)}
 .send:active{transform:scale(.92)}
-.send:disabled{background:#d9d9de;cursor:default}
-.log{width:100%;display:grid;grid-template-columns:16px minmax(0,1fr) 14px;gap:10px;align-items:center;padding:9px 0;border:0;border-top:1px solid #f2f2f4;background:none;cursor:pointer;text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#18181b}
-.log svg.ch{transition:transform .2s;color:#a1a1aa}
+.send:disabled{background:var(--line);cursor:default}
+.log{width:100%;display:grid;grid-template-columns:16px minmax(0,1fr) 14px;gap:10px;align-items:center;padding:9px 0;border:0;border-top:1px solid var(--subtle);background:none;cursor:pointer;text-align:left;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--ink)}
+.log svg.ch{transition:transform .2s;color:var(--ink-4)}
 .log.open svg.ch{transform:rotate(180deg)}
-.ok{color:#15803d;font-weight:700}
-.no{color:#d63a3f;font-weight:700}
-.go{color:#5b3cf0;font-weight:700}
-.det{margin:0 0 10px 26px;padding:10px 12px;border-radius:6px;background:#fafafa;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;color:#3f3f46;white-space:pre-wrap}
+.ok{color:var(--ok);font-weight:700}
+.no{color:var(--bad);font-weight:700}
+.go{color:var(--accent);font-weight:700}
+.det{margin:0 0 10px 26px;padding:10px 12px;border-radius:6px;background:var(--bg);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap}
 .drawer{animation:slide .22s ease-out}
 @keyframes slide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
-.btn.nf{border-color:transparent;color:#fff;background:radial-gradient(130% 160% at 18% -10%,#5b3fd4 0%,#33198f 46%,#1d0f55 100%);box-shadow:0 10px 24px -12px rgba(42,15,160,.65),0 0 0 1px rgba(60,30,170,.35),inset 0 1px 0 rgba(255,255,255,.14);transition:box-shadow .2s,filter .2s}
-.btn.nf svg{color:#cfc3ff}
-.btn.nf:hover{color:#fff;border-color:transparent;background:radial-gradient(130% 160% at 18% -10%,#6a4de6 0%,#3a1ea3 46%,#211062 100%);box-shadow:0 0 0 5px rgba(124,92,255,.14),0 12px 28px -12px rgba(42,15,160,.75),inset 0 1px 0 rgba(255,255,255,.18)}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1100px 560px at 6% -8%, rgba(124,92,255,.12), transparent 62%), radial-gradient(900px 520px at 96% 2%, rgba(176,148,255,.11), transparent 60%), radial-gradient(1200px 800px at 50% 115%, rgba(124,92,255,.07), transparent 60%), #fafafa; color: #18181b; font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14.5px; line-height: 1.5; -webkit-font-smoothing: antialiased">
+<div style="min-height: 100vh; background:var(--bg); color: var(--ink); font-family: Inter, system-ui, -apple-system, sans-serif; font-size:14px; line-height: 1.5; -webkit-font-smoothing: antialiased">
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
 <button type="button" class="backdrop" aria-label="Close menu" onClick="{{ closeMenu }}"></button>
 </sc-if>
 
 <header style="position: relative; z-index: 30; max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px">
-<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; color: #18181b">Company</a>
+<a href="Main.dc.html" style="font-family: Newsreader, Georgia, 'Times New Roman', serif; font-size:24px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink)">Company</a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0">
 <a href="Main.dc.html" class="nl">Incoming</a>
 <a href="Chat.dc.html" class="nl on" aria-current="page">Chat</a>
@@ -107,8 +89,8 @@ input::placeholder{color:#7b7b85}
 <a href="NewFeedback.dc.html" class="btn nf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New feedback</a>
 
 <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
-<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius: 12px; background: linear-gradient(160deg, #f4f0ff 0%, #f9f8ff 45%, #fafafa 100%); border: 1px solid #e8e8ec; box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<div id="catalogue" class="pop" style="position: absolute; top: 64px; left: 24px; right: 24px; padding: 6px; border-radius:10px; background:var(--surface); border: 1px solid var(--line); box-shadow: 0 30px 70px -20px rgba(15,15,15,.26), 0 2px 6px rgba(15,15,15,.04); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 6px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Support desk</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Main.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l2.5-7.5A2 2 0 0 1 7.4 4h9.2a2 2 0 0 1 1.9 1.5L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M3 13h5l1.5 2.5h5L16 13h5"></path></svg></span>Incoming</a>
@@ -117,14 +99,14 @@ input::placeholder{color:#7b7b85}
 <a href="Reopen.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg></span>Reopen ticket</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">In-app agent</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Chat.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"></path></svg></span>Test chat</a>
 <a href="Settings.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></span>Agent settings</a>
 </div>
 </section>
-<section style="background: linear-gradient(180deg, #faf8ff 0%, #ffffff 130px); border: 1px solid #eeebf8; border-radius: 8px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
+<section style="background:var(--surface); border: 1px solid var(--line); border-radius:6px; padding: 20px 22px 14px; display: flex; flex-direction: column; gap: 10px">
 <p class="kicker">Numbers</p>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <a href="Analyze.dc.html" class="mi"><span class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-6M3 20h18"></path></svg></span>Analyze</a>
@@ -139,8 +121,8 @@ input::placeholder{color:#7b7b85}
 </header>
 
 <main style="max-width: 1200px; margin: 0 auto; padding: 16px 24px 48px; display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size: 13.5px; color: #6b6b75">
-<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; color: #3f3f46">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><label for="chat-id">Chat id</label><input id="chat-id" class="idf" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" class="linkbtn" style="font-size: 13.5px">Open</button><sc-if value="{{ readOnly }}"><span class="ro">Read only · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></sc-if><button type="button" class="linkbtn" style="font-size: 13.5px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: #d63a3f">{{ idErr }}</span></sc-if>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size:14px; color: var(--ink-3)">
+<sc-if value="{{ design }}"><span>as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px; color: var(--ink-2)">{{ user }}</span></span></sc-if><sc-if value="{{ live }}"><form onSubmit="{{ openById }}" style="display: inline-flex; align-items: center; gap: 8px; margin: 0"><label for="chat-id">Chat id</label><input id="chat-id" class="idf" type="text" autocomplete="off" spellcheck="false" placeholder="chat or ticket id, e.g. f-0004" value="{{ idDraft }}" onChange="{{ onIdDraft }}"><button type="submit" class="linkbtn" style="font-size:14px">Open</button><sc-if value="{{ readOnly }}"><span class="ro">Read only · as <span style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace">{{ user }}</span></span></sc-if><button type="button" class="linkbtn" style="font-size:14px" onClick="{{ newSession }}">New chat</button></form></sc-if><sc-if value="{{ idErr }}"><span role="alert" style="color: var(--bad)">{{ idErr }}</span></sc-if>
 <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 10px">
 <span id="dbg-l">Debug</span>
 <button type="button" role="switch" aria-checked="{{ debug }}" aria-labelledby="dbg-l" class="{{ swCls }}" onClick="{{ toggleDebug }}"></button>
@@ -152,15 +134,15 @@ input::placeholder{color:#7b7b85}
 <div role="log" aria-live="polite" style="flex: 1 1 auto; overflow-y: auto; padding: 20px 20px 12px">
 <div style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column">
 <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
-<p style="margin: 160px 0 0; text-align: center; color: #6b6b75">Send a message to start a new chat.</p>
+<p style="margin: 160px 0 0; text-align: center; color: var(--ink-3)">Send a message to start a new chat.</p>
 </sc-if>
 <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="5">
 <div style="display: flex; flex-direction: column">
-<sc-if value="{{ m.label }}"><span style="margin: 14px 0 3px 36px; font-size: 12px; font-weight: 500; color: #6b6b75">{{ m.label }}</span></sc-if>
+<sc-if value="{{ m.label }}"><span style="margin: 14px 0 3px 36px; font-size:12px; font-weight: 500; color: var(--ink-3)">{{ m.label }}</span></sc-if>
 <div class="{{ m.rowCls }}">
 <sc-if value="{{ m.left }}"><span class="{{ m.avCls }}" aria-hidden="true">F</span></sc-if>
 <div class="{{ m.bCls }}">{{ m.text }}<span class="t">{{ m.ts }}</span>
-<sc-if value="{{ m.tailR }}"><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; right: -5px; bottom: 0"><path d="M0 0 Q0 12 11 16 L0 16 Z" fill="#6247f5"></path></svg></sc-if>
+<sc-if value="{{ m.tailR }}"><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; right: -5px; bottom: 0"><path d="M0 0 Q0 12 11 16 L0 16 Z" fill="var(--accent)"></path></svg></sc-if>
 <sc-if value="{{ m.tailL }}"><svg aria-hidden="true" width="11" height="16" viewBox="0 0 11 16" style="position: absolute; left: -5px; bottom: 0"><path d="M11 0 Q11 12 0 16 L11 16 Z" fill="{{ m.tailFill }}"></path></svg></sc-if>
 </div>
 </div>
@@ -174,7 +156,7 @@ input::placeholder{color:#7b7b85}
 <form onSubmit="{{ submit }}" style="flex: 0 0 auto; padding: 12px 20px 18px">
 <div class="composer" style="max-width: 720px; margin: 0 auto">
 <label for="msg" class="sr">Message</label>
-<input id="msg" type="text" autocomplete="off" placeholder="{{ msgPh }}" disabled="{{ readOnly }}" value="{{ draft }}" onChange="{{ onDraft }}" style="flex: 1; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: #18181b; font-size: 15px">
+<input id="msg" type="text" autocomplete="off" placeholder="{{ msgPh }}" disabled="{{ readOnly }}" value="{{ draft }}" onChange="{{ onDraft }}" style="flex: 1; min-width: 0; height: 100%; border: 0; outline: none; background: transparent; color: var(--ink); font-size:14px">
 <button type="submit" class="send" aria-label="Send" disabled="{{ noDraft }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></button>
 </div>
 </form>
@@ -184,15 +166,15 @@ input::placeholder{color:#7b7b85}
 <aside class="card drawer" aria-label="Debug" style="flex: 1 1 320px; min-width: 0; max-height: 680px; overflow-y: auto; padding: 20px 22px; display: flex; flex-direction: column; gap: 18px">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <p class="kicker">Session</p>
-<dl style="margin: 0; display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 6px 12px; font-size: 13.5px">
-<dt style="color: #6b6b75">Id</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px">{{ session }}</dd>
-<dt style="color: #6b6b75">Outcome</dt><dd style="margin: 0"><sc-if value="{{ handedOff }}"><a href="{{ ticketHref }}" style="font-weight: 500">Handed to a person · {{ ticket }} →</a></sc-if><sc-if value="{{ inProgress }}"><span>{{ outcomeText }}</span></sc-if></dd>
-<dt style="color: #6b6b75">Plan</dt><dd style="margin: 0">{{ plan }}</dd>
+<dl style="margin: 0; display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 6px 12px; font-size:14px">
+<dt style="color: var(--ink-3)">Id</dt><dd style="margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:13px">{{ session }}</dd>
+<dt style="color: var(--ink-3)">Outcome</dt><dd style="margin: 0"><sc-if value="{{ handedOff }}"><a href="{{ ticketHref }}" style="font-weight: 500">Handed to a person · {{ ticket }} →</a></sc-if><sc-if value="{{ inProgress }}"><span>{{ outcomeText }}</span></sc-if></dd>
+<dt style="color: var(--ink-3)">Plan</dt><dd style="margin: 0">{{ plan }}</dd>
 </dl>
 </div>
 <div style="display: flex; flex-direction: column">
 <p class="kicker" style="margin-bottom: 6px">Tool calls</p>
-<sc-if value="{{ noLog }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13.5px; color: #6b6b75">No calls yet.</p></sc-if>
+<sc-if value="{{ noLog }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; color: var(--ink-3)">No calls yet.</p></sc-if>
 <sc-for list="{{ log }}" as="l" hint-placeholder-count="3">
 <div>
 <button type="button" class="{{ l.cls }}" aria-expanded="{{ l.open }}" onClick="{{ l.toggle }}">
@@ -460,7 +442,7 @@ class Component extends DCLogic {
         bCls: 'b b-' + m.role + (last ? ' last' : ''),
         tailR: last && !left,
         tailL: last && left,
-        tailFill: m.role === 'support' ? '#ebe7fd' : '#f2f2f5'
+        tailFill: m.role === 'support' ? 'var(--accent-soft)' : 'var(--subtle)'
       };
     });
     var draft = s.draft || '';
