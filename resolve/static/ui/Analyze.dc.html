@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Company · Analyze</title>
+<title>Company: Analyze</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -302,7 +302,7 @@ button{font-family:Inter,system-ui,-apple-system,sans-serif}
 <span class="{{ g.dot }}"></span>
 <span style="display: flex; flex-direction: column; min-width: 0">
 <span class="cell tt" style="font-size:14px; font-weight: 500; transition: color .15s">{{ t.title }}</span>
-<span class="cell" style="font-size:13px; color: var(--ink-3)">{{ t.user }} · {{ t.note }}</span>
+<span class="cell" style="font-size:13px; color: var(--ink-3)">{{ t.user }}, {{ t.note }}</span>
 </span>
 <span class="num" style="font-size:13px; color: var(--ink-3); white-space: nowrap">{{ t.age }}</span>
 </a>
@@ -325,9 +325,9 @@ var YMAX = 5, H = 280, W = 1000;
 var C = { agent: 'var(--accent)', handed: 'var(--ink-2)', closed: 'var(--ink-4)', open: 'var(--warn)', feedback: 'var(--ink)' };
 var GRANTS = [7, 7, 14, 3, 7, 7, 7];
 var RANGES = [
-  { id: 'today', label: 'Today', note: 'Nov 7, 11:00–23:00 · compared with Nov 6' },
-  { id: 'week', label: '7 days', note: 'Nov 1–7 · compared with the week before' },
-  { id: 'month', label: '30 days', note: 'Oct 9–Nov 7 · compared with the 30 days before' }
+  { id: 'today', label: 'Today', note: 'Nov 7, 11:00–23:00, compared with Nov 6' },
+  { id: 'week', label: '7 days', note: 'Nov 1–7, compared with the week before' },
+  { id: 'month', label: '30 days', note: 'Oct 9–Nov 7, compared with the 30 days before' }
 ];
 var VS = [
   { label: 'Time to first reply', a: '3.8 s', p: '18 min', av: 3.8, pv: 1080, better: 'low' },
@@ -415,7 +415,7 @@ function mockView(range, tick) {
     xLabels: HOURS.filter(function (h, i) { return i % 2 === 0; }),
     agent: AGENT, handed: HANDED, closed: CLOSED, feedback: FEEDBACK, ymax: YMAX, step: 1, totals: [19, 7, 5, 4],
     rangeNote: RANGES.filter(function (r) { return r.id === range; })[0].note,
-    hero: { aBg: 'var(--accent)', bBg: 'var(--ink-2)', fg: 'var(--surface)', w: 73, machines: '73%', humans: '27%', aria: 'Of 26 closed chats, machines closed 73% and humans 27%', delta: '▲ 6 pts for the machines', line: 'vs Nov 6 · 19 of 26 closed chats ended without a human, 7 needed one' },
+    hero: { aBg: 'var(--accent)', bBg: 'var(--ink-2)', fg: 'var(--surface)', w: 73, machines: '73%', humans: '27%', aria: 'Of 26 closed chats, machines closed 73% and humans 27%', delta: '▲ 6 pts for the machines', line: 'vs Nov 6, 19 of 26 closed chats ended without a human, 7 needed one' },
     grants: GRANTS,
     chartTitle: 'Conversations by hour', bucketHead: 'Hour',
     chartAria: 'Stacked area chart of chats per hour from 11:00 to 23:00: 19 kept by the agent, 7 handed to people, 5 closed by people, 4 other feedback.',
@@ -455,8 +455,8 @@ function liveView(data, range, elapsed, updated, error) {
   var note = '';
   if (p.start) {
     var s0 = API.day(p.start), e0 = API.day(p.end);
-    if (range === 'today') note = s0 + ', ' + API.hm(p.start) + '–' + API.hm(p.end) + ' · compared with ' + prevLabel;
-    else note = (s0.split(' ')[0] === e0.split(' ')[0] ? s0 + '–' + e0.split(' ')[1] : s0 + '–' + e0) + ' · compared with ' + PREV_LABEL[range];
+    if (range === 'today') note = s0 + ', ' + API.hm(p.start) + '–' + API.hm(p.end) + ', compared with ' + prevLabel;
+    else note = (s0.split(' ')[0] === e0.split(' ')[0] ? s0 + '–' + e0.split(' ')[1] : s0 + '–' + e0) + ', compared with ' + PREV_LABEL[range];
   }
   var side = function (v, f) { return v === null || v === undefined ? null : f(v); };
   var vsRow = function (label, a, b, better, fmt, scale) {

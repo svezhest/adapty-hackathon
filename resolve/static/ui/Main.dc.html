@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Company · Incoming</title>
+<title>Company: Incoming</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -170,7 +170,7 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 <sc-for list="{{ rows }}" as="t" hint-placeholder-count="6">
 <a href="{{ t.href }}" role="listitem" class="{{ t.cls }}">
 <span class="subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span>
-<span class="{{ t.nextCls }}"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.acc }}"><span class="acc">{{ p.t }}</span></sc-if><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
+<span class="{{ t.nextCls }}"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.acc }}"><span class="acc">{{ p.t }}</span></sc-if><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span>{{ t.age }}</span></span></span>
 </a>
 </sc-for>
 </div>

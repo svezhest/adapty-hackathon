@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Company · Reopen ticket</title>
+<title>Company: Reopen ticket</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -89,7 +89,7 @@ function outcomeOf(full) {
   var p = f.params || {};
   switch (f.action) {
     case 'grant_access': var days = a.days || p.days; return days ? 'Granted ' + days + ' days' : 'Granted access';
-    case 'store_instructions': return 'Sent ' + (KIND[p.kind] || 'store').toLowerCase() + ' steps' + (p.store ? ' · ' + (STORE[p.store] || p.store) : '');
+    case 'store_instructions': return 'Sent ' + (KIND[p.kind] || 'store').toLowerCase() + ' steps' + (p.store ? ', ' + (STORE[p.store] || p.store) : '');
     case 'refund_to_human': return 'Passed the refund to a person';
     case 'ask_user': return 'Asked the user';
     case 'reply_only': return 'Replied, no action';
@@ -123,11 +123,11 @@ class Component extends DCLogic {
     if (t && closed) {
       var at = API.day((t.action && t.action.approved_at) || t.updated_at || t.created_at);
       var what = outcomeOf(t);
-      line = (t.status === 'dismissed' ? 'Dismissed ' : 'Closed ') + at + (what ? ' · ' + what : '');
+      line = (t.status === 'dismissed' ? 'Dismissed ' : 'Closed ') + at + (what ? ', ' + what : '');
     }
     return {
       subject: live ? (t ? t.title : '') : 'Wants another free week after compensation',
-      closedLine: live ? line : 'Closed Nov 7 · Granted 7 days',
+      closedLine: live ? line : 'Closed Nov 7, Granted 7 days',
       dotColor: !live ? 'var(--ok)' : !closed ? 'transparent' : t.status === 'dismissed' ? 'var(--ink-4)' : 'var(--ok)',
       ticketHref: live && id ? 'Ticket.dc.html?id=' + encodeURIComponent(id) : 'Ticket.dc.html',
       editing: live ? closed && !s.done : !s.done, done: !!s.done,

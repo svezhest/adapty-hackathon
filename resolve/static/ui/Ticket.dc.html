@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Company · Ticket</title>
+<title>Company: Ticket</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -60,6 +60,8 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .pick{font-size:13px;color:var(--ink-3);font-weight:500}
 .hov{position:absolute;z-index:2;top:16px;right:204px;height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;font-weight:500;cursor:pointer;opacity:0;transition:opacity .15s}
 .ans:hover .hov,.hov:focus-visible{opacity:1}
+.hov-out{display:none}
+.hov-in{position:static;display:inline-block;margin-left:14px;vertical-align:3px;text-shadow:none}
 .field{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-3);font-weight:500}
 .inp{height:36px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:14px}
 .inp:focus{outline:none;border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-ring)}
@@ -98,7 +100,7 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ans{--row:var(--surface)}
 .ans:hover{--row:var(--bg)}
 .ans.sel,.ans.sel:hover{--row:var(--accent-soft)}
-.emo-box .emo{position:absolute;right:0;top:0;font-size:60px;line-height:1;transform-origin:50% 90%;filter:drop-shadow(0 5px 6px rgba(24,10,90,.2));transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.emo-box .emo{position:absolute;right:0;top:0;font-size:60px;line-height:1;transform-origin:50% 90%;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
 .ans:hover .emo{transform:rotate(-8deg) scale(1.06)}
 .ans.sel .emo{transform:scale(1.08);animation:chonk .46s cubic-bezier(.2,1.5,.4,1)}
 @keyframes chonk{0%{transform:scale(1)}28%{transform:scale(1.2,.84)}58%{transform:scale(.94,1.12)}100%{transform:scale(1.08)}}
@@ -156,6 +158,8 @@ input::placeholder,textarea::placeholder{color:var(--ink-3)}
 .ttl{font-size:18px;padding-right:0}
 .ans.own .copy{min-height:54px}
 .hov{top:auto;right:auto;bottom:14px;left:16px}
+.hov-in{display:none}
+.hov-out{display:block}
 .ans.sel .hov{opacity:1}
 .ans.sel .ans-main{padding-bottom:58px}
 .ans .okstamp{right:-6px;bottom:-14px}
@@ -265,7 +269,7 @@ html{scroll-padding-bottom:104px}
 <sc-if value="{{ m.isUser }}">
 <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
 <div class="b b-u">{{ m.text }}<span class="t">{{ m.time }}</span></div>
-<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
+<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }}, <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
 </div>
 </sc-if>
 <sc-if value="{{ m.labelled }}">
@@ -274,14 +278,14 @@ html{scroll-padding-bottom:104px}
 <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1">
 <span style="font-size:12px; color: var(--ink-3); padding-left: 14px">{{ m.label }}</span>
 <div class="b b-a">{{ m.text }}<span class="t">{{ m.time }}</span></div>
-<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
+<sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }}, <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if>
 </div>
 </div>
 </sc-if>
 <sc-if value="{{ m.plain }}">
 <div style="display: flex; align-items: flex-end; gap: 8px">
 <span aria-hidden="true" style="flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size:12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{ m.avatar }}</span>
-<div style="display: flex; flex-direction: column; gap: 3px; min-width: 0"><div class="b b-a" style="max-width: 100%; align-self: flex-start">{{ m.text }}<span class="t">{{ m.time }}</span></div><sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }} · <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if></div>
+<div style="display: flex; flex-direction: column; gap: 3px; min-width: 0"><div class="b b-a" style="max-width: 100%; align-self: flex-start">{{ m.text }}<span class="t">{{ m.time }}</span></div><sc-if value="{{ m.tr }}"><span class="trl {{ m.trSide }}">Translated from {{ lang }}, <button type="button" class="quiet" style="font-size:12px" onClick="{{ m.toggle }}">{{ m.trWord }}</button></span></sc-if><sc-if value="{{ m.showOrig }}"><span class="orig {{ m.trSide }}">{{ m.orig }}</span></sc-if></div>
 </div>
 </sc-if>
 </sc-for>
@@ -303,16 +307,16 @@ html{scroll-padding-bottom:104px}
 <sc-if value="{{ a.sig.has }}"><span class="band" aria-hidden="true"><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span><span class="pair"><span class="{{ a.sig.cls }} ink-b" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span><span class="{{ a.sig.cls }} ink-a" aria-hidden="true"><sc-if value="{{ a.sig.rwifi }}"><svg focusable="false"><use href="#sig-wifi"></use></svg></sc-if><sc-if value="{{ a.sig.r5g }}"><svg focusable="false"><use href="#sig-5g"></use></svg></sc-if><sc-if value="{{ a.sig.rlteplus }}"><svg focusable="false"><use href="#sig-lteplus"></use></svg></sc-if><sc-if value="{{ a.sig.rlte }}"><svg focusable="false"><use href="#sig-lte"></use></svg></sc-if><sc-if value="{{ a.sig.rhplus }}"><svg focusable="false"><use href="#sig-hplus"></use></svg></sc-if><sc-if value="{{ a.sig.rh }}"><svg focusable="false"><use href="#sig-h"></use></svg></sc-if><sc-if value="{{ a.sig.r3g }}"><svg focusable="false"><use href="#sig-3g"></use></svg></sc-if><sc-if value="{{ a.sig.re }}"><svg focusable="false"><use href="#sig-e"></use></svg></sc-if><sc-if value="{{ a.sig.rg }}"><svg focusable="false"><use href="#sig-g"></use></svg></sc-if></span></span></span></sc-if>
 </span>
 <span class="copy">
-<span class="ttl">{{ a.title }}</span>
+<span class="ttl">{{ a.title }}<sc-if value="{{ a.showEditBtn }}"><button type="button" class="hov hov-in" onClick="{{ a.edit }}">Edit</button></sc-if><sc-if value="{{ a.showScratchBtn }}"><button type="button" class="hov hov-in" onClick="{{ a.pick }}">Write from scratch</button></sc-if></span>
 <sc-if value="{{ a.hasMeta }}"><span class="meta"><sc-if value="{{ a.isPick }}"><span class="pick pick-agent">Agent's pick</span></sc-if><sc-if value="{{ a.edited }}"><span class="pick">edited</span></sc-if></span></sc-if>
 <sc-if value="{{ a.hasRisk }}"><span class="{{ a.riskCls }}">{{ a.risk }}</span></sc-if>
 <sc-if value="{{ a.showText }}"><span class="txt">{{ a.reply }}</span></sc-if>
-<sc-if value="{{ a.hasLang }}"><span class="sends">{{ a.sendsWord }} · <button type="button" class="quiet" style="font-size:13px" onClick="{{ a.toggleOrig }}">{{ a.origWord }}</button></span></sc-if>
+<sc-if value="{{ a.hasLang }}"><span class="sends">{{ a.sendsWord }}, <button type="button" class="quiet" style="font-size:13px" onClick="{{ a.toggleOrig }}">{{ a.origWord }}</button></span></sc-if>
 <sc-if value="{{ a.showOrig }}"><span class="orig" style="display: block; max-width: 100%; margin-top: 4px">{{ a.origText }}</span></sc-if>
 </span>
 </label>
-<sc-if value="{{ a.showEditBtn }}"><button type="button" class="hov" onClick="{{ a.edit }}">Edit</button></sc-if>
-<sc-if value="{{ a.showScratchBtn }}"><button type="button" class="hov" onClick="{{ a.pick }}">Write from scratch</button></sc-if>
+<sc-if value="{{ a.showEditBtn }}"><button type="button" class="hov hov-out" onClick="{{ a.edit }}">Edit</button></sc-if>
+<sc-if value="{{ a.showScratchBtn }}"><button type="button" class="hov hov-out" onClick="{{ a.pick }}">Write from scratch</button></sc-if>
 
 <sc-if value="{{ a.showOwnBox }}">
 <div class="below" style="padding: 0 20px 20px">
@@ -394,14 +398,14 @@ html{scroll-padding-bottom:104px}
 <div style="max-width: 760px; display: flex; flex-direction: column; gap: 18px">
 <p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size:14px; color: var(--ink)">
 <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"></path></svg>Ticket closed</span>
-<span style="color: var(--ink-2)">{{ outcome }} · {{ closedAt }}</span>
+<span style="color: var(--ink-2)">{{ outcome }} on {{ closedAt }}</span>
 <a href="{{ reopenHref }}" style="font-weight: 500">Reopen</a>
 </p>
 <button type="button" class="letter" aria-expanded="{{ ballot }}" onClick="{{ toggleBallot }}">
 <svg class="flap" aria-hidden="true" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M-1 -1 L50 19 L101 -1 Z"></path></svg>
-<span aria-hidden="true" style="font-size:46px; line-height: 1; filter: drop-shadow(0 5px 6px rgba(20,8,80,.18))">{{ chosenEmoji }}</span>
+<span aria-hidden="true" style="font-size:46px; line-height: 1">{{ chosenEmoji }}</span>
 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 6px">
-<span style="font-size:13px; color: var(--ink-3)">Sent to {{ user }} · {{ sentTime }}</span>
+<span style="font-size:13px; color: var(--ink-3)">Sent to {{ user }}, {{ sentTime }}</span>
 <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); font-weight: 500">{{ firstLine }}</span>
 </span>
 <span class="postmark" aria-hidden="true"><svg viewBox="0 0 76 76"><circle class="rim" cx="38" cy="38" r="37"></circle><circle class="rim2" cx="38" cy="38" r="32"></circle></svg><b>SENT</b><small>{{ postmark }}</small></span>
@@ -440,7 +444,7 @@ html{scroll-padding-bottom:104px}
 <sc-if value="{{ jiraShow }}" hint-placeholder-val="{{ false }}">
 <section class="card" aria-labelledby="h-jira" style="margin-top: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px">
 <p id="h-jira" class="sr">For the engineers</p>
-<sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a> · {{ jiraTitle }} <span style="color: var(--ink-2)">· {{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
+<sc-if value="{{ jiraDone }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5"><a href="{{ jiraUrl }}" target="_blank" rel="noopener" style="font-weight: 600">{{ jiraKey }}</a>, {{ jiraTitle }} <span style="color: var(--ink-2)">{{ jiraTeamName }}, {{ jiraBy }}</span></p></sc-if>
 <sc-if value="{{ jiraDemo }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size:14px; line-height: 1.5">Demo mode: no Jira issue was created. It would go to {{ jiraTeamName }} ({{ jiraProject }}).</p></sc-if>
 <sc-if value="{{ jiraOffer }}" hint-placeholder-val="{{ false }}"><p style="margin: 0"><button type="button" class="quiet" onClick="{{ openJira }}">Send to a team in Jira</button></p></sc-if>
 <sc-if value="{{ jiraForm }}" hint-placeholder-val="{{ false }}">
@@ -495,7 +499,7 @@ var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oc
 var MOCK = {
   base: BASE, order: ORDER, conf: CONF, user: USER, phase: null, closed: null, actionError: null, action: null,
   title: 'Wants another free week after compensation',
-  meta: 'lumen_443814_02380 · 21:40',
+  meta: 'lumen_443814_02380, 21:40',
   messages: [
     { isUser: true, text: 'Hi, the trial thing again, I still feel tricked by the weekly charge', time: '21:38' },
     { labelled: true, avatar: 'F', label: 'FitBuddy assistant', text: "I'm sorry you feel that way. I can see your weekly plan renews on Nov 13 and we added 7 days of premium on Nov 5.", time: '21:38' },
@@ -506,15 +510,15 @@ var MOCK = {
   foundSummary: 'The user wants more free days after already being compensated for the trial conversion.',
   foundCause: 'Second complaint about the same trial conversion two days after a 7-day grant; no new problem in the profile.',
   confidence: 88, category: 'Charged after trial',
-  evidenceRows: pairs([['last_grant', '7 days · Nov 5'], ['grants_30d', '1 of 1 allowed'], ['trial_converted', 'Oct 30 → lumen_weekly'], ['renews_at', 'Nov 13 2026'], ['new_issue', 'none in the profile']]),
-  acc1: 'Premium · active until Nov 20 2026', acc2: 'Google Play · lumen_weekly · $18.90 revenue', acc3: 'Found by the user id from the chat.',
-  accountRows: pairs([['customer_user_id', 'lumen_443814_02380'], ['access_level', 'premium · active'], ['expires_at', 'Nov 20 2026, 21:00'], ['store', 'Google Play'], ['product', 'lumen_weekly'], ['renews_at', 'Nov 13 2026'], ['trial_converted', 'Oct 30 2026'], ['revenue', '$18.90'], ['grants_30d', '1 · 7 days on Nov 5']]),
+  evidenceRows: pairs([['last_grant', '7 days, Nov 5'], ['grants_30d', '1 of 1 allowed'], ['trial_converted', 'Oct 30 → lumen_weekly'], ['renews_at', 'Nov 13 2026'], ['new_issue', 'none in the profile']]),
+  acc1: 'Premium, active until Nov 20 2026', acc2: 'Google Play, lumen_weekly, $18.90 revenue', acc3: 'Found by the user id from the chat.',
+  accountRows: pairs([['customer_user_id', 'lumen_443814_02380'], ['access_level', 'premium, active'], ['expires_at', 'Nov 20 2026, 21:00'], ['store', 'Google Play'], ['product', 'lumen_weekly'], ['renews_at', 'Nov 13 2026'], ['trial_converted', 'Oct 30 2026'], ['revenue', '$18.90'], ['grants_30d', '1, 7 days on Nov 5']]),
   closedAt: 'Nov 7, 21:52', sentTime: '21:52', postmark: 'NOV 7', reopenHref: 'Reopen.dc.html'
 };
 
 // ?mock=1&sample=ru: the same screen for a user who writes in Russian.
 if (API.param('sample') === 'ru') Object.assign(MOCK, {
-  lang: 'Russian', title: 'Wants a refund for the annual plan', meta: 'lumen_443814_02380 · 21:40',
+  lang: 'Russian', title: 'Wants a refund for the annual plan', meta: 'lumen_443814_02380, 21:40',
   messages: [
     { isUser: true, text: 'I was charged $49.99 for the annual plan and I no longer use the app. Please refund the money.', orig: 'С меня списали $49.99 за годовой план, а я приложением больше не пользуюсь. Верните деньги, пожалуйста.', time: '21:38' },
     { plain: true, avatar: 'F', text: "I've passed your request to our support team. They will reply here.", orig: 'Я передал ваш запрос команде поддержки. Они ответят здесь.', time: '21:39' }
@@ -547,9 +551,9 @@ function stamp(ts) { return API.day(ts) + ', ' + API.hm(ts); }
 function merged(base, id, edits) { return Object.assign({}, base[id], edits[id] || {}); }
 function titleOf(v) {
   if (v.action === 'grant') return 'Grant ' + v.days + ' days of access';
-  if (v.action === 'store_steps') return [v.kind ? v.kind + ' steps' : 'Store steps', v.store].filter(Boolean).join(' · ');
+  if (v.action === 'store_steps') return [v.kind ? v.kind + ' steps' : 'Store steps', v.store].filter(Boolean).join(', ');
   if (v.action === 'ask') return 'Ask the user';
-  if (v.action === 'refund') return ['Refund to a person', v.store].filter(Boolean).join(' · ');
+  if (v.action === 'refund') return ['Refund to a person', v.store].filter(Boolean).join(', ');
   if (v.action === 'no_reply') return 'Close, no reply';
   return 'Reply, no action';
 }
@@ -570,7 +574,7 @@ function outcomeOf(v, action) {
     if (!LIVE) return 'Granted ' + v.days + ' days, until ' + until(v.days);
     return 'Granted ' + ((action && action.days) || v.days) + ' days' + (action && action.expires_at ? ', until ' + API.day(action.expires_at) : '');
   }
-  if (v.action === 'store_steps') return 'Sent ' + [v.kind ? v.kind.toLowerCase() + ' steps' : 'store steps', v.store].filter(Boolean).join(' · ');
+  if (v.action === 'store_steps') return 'Sent ' + [v.kind ? v.kind.toLowerCase() + ' steps' : 'store steps', v.store].filter(Boolean).join(', ');
   if (v.action === 'ask') return 'Asked the user';
   if (v.action === 'refund') return 'Replied, refund to a person';
   if (v.action === 'no_reply') return 'Closed, no reply';
@@ -579,11 +583,11 @@ function outcomeOf(v, action) {
 function riskOf(b, v) {
   if (!LIVE) {
     var isGrant = v.action === 'grant';
-    return { has: isGrant, text: isGrant ? (Number(v.days) > 7 ? 'High risk · more than 7 days, second grant' : 'High risk · second grant in 30 days') : '', cls: 'risk-high' };
+    return { has: isGrant, text: isGrant ? (Number(v.days) > 7 ? 'High risk: more than 7 days, second grant' : 'High risk: second grant in 30 days') : '', cls: 'risk-high' };
   }
   // The agent's risk, shown while the answer keeps the agent's action.
   var has = (b.risk === 'medium' || b.risk === 'high') && v.action === b.action;
-  return { has: has, text: has ? cap(b.risk) + ' risk' + (b.riskReason ? ' · ' + b.riskReason : '') : '', cls: has ? 'risk-' + b.risk : '' };
+  return { has: has, text: has ? cap(b.risk) + ' risk' + (b.riskReason ? ': ' + b.riskReason : '') : '', cls: has ? 'risk-' + b.risk : '' };
 }
 // OptionEdits: only what the person changed; switching the action also sends the new action's shown params.
 function editsFor(base, id, edits) {
@@ -642,8 +646,8 @@ function account(t) {
   var acc1 = 'No access level';
   if (level) {
     var lifetime = !level.expires_at, active = lifetime || Date.parse(level.expires_at) > now;
-    acc1 = cap(level.access_level_id) + ' · ' + (lifetime ? 'lifetime' : (active ? 'active until ' : 'expired ') + API.day(level.expires_at, true));
-    rows.push(['access_level', level.access_level_id + ' · ' + (active ? 'active' : 'expired')]);
+    acc1 = cap(level.access_level_id) + ', ' + (lifetime ? 'lifetime' : (active ? 'active until ' : 'expired ') + API.day(level.expires_at, true));
+    rows.push(['access_level', level.access_level_id + ', ' + (active ? 'active' : 'expired')]);
     rows.push(['expires_at', lifetime ? 'never' : API.day(level.expires_at, true) + ', ' + API.hm(level.expires_at)]);
     if (level.store === 'adapty') rows.push(['granted', 'server side, ' + API.day(level.purchased_at, true)]);
   }
@@ -660,7 +664,7 @@ function account(t) {
   if (refunded.length) rows.push(['refunded', refunded.join(', ')]);
   var revenue = p.total_revenue_usd != null ? money(p.total_revenue_usd) : '';
   if (revenue) rows.push(['revenue', revenue]);
-  var acc2 = [buy && (STORE_NAMES[buy.store] || buy.store), buy && buy.store_product_id, revenue && revenue + ' revenue'].filter(Boolean).join(' · ') || 'No purchases';
+  var acc2 = [buy && (STORE_NAMES[buy.store] || buy.store), buy && buy.store_product_id, revenue && revenue + ' revenue'].filter(Boolean).join(', ') || 'No purchases';
   return { acc1: acc1, acc2: acc2, acc3: how, rows: pairs(rows) };
 }
 
@@ -723,7 +727,7 @@ function liveModel(t, cfg) {
     lang: lang, base: base, order: order, conf: conf, user: t.customer_user_id || t.email || 'unknown user', action: a, actionError: t.action_error,
     phase: t.status === 'dismissed' || noReply ? 'dismissed' : t.status === 'done' ? 'closed' : 'open',
     closed: closed,
-    title: t.title, meta: (t.customer_user_id || t.email || 'unknown user') + ' · ' + when(t.created_at),
+    title: t.title, meta: (t.customer_user_id || t.email || 'unknown user') + ', ' + when(t.created_at),
     messages: messages,
     hasTriage: !!tri, foundSummary: found, foundCause: tri && tri.root_cause !== tri.summary ? tri.root_cause : '',
     confidence: tri && typeof tri.confidence === 'number' ? Math.round(tri.confidence * 100) : null, category: tri ? CATEGORIES[tri.category] || tri.category : '',
@@ -767,7 +771,7 @@ class Component extends DCLogic {
         self.setState({ vanish: true });
         self.tt = setTimeout(function () {
           var sent = liveModel(t, null).phase === 'closed';
-          self.setState({ ticket: t, vanish: false, checking: false, editing: null, toast: sent ? 'Sent · moved to Closed' : '', ballot: false });
+          self.setState({ ticket: t, vanish: false, checking: false, editing: null, toast: sent ? 'Sent, moved to Closed' : '', ballot: false });
           self.load();
           self.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
         }, 340);
@@ -916,7 +920,7 @@ class Component extends DCLogic {
       ownHint: s.ownDirect ? 'Sent to the user exactly as written.' : 'Your English is translated to ' + lang + ' when you send.',
       ownDirectWord: s.ownDirect ? 'Write in English' : 'Write in ' + lang + ' directly',
       toggleOwnDirect: function () { self.setState({ ownDirect: !s.ownDirect }); },
-      sendsSuffix: lang && chosenVal && chosenVal.action !== 'no_reply' || lang && selected === 'own' ? ' · in ' + lang : '',
+      sendsSuffix: lang && chosenVal && chosenVal.action !== 'no_reply' || lang && selected === 'own' ? ', in ' + lang : '',
       sentLang: fixed && m.closed.sent ? m.closed.sent.lang : '', sentOrig: fixed && m.closed.sent ? m.closed.sent.orig : '', sentEn: fixed && m.closed.sent ? m.closed.sent.en : '',
       hasTriage: m && m.hasTriage, foundSummary: m ? m.foundSummary : '', foundCause: m ? m.foundCause : '',
       category: m ? m.category : '', evidenceRows: m ? m.evidenceRows : [],
@@ -952,7 +956,7 @@ class Component extends DCLogic {
           }
           self.setState({ vanish: true });
           self.tt = setTimeout(function () {
-            self.setState({ phase: 'closed', vanish: false, checking: false, editing: null, toast: 'Sent · moved to Closed', ballot: false });
+            self.setState({ phase: 'closed', vanish: false, checking: false, editing: null, toast: 'Sent, moved to Closed', ballot: false });
             self.tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600);
           }, 340);
         }, 480);

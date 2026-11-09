@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Company · Agent settings</title>
+<title>Company: Agent settings</title>
 <script src="./api.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -322,7 +322,7 @@ function mostLine(days, per) {
 
 function runningNow(info) {
   if (!info) return '…';
-  if (info.active) return info.active + (info.model ? ' · ' + info.model : '');
+  if (info.active) return info.active + (info.model ? ', ' + info.model : '');
   return info.demo ? 'demo mode, no model' : 'no model';
 }
 
@@ -423,11 +423,11 @@ class Component extends DCLogic {
       addTeam: function () { putTeams(teamList.concat([{ name: '', project_key: '', handles: '', issue_type: 'Bug' }])); },
       jiraStatus: !LIVE ? 'Connected to example.atlassian.net.' : !ji ? '' : ji.connected ? 'Connected to ' + ji.site.replace(/^https?:\/\//, '') + '.' : ji.demo ? 'Demo mode: no issue is created.' : 'Not connected: set JIRA_BASE_URL, JIRA_EMAIL and JIRA_API_TOKEN in .env.',
       v: v, on: on, tg: tg, sw: sw, err: err, cls: cls,
-      running: LIVE ? runningNow(s.llm) : 'openai · deepseek-flash',
+      running: LIVE ? runningNow(s.llm) : 'openai, deepseek-flash',
       prov: LIVE ? {
-        openai: have && !have.openai ? 'OpenAI-compatible · no key' : 'OpenAI-compatible', openaiOff: !!have && !have.openai,
-        anthropic: have && !have.anthropic ? 'Anthropic · no key' : 'Anthropic', anthropicOff: !!have && !have.anthropic
-      } : { openai: 'OpenAI-compatible', openaiOff: false, anthropic: 'Anthropic · no key', anthropicOff: true },
+        openai: have && !have.openai ? 'OpenAI-compatible, no key' : 'OpenAI-compatible', openaiOff: !!have && !have.openai,
+        anthropic: have && !have.anthropic ? 'Anthropic, no key' : 'Anthropic', anthropicOff: !!have && !have.anthropic
+      } : { openai: 'OpenAI-compatible', openaiOff: false, anthropic: 'Anthropic, no key', anthropicOff: true },
       provErr: LIVE ? s.provErr || '' : '',
       failText: LIVE ? s.failText || '' : '',
       toneCustom: raw,
