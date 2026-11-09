@@ -32,7 +32,7 @@
   --pane:#f6f5fb; --pane-dot:#d9d5ee;  /* точечная подложка: экран, на котором стоит знак */
 }
 ::selection{background:var(--accent);color:#fff;text-shadow:none}
-:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,section[style*="background:var(--accent)"])::selection,:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,section[style*="background:var(--accent)"]) *::selection{background:#fff;color:var(--accent)}  /* on solid purple the selection flips */
+:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,.side[style*="--accent"],section[style*="background:var(--accent)"])::selection,:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,.side[style*="--accent"],section[style*="background:var(--accent)"]) *::selection{background:#fff;color:var(--accent)}  /* on solid purple the selection flips */
 input,textarea,select,button{font-family:inherit}  /* browsers give form controls the system font */
 html{overflow-x:clip;scroll-padding-top:76px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
