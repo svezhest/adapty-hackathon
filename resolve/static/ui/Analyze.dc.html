@@ -478,7 +478,7 @@ function liveView(data, range, elapsed, updated, error) {
       w: share === null ? 50 : Math.min(88, Math.max(12, Math.round(share * 100))),
       machines: pct(share), humans: share === null ? '—' : (100 - Math.round(share * 100)) + '%',
       aria: share === null ? 'No closed chats in this period' : 'Of ' + closedChats + ' closed chats, machines closed ' + pct(share) + ' and humans ' + (100 - Math.round(share * 100)) + '%',
-      delta: dShare === null ? '' : (dShare > 0 ? '▲ ' : dShare < 0 ? '▼ ' : '± ') + Math.abs(dShare) + ' pts for the machines',
+      delta: dShare === null ? '' : (dShare > 0 ? '▲ ' : dShare < 0 ? '▼ ' : '± ') + Math.abs(dShare) + (Math.abs(dShare) === 1 ? ' pt' : ' pts') + ' for the machines',
       line: closedChats ? ch.resolved + ' of ' + closedChats + ' closed chats ended without a human, ' + ch.handed_off + ' needed one' : 'No closed chats in this period',
       aBg: share === null ? 'var(--subtle)' : 'var(--accent)', bBg: share === null ? 'var(--subtle)' : 'var(--ink-2)', fg: share === null ? 'var(--ink-3)' : 'var(--surface)'
     },

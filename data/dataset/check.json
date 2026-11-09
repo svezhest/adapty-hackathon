@@ -1,0 +1,126 @@
+{
+ "tickets": 200,
+ "languages": {
+  "en": 160,
+  "ru": 20,
+  "sr": 20
+ },
+ "sources": {
+  "chat": 146,
+  "email": 54
+ },
+ "user_words": {
+  "min": 15,
+  "median": 73.0,
+  "max": 176
+ },
+ "repeated_openings": {
+  "this is the": 2,
+  "i deleted the": 2,
+  "please cancel my": 3,
+  "on october i": 2,
+  "to whom it": 2,
+  "hi there i": 2,
+  "the app says": 3,
+  "i tried the": 2,
+  "this is my": 2,
+  "gone from my": 2,
+  "hello my name": 2,
+  "пишу второй раз": 2,
+  "hello sorry to": 2,
+  "second time writing": 2
+ },
+ "pairs_sharing_two_or_more_5grams": 42,
+ "worst_pairs": [
+  {
+   "shared_5grams": 6,
+   "a": "c-096",
+   "b": "c-170",
+   "example": "app for a cancel button"
+  },
+  {
+   "shared_5grams": 5,
+   "a": "c-070",
+   "b": "c-183",
+   "example": "a cancel button in the"
+  },
+  {
+   "shared_5grams": 5,
+   "a": "c-066",
+   "b": "c-183",
+   "example": "a cancel button in the"
+  },
+  {
+   "shared_5grams": 4,
+   "a": "c-066",
+   "b": "c-070",
+   "example": "a cancel button in the"
+  },
+  {
+   "shared_5grams": 4,
+   "a": "c-014",
+   "b": "c-045",
+   "example": "app store i asked the"
+  },
+  {
+   "shared_5grams": 4,
+   "a": "c-006",
+   "b": "c-059",
+   "example": "it would turn into a"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-148",
+   "b": "c-166",
+   "example": "also and nobody replied i"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-111",
+   "b": "c-171",
+   "example": "deleted the app and my"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-108",
+   "b": "c-191",
+   "example": "been through every screen of"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-093",
+   "b": "c-186",
+   "example": "do not want it to"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-090",
+   "b": "c-171",
+   "example": "deleted the app and my"
+  },
+  {
+   "shared_5grams": 3,
+   "a": "c-090",
+   "b": "c-111",
+   "example": "deleted the app and my"
+  }
+ ],
+ "handoff_reasons": {
+  "refund": 71,
+  "asks_for_human": 19,
+  "other": 41,
+  "profile_mismatch": 10,
+  "chargeback": 5
+ },
+ "review_overlap": {
+  "reviews": 21825,
+  "min_run": 6,
+  "tickets_with_run": 26,
+  "longest": 7,
+  "at_least_8": [],
+  "run_histogram": {
+   "6": 19,
+   "7": 7
+  }
+ }
+}

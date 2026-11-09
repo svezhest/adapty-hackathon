@@ -42,7 +42,7 @@ E409 = {409: {"model": ErrorDetail, "description": "Wrong ticket status for this
 E409_RUN = {409: {"model": ErrorDetail, "description": "A hypothesis run is already in flight"}}
 E409_DRAFT = {409: {"model": ErrorDetail, "description": "Demo mode or no Adapty CLI: nothing is created"}}
 E502 = {502: {"model": ErrorDetail, "description": "The person's English could not be translated to the user's language; nothing was sent"}}
-from resolve.tickets import CATEGORIES, GENERATED, action_accent, action_state, ticket_title
+from resolve.tickets import CATEGORIES, action_accent, action_state, ticket_title
 
 ACCEPT_STATUSES = ("proposed",)
 REJECT_STATUSES = ("new", "triaged", "proposed")
@@ -143,6 +143,7 @@ def ticket_full(conn: db.Database, ticket: dict) -> dict:
         "triage": view,
         "legacy": legacy,
         "profile": ticket["profile"],
+        "profile_fetched_at": ticket.get("profile_fetched_at"),
         "decision": ticket["decision"],
         "action": ticket["action"],
         "action_error": ticket["action_error"],
@@ -346,11 +347,11 @@ def build_router(services, live: insights_live.Live | None = None, ab_runner=lam
 
     @router.get("/api/users", response_model=list[UserItem], tags=["mobile"], summary="Seeded demo users for a user picker")
     def users():
-        ids = {r[0] for r in conn.execute("SELECT customer_user_id FROM tickets WHERE customer_user_id != '' AND rule != ?", (GENERATED,))}
+        ids = {r[0] for r in conn.execute("SELECT customer_user_id FROM tickets WHERE customer_user_id != ''")}
         ids |= {r[0] for r in conn.execute("SELECT customer_user_id FROM conversations WHERE customer_user_id != ''")}
         profiles = {}  # latest cached profile per user (later rows overwrite earlier ones)
         for r in conn.execute(
-            "SELECT customer_user_id, profile_json FROM tickets WHERE profile_json IS NOT NULL AND rule != ? ORDER BY profile_fetched_at, updated_at", (GENERATED,)
+            "SELECT customer_user_id, profile_json FROM tickets WHERE profile_json IS NOT NULL ORDER BY profile_fetched_at, updated_at"
         ):
             profiles[r[0]] = json.loads(r[1])
         now = datetime.now(timezone.utc)

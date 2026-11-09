@@ -23,7 +23,7 @@ Python 3.11+, FastAPI, SQLite, one `uvicorn` process. One tool-calling interface
 | `resolve/db.py` | SQLite schema + migrations (tickets, conversations, messages, l2_events, grants, agent_config, email_index) |
 | `resolve/web.py` | App factory, redirects to the screens, `/healthz` |
 | `resolve/static/ui/` | The web screens (`*.dc.html`, `tokens.css`, `support.js`, `api.js`), JSON API only; colours, scale and the shared header come from `tokens.css`, not from a screen; `?mock=1` for sample data |
-| `scripts/` | `seed_demo_profiles.py` (copy the demo users into another Adapty app), `import_feedback.py`, `seed_emails.py`, `eval.py` (paid), `export_openapi.py`, `generate_tickets.py`, `snapshot.py`, `generate_feed.py` (the demo feed's long tail, no model) |
+| `scripts/` | `seed_demo_profiles.py` (copy the demo users into another Adapty app), `import_feedback.py`, `seed_emails.py`, `eval.py` (paid), `export_openapi.py`, `generate_tickets.py`, `snapshot.py`; the demo's data: `dataset_faces.py`, `dataset_cards.py`, `dataset_check.py`, `build_demo.py` (two stages paid), `dataset_study.py` |
 | `mobile-mock/` | Backup Android app: chat + debug buttons over `POST /chat` |
 | `tests/` | pytest, no network, no keys; `tests/fakes_v2.py` has the scripted LLM steps and profiles |
 

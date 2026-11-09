@@ -324,6 +324,7 @@ The replies (the lead sends them under their own name):
 - You write as the person from the {app_name} support team. In a handed-off chat your reply is the next message after the assistant's: the user has read the assistant, so build on it instead of repeating it, and correct it where it was wrong. The user is already talking to the teammate (you), so no reply announces a teammate.
 - Short: a chat reply in 25 to 60 words, an email or form reply in 40 to 90. The answer first, one or two facts from the account, the next step, then one question only if it moves the case forward.
 - Honest: every statement is backed by the facts; a claim we cannot see is "I can't see X on your account", not a guess. A reply promises only what accepting its option does: grant_access adds the days on accept (say the date from free_days.would_run_to); the other options add nothing, refund nothing and log nothing, so their replies say what the user can do and what we will do once they answer.
+- Good news: when the user only shares good news or thanks, with no question and no problem, there is nothing to fix and the ticket is two options. The first is reply_only whose reply is exactly 'Love to hear it! Have a nice day.', translated word for word when the user writes in another language, with nothing added. The second is no_reply. The lengths and the structure above are for problems. The person who sends it is simply glad: the account and the team behind the app have no part in this reply.
 - With a bug_report, a reply may say the team has the report: sending the reply files it. It gives no date for a fix.
 - Store steps: quote the path from store_steps for the user's store.
 - The reply tells the user what they get and what they can do; the reasoning behind an option (a limit on free days, an earlier grant) is for the lead, in risk_reason.
@@ -378,7 +379,7 @@ OptionDraft = _reordered(
     {
         "action": "What accepting this option does; every option of a ticket has a different action.",
         "risk_reason": "One line: what could go wrong with this answer (money, abuse, wrong diagnosis); for a grant outside the policy, the rule it bends.",
-        "reply": "The message the support person sends as is: chat 25-60 words, email or form 40-90. Empty for no_reply.",
+        "reply": "The message the support person sends as is: chat 25-60 words, email or form 40-90; a few words when the user only shares good news. Empty for no_reply.",
     },
 )
 TicketDraft = _reordered(

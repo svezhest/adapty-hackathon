@@ -12,7 +12,8 @@ throwaway chats (DROP_SESSIONS) and tickets without a Level 1 triage go, with ev
 on them. Nothing is edited or rewritten. In demo mode each start moves the runtime copy forward so its
 newest event is now (resolve/demo_clock.py), so the periods don't empty out as the file ages.
 
-Then `python scripts/generate_feed.py` adds the long tail of the demo's Incoming on top of this file.
+The demo's own data is built by scripts/build_demo.py. Use this only to freeze a live database for inspection,
+with --out somewhere else: the default target is the demo file itself.
 """
 
 from __future__ import annotations

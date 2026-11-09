@@ -1,0 +1,12 @@
+[
+ {"ticket_id": "f-0017", "kind": "accept", "option": 0, "after_minutes": 95},
+ {"ticket_id": "f-0020", "kind": "accept", "option": 1, "after_minutes": 210},
+ {"ticket_id": "f-0016", "kind": "accept", "option": 0, "after_minutes": 340, "edit_append": "Sorry nobody warned you before the trial ended."},
+ {"ticket_id": "f-0022", "kind": "reject", "after_minutes": 150, "note": "Own reply: the options only asked again", "reply": "Hi Priya, a lifetime bought on your Pixel stays with the Google account that paid for it, and the new sign-in starts empty, so nothing is lost. Send me the order number from play.google.com/store/account/orderhistory and I'll move it onto your account by hand."},
+ {"ticket_id": "f-0028", "kind": "accept", "option": 0, "after_minutes": 62},
+ {"ticket_id": "f-0031", "kind": "accept", "option": 0, "after_minutes": 118},
+ {"ticket_id": "f-0050", "kind": "accept", "option": 0, "after_minutes": 75},
+ {"ticket_id": "f-0066", "kind": "accept", "option": 0, "after_minutes": 180, "edit_append": "Sorry about the surprise, and thanks for writing in."},
+ {"ticket_id": "f-0073", "kind": "reject", "after_minutes": 44, "note": "The assistant already gave the steps in the chat", "reply": null},
+ {"ticket_id": "f-0076", "kind": "accept", "option": 0, "after_minutes": 130}
+]

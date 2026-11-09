@@ -1,0 +1,106 @@
+{
+ "edited_by": "claude-opus-5-5",
+ "why": "repeated openings, the assistant's gender in Russian and Serbian, unnatural words",
+ "edits": [
+  {
+   "id": "c-085",
+   "old": "This is the second time I'm writing about this, the first one went nowhere.",
+   "new": "Already wrote once, went nowhere."
+  },
+  {
+   "id": "c-091",
+   "old": "This is the second time I write, last time nobody answered.",
+   "new": "Nobody answered me last time so I try again."
+  },
+  {
+   "id": "c-187",
+   "old": "This is the second time I'm writing and nobody answered the first.",
+   "new": "Wrote y'all once already and heard nothing."
+  },
+  {
+   "id": "c-022",
+   "old": "I got a new phone and the app asked me to subscribe again",
+   "new": "I upgraded my phone and got the subscribe screen again"
+  },
+  {
+   "id": "c-022",
+   "old": "December statements",
+   "new": "year-end statements"
+  },
+  {
+   "id": "c-033",
+   "old": "сказали idk, обращайтесь к разработчику",
+   "new": "сказали, мол, хз, обращайтесь к разработчику"
+  },
+  {
+   "id": "c-033",
+   "old": "сам я вернуть деньги не могу. Передал ваш",
+   "new": "сама я вернуть деньги не могу. Передала ваш"
+  },
+  {
+   "id": "c-034",
+   "old": "Возвраты я сам делать не могу, поэтому передал вашу",
+   "new": "Возвраты я сама делать не могу, поэтому передала вашу"
+  },
+  {
+   "id": "c-035",
+   "old": "поэтому передал вопрос",
+   "new": "поэтому передала вопрос"
+  },
+  {
+   "id": "c-036",
+   "old": "Сам вернуть деньги не могу, поэтому передал ваш",
+   "new": "Сама вернуть деньги не могу, поэтому передала ваш"
+  },
+  {
+   "id": "c-117",
+   "old": "koleginici ili koleginu",
+   "new": "kolegi"
+  },
+  {
+   "id": "c-120",
+   "old": "Povraćaj mogu da odobrim samo preko Google-a, ne mogu sama.",
+   "new": "Povraćaj ide preko Google-a, ne mogu sama da ga odobrim."
+  },
+  {
+   "id": "c-200",
+   "old": "ne mogu da odobrim sam,",
+   "new": "ne mogu da odobrim sama,"
+  },
+  {
+   "id": "c-037",
+   "old": "ćaskanju",
+   "new": "četu"
+  },
+  {
+   "id": "c-039",
+   "old": "ćaskanju",
+   "new": "četu"
+  },
+  {
+   "id": "c-077",
+   "old": "ćaskanju",
+   "new": "četu"
+  },
+  {
+   "id": "c-078",
+   "old": "ćaskanju",
+   "new": "četu"
+  },
+  {
+   "id": "c-080",
+   "old": "ćaskanju",
+   "new": "četu"
+  },
+  {
+   "id": "c-005",
+   "old": "mx$99.99 me cobraron y yo pense que era gratis la prueba de 3 dias",
+   "new": "mx$99.99 they charged me and i thought the 3 days trial was free"
+  },
+  {
+   "id": "c-005",
+   "old": "nadie me aviso nada y no tengo ese dinero para tirarlo apple me dijo que le pregunte a ustedes",
+   "new": "nobody told me nothing and i dont have that money to throw away apple told me to ask you"
+  }
+ ]
+}

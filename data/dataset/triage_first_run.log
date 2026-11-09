@@ -1,0 +1,167 @@
+97 tickets, model deepseek-flash, 6 at a time
+ticket f-0006: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3814 of 3885), most likely a double quote inside a text; quote with single quotes inside texts
+f-0008 en cancel_how                 store_instructions 1 calls
+f-0009 en charged_after_trial        refund_to_human    1 calls
+ticket f-0005: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+ticket f-0007: submit_ticket rejected: options[2] repeats the action of options[0]; each option must be a different action
+f-0004 sr no_access_after_purchase   reply_only         1 calls
+ticket f-0006: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3791 of 3862), most likely a double quote inside a text; quote with single quotes inside texts
+f-0010 en billing_issue              reply_only         2 calls
+ticket f-0012: submit_ticket rejected: summary says 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0011 en no_access_after_purchase   ask_user           2 calls
+ticket f-0007: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+ticket f-0007: triage failed: no valid ticket after a correction: messages_en must have one English entry for each of the 4 numbered messages
+f-0007 ru ERROR no valid ticket after a correction: messages_en must have one English entry for each of the 4 numbered messages
+f-0005 ru refund_request             refund_to_human    2 calls
+ticket f-0006: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3802 of 3873), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0006: triage failed: no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 3802 of 3873), most likely a double quote inside a text; quote with single quotes inside texts
+f-0006 en ERROR no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 3802 of 3873), most likely a double quote inside a text; quote with single quotes inside texts
+f-0012 en refund_request             refund_to_human    2 calls
+f-0014 en refund_request             refund_to_human    1 calls
+f-0016 en charged_after_trial        store_instructions 1 calls
+ticket f-0013: submit_ticket rejected: the arguments do not match the schema: messages_en.0: Input should be a valid string
+ticket f-0015: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages; summary says 'she': call the person 'the user' or 'they' (no gender from a name); root_cause says 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0018 en refund_request             refund_to_human    1 calls
+f-0017 sr refund_request             reply_only         1 calls
+f-0019 en refund_request             refund_to_human    2 calls
+f-0020 en price_complaint            reply_only         1 calls
+f-0013 ru other                      grant_access       2 calls
+ticket f-0021: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'him', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0015 en cancel_how                 store_instructions 2 calls
+ticket f-0022: submit_ticket rejected: summary says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0024 en charged_after_trial        refund_to_human    1 calls
+f-0021 en refund_request             refund_to_human    2 calls
+ticket f-0023: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0022 en no_access_after_purchase   ask_user           2 calls
+f-0026 en no_access_after_purchase   ask_user           1 calls
+ticket f-0025: submit_ticket rejected: root_cause says 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0023 en charged_after_trial        refund_to_human    2 calls
+f-0027 en cancel_how                 reply_only         1 calls
+f-0028 en cancel_how                 reply_only         2 calls
+f-0025 en cancel_how                 refund_to_human    3 calls
+ticket f-0029: submit_ticket rejected: evidence says 'her': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0030: submit_ticket rejected: messages_en must have one English entry for each of the 5 numbered messages
+f-0029 en charged_after_trial        refund_to_human    2 calls
+ticket f-0031: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages; summary says 'he', 'his': call the person 'the user' or 'they' (no gender from a name); root_cause says 'he', 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'he', 'his': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0032: submit_ticket rejected: evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0034 en refund_request             store_instructions 1 calls
+f-0033 ru refund_request             refund_to_human    1 calls
+f-0030 en cancel_how                 reply_only         2 calls
+f-0032 en cancel_how                 store_instructions 3 calls
+f-0035 en cancel_how                 store_instructions 1 calls
+f-0031 ru cancel_how                 reply_only         2 calls
+f-0037 en no_access_after_purchase   reply_only         1 calls
+f-0036 en refund_request             refund_to_human    2 calls
+ticket f-0038: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0040: submit_ticket rejected: the arguments do not match the schema: options.1.params.kind: Input should be 'restore', 'cancel' or 'refund_request'; options.2.params.kind: Input should be 'restore', 'cancel' or 'refund_request'
+f-0039 en cancel_how                 reply_only         2 calls
+f-0041 en refund_request             reply_only         1 calls
+f-0038 en charged_after_trial        refund_to_human    2 calls
+f-0042 en cancel_how                 store_instructions 2 calls
+ticket f-0043: submit_ticket rejected: summary says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0040 en refund_request             refund_to_human    2 calls
+ticket f-0044: submit_ticket rejected: options[2] repeats the action of options[0]; each option must be a different action
+f-0043 en refund_request             refund_to_human    2 calls
+f-0046 en refund_request             refund_to_human    1 calls
+ticket f-0048: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0045: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+f-0044 en price_complaint            reply_only         2 calls
+f-0048 en cancel_how                 reply_only         2 calls
+f-0049 en cancel_how                 store_instructions 1 calls
+ticket f-0047: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 5298 of 5780), most likely a double quote inside a text; quote with single quotes inside texts
+f-0050 en cancel_how                 store_instructions 1 calls
+f-0045 ru no_access_after_purchase   store_instructions 3 calls
+ticket f-0051: submit_ticket rejected: options[0]: the reply is 125 words; keep it to 60 in a chat, 90 in an email or form
+f-0052 en charged_after_trial        refund_to_human    1 calls
+ticket f-0053: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3895 of 3966), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0047: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 5243 of 5725), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0054: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0055: submit_ticket rejected: summary says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0051: submit_ticket rejected: options[1]: the reply is 126 words; keep it to 60 in a chat, 90 in an email or form
+ticket f-0051: triage failed: no valid ticket after a correction: options[1]: the reply is 126 words; keep it to 60 in a chat, 90 in an email or form
+f-0051 en ERROR no valid ticket after a correction: options[1]: the reply is 126 words; keep it to 60 in a chat, 90 in an email or form
+ticket f-0053: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3828 of 3899), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0056: submit_ticket rejected: summary says 'he': call the person 'the user' or 'they' (no gender from a name); root_cause says 'he', 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'his': call the person 'the user' or 'they' (no gender from a name)
+f-0055 en no_access_after_purchase   ask_user           3 calls
+f-0054 en no_access_after_purchase   reply_only         3 calls
+ticket f-0047: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 5243 of 5725), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0047: triage failed: no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 5243 of 5725), most likely a double quote inside a text; quote with single quotes inside texts
+f-0047 sr ERROR no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 5243 of 5725), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0053: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3831 of 4830), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0053: triage failed: no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 3831 of 4830), most likely a double quote inside a text; quote with single quotes inside texts
+f-0053 en ERROR no valid ticket after a correction: the arguments are not valid JSON (Expecting ',' delimiter at character 3831 of 4830), most likely a double quote inside a text; quote with single quotes inside texts
+f-0056 en no_access_after_purchase   ask_user           2 calls
+ticket f-0057: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+ticket f-0058: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0060 en refund_request             refund_to_human    1 calls
+f-0059 en no_access_after_purchase   store_instructions 2 calls
+ticket f-0061: submit_ticket rejected: summary says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0057 en charged_after_trial        refund_to_human    2 calls
+ticket f-0062: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages; summary says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0058 en charged_after_trial        reply_only         3 calls
+f-0061 en refund_request             refund_to_human    2 calls
+f-0063 en refund_request             refund_to_human    1 calls
+ticket f-0064: submit_ticket rejected: messages_en must have one English entry for each of the 5 numbered messages; summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0066 en charged_after_trial        refund_to_human    1 calls
+f-0062 ru charged_after_trial        grant_access       2 calls
+ticket f-0065: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+f-0067 ru charged_after_trial        grant_access       1 calls
+f-0068 en cancel_how                 store_instructions 1 calls
+f-0070 en no_access_after_purchase   store_instructions 1 calls
+f-0064 sr refund_request             refund_to_human    2 calls
+ticket f-0069: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 4454 of 4525), most likely a double quote inside a text; quote with single quotes inside texts
+f-0065 sr refund_request             refund_to_human    2 calls
+f-0072 en refund_request             refund_to_human    1 calls
+ticket f-0069: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 4454 of 4525), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0073: submit_ticket rejected: evidence says 'he', 'his': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0071: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+ticket f-0074: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages; root_cause says 'he', 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'he', 'his': call the person 'the user' or 'they' (no gender from a name)
+f-0075 en refund_request             refund_to_human    2 calls
+f-0076 en cancel_how                 store_instructions 1 calls
+f-0069 en billing_issue              refund_to_human    4 calls
+f-0073 en cancel_how                 store_instructions 3 calls
+f-0071 en price_complaint            reply_only         2 calls
+f-0074 en refund_request             refund_to_human    2 calls
+f-0077 en cancel_how                 store_instructions 1 calls
+ticket f-0078: submit_ticket rejected: the arguments are not valid JSON (Expecting ',' delimiter at character 3933 of 4004), most likely a double quote inside a text; quote with single quotes inside texts
+ticket f-0079: submit_ticket rejected: summary says 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'his': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0080: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages; summary says 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'he', 'his': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0078: submit_ticket rejected: summary says 'he', 'him': call the person 'the user' or 'they' (no gender from a name); root_cause says 'he': call the person 'the user' or 'they' (no gender from a name); evidence says 'he', 'him': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0081: submit_ticket rejected: evidence says 'he', 'him', 'his': call the person 'the user' or 'they' (no gender from a name)
+f-0083 en other                      reply_only         2 calls
+f-0079 en refund_request             reply_only         2 calls
+f-0080 ru refund_request             refund_to_human    2 calls
+f-0081 en refund_request             refund_to_human    2 calls
+f-0078 en other                      reply_only         3 calls
+ticket f-0082: submit_ticket rejected: messages_en must have one English entry for each of the 1 numbered messages; evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0085: submit_ticket rejected: options[2]: ask_user needs params.question; root_cause says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0084 en refund_request             refund_to_human    1 calls
+f-0088 en cancel_how                 store_instructions 1 calls
+f-0085 en cancel_how                 store_instructions 2 calls
+f-0082 ru refund_request             refund_to_human    3 calls
+ticket f-0086: submit_ticket rejected: summary says 'his': call the person 'the user' or 'they' (no gender from a name); evidence says 'he', 'his': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0087: submit_ticket rejected: root_cause says 'her': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0089: submit_ticket rejected: options[2] repeats the action of options[1]; each option must be a different action
+f-0090 en cancel_how                 store_instructions 2 calls
+ticket f-0091: submit_ticket rejected: evidence says 'her': call the person 'the user' or 'they' (no gender from a name)
+f-0092 en charged_after_trial        store_instructions 1 calls
+f-0086 sr cancel_how                 store_instructions 2 calls
+f-0087 sr refund_request             refund_to_human    2 calls
+f-0091 en other                      reply_only         2 calls
+f-0089 sr refund_request             refund_to_human    2 calls
+ticket f-0093: submit_ticket rejected: options[2] repeats the action of options[1]; each option must be a different action
+f-0095 en no_access_after_purchase   ask_user           1 calls
+ticket f-0094: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0096 en no_access_after_purchase   ask_user           2 calls
+ticket f-0098: submit_ticket rejected: summary says 'her': call the person 'the user' or 'they' (no gender from a name); root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+ticket f-0097: submit_ticket rejected: summary says 'she': call the person 'the user' or 'they' (no gender from a name); root_cause says 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0093 en refund_request             refund_to_human    3 calls
+ticket f-0099: submit_ticket rejected: root_cause says 'her', 'she': call the person 'the user' or 'they' (no gender from a name); evidence says 'her', 'she': call the person 'the user' or 'they' (no gender from a name)
+f-0097 en refund_request             refund_to_human    2 calls
+f-0098 en charged_after_trial        refund_to_human    2 calls
+f-0094 sr refund_request             store_instructions 2 calls
+ticket f-0100: submit_ticket rejected: messages_en must have one English entry for each of the 4 numbered messages
+f-0099 en refund_request             refund_to_human    3 calls
+f-0100 sr refund_request             refund_to_human    2 calls
+
+186 model calls, 1331688 prompt tokens, 225892 completion tokens

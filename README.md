@@ -10,7 +10,7 @@ Most support questions in a subscription app are about money: "charged after the
 
 ## The screens
 
-Screenshots of the running app. The chats and tickets are test data; the replies, options and scores of the 31 tickets on top come from the agents, and the long tail of the demo feed is assembled from templates by code, no model.
+Screenshots of the running app. The people and their messages are synthetic, written by `claude-sonnet-5-5` from the labels of real complaints; the options, replies and scores come from the real triage agent on a real model. [How the demo data was made](docs/dataset-study.md).
 
 **Ticket.** The cause, the evidence and how sure the agent is, then answers that take different actions. The person sends one, edits it or writes their own. Nothing runs before that click.
 
@@ -110,7 +110,7 @@ We read 21,825 App Store reviews of 74 top-grossing subscription apps. One in si
 ## What is real and what isn't
 
 - **Real:** subscription profile reads, grants and the profile stamp, all on seeded demo users; the model calls of both agents; the limits and handoff rules.
-- **Synthetic:** every ticket and chat message. No real end-user text is used. App Store reviews appear only in the research, never as tickets.
+- **Synthetic:** every ticket and chat message, and in the demo every account. No real end-user text is used. App Store reviews appear only in the research, never as tickets; the demo's cases take the labels of real complaints, never their words, and a check confirms it ([study](docs/dataset-study.md)).
 - **Not built:** email and App Store inboxes. "Reply sent" is a status for anything outside the chat, and nothing is emailed. The email → user index is filled by a script; in production it would come from the platform's webhooks.
 
 The platform's server API finds a profile only by `customer_user_id` or `profile_id`, not by email or transaction, so Resolve keeps its own email index.

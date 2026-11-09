@@ -53,6 +53,12 @@ def shift_to_now(conn: db.Database, now: datetime | None = None) -> timedelta:
     if newest is None or newest >= now:
         return timedelta(0)
     delta = now - newest
+    shift_by(conn, delta)
+    return delta
+
+
+def shift_by(conn: db.Database, delta: timedelta) -> None:
+    """Move every stored timestamp by `delta`. Words stay as written."""
     tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'").fetchall()]
     with conn:
         for table in tables:
@@ -66,4 +72,3 @@ def shift_to_now(conn: db.Database, now: datetime | None = None) -> timedelta:
                 if changed:
                     assignments = ", ".join(f"{c} = ?" for c in changed)
                     conn.execute(f"UPDATE {table} SET {assignments} WHERE rowid = ?", (*changed.values(), row["row_id"]))
-    return delta

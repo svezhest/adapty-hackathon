@@ -64,8 +64,6 @@ Records the numbers are built from:
 - feedback: tickets not from a chat handoff (form, email) by created_at.
 
 `agent_log`: the latest 20 agent replies (all time), newest first.
-The demo feed's long tail (`rule` = generated, scripts/generate_feed.py) is left out of every number here:
-no person handled those tickets and no agent wrote them. `REAL` is that condition.
 
 `open_counts`: how many open chats / tickets waiting for triage (new, triaged) / waiting for a person
 (proposed, approved). `open_tasks[].detail`: chat = the agent's last tool step ("checked the profile", "sent cancel
@@ -84,9 +82,8 @@ from datetime import datetime, timedelta, timezone
 from resolve.adapty import format_datetime, parse_datetime
 from resolve import config, db
 from resolve.models import DB_TO_API_STATUS
-from resolve.tickets import CANCELLED_HANDOFF, GENERATED, ticket_title
+from resolve.tickets import CANCELLED_HANDOFF, ticket_title
 
-REAL = f"rule != '{GENERATED}'"
 EVAL_RESULTS = config.ROOT / "data" / "eval_results.json"
 BUCKETS = (("0-0.5", 0.5), ("0.5-0.7", 0.7), ("0.7-0.9", 0.9), ("0.9-1", None))
 
@@ -119,7 +116,7 @@ def _eval() -> dict | None:
 
 def compute(conn: db.Database, range_id: str = "today", tz_offset_min: int = 0, now: datetime | None = None) -> dict:
     now = now or datetime.now(timezone.utc)
-    tickets = conn.execute(f"SELECT status, source, category, created_at, triage_json, decision_json FROM tickets WHERE {REAL}").fetchall()
+    tickets = conn.execute(f"SELECT status, source, category, created_at, triage_json, decision_json FROM tickets").fetchall()
 
     by_status = Counter(DB_TO_API_STATUS.get(t["status"], t["status"]) for t in tickets)
     per_day = Counter(t["created_at"][:10] for t in tickets)
@@ -205,9 +202,9 @@ def timeline(conn: db.Database, now: datetime | None = None) -> dict:
     since = format_datetime(now - timedelta(days=TIMELINE_DAYS))
     chats = conn.execute("SELECT outcome, created_at FROM conversations WHERE created_at >= ?", (since,)).fetchall()
     closed = conn.execute(
-        f"SELECT updated_at AS ts FROM tickets WHERE {REAL} AND status IN ('done', 'dismissed') AND decision_json IS NOT NULL AND updated_at >= ?", (since,)
+        f"SELECT updated_at AS ts FROM tickets WHERE status IN ('done', 'dismissed') AND decision_json IS NOT NULL AND updated_at >= ?", (since,)
     ).fetchall()
-    feedback = conn.execute(f"SELECT created_at AS ts FROM tickets WHERE {REAL} AND source != 'chat_handoff' AND created_at >= ?", (since,)).fetchall()
+    feedback = conn.execute(f"SELECT created_at AS ts FROM tickets WHERE source != 'chat_handoff' AND created_at >= ?", (since,)).fetchall()
     grants = conn.execute("SELECT ts, days FROM grants WHERE ts >= ?", (since,)).fetchall()
     stamps = [c["created_at"] for c in chats] + [r["ts"] for r in closed] + [r["ts"] for r in feedback] + [g["ts"] for g in grants]
     if not stamps:
@@ -244,9 +241,9 @@ def open_tasks(conn: db.Database, now: datetime | None = None) -> list[dict]:
     for c in conn.execute("SELECT session_id, customer_user_id, updated_at FROM conversations WHERE outcome = 'open' ORDER BY updated_at DESC LIMIT 20"):
         first = conn.execute("SELECT content FROM messages WHERE session_id = ? AND role = 'user' ORDER BY id LIMIT 1", (c["session_id"],)).fetchone()
         tasks.append({"kind": "chat", "id": c["session_id"], "title": (first["content"] if first else "")[:80], "user": c["customer_user_id"], "since": c["updated_at"], "age_s": age(c["updated_at"]), "note": "Level 2 is talking", "detail": _chat_step(conn, c["session_id"])})
-    for t in conn.execute(f"SELECT id, subject, body, customer_user_id, created_at, triage_error FROM tickets WHERE {REAL} AND status IN ('new', 'triaged') ORDER BY created_at DESC LIMIT 20"):
+    for t in conn.execute(f"SELECT id, subject, body, customer_user_id, created_at, triage_error FROM tickets WHERE status IN ('new', 'triaged') ORDER BY created_at DESC LIMIT 20"):
         tasks.append({"kind": "triage", "id": t["id"], "title": ticket_title(t["subject"], t["body"], None), "user": t["customer_user_id"], "since": t["created_at"], "age_s": age(t["created_at"]), "note": "triage failed" if t["triage_error"] else "not triaged yet", "detail": None})
-    for t in conn.execute(f"SELECT id, subject, body, customer_user_id, created_at, triage_at, triage_json, proposal_json FROM tickets WHERE {REAL} AND status IN ('proposed', 'approved') ORDER BY COALESCE(triage_at, created_at) LIMIT 20"):
+    for t in conn.execute(f"SELECT id, subject, body, customer_user_id, created_at, triage_at, triage_json, proposal_json FROM tickets WHERE status IN ('proposed', 'approved') ORDER BY COALESCE(triage_at, created_at) LIMIT 20"):
         since = t["triage_at"] or t["created_at"]
         tasks.append({"kind": "review", "id": t["id"], "title": ticket_title(t["subject"], t["body"], json.loads(t["triage_json"] or "{}").get("summary")), "user": t["customer_user_id"], "since": since, "age_s": age(since), "note": "waiting for a person", "detail": _top_option(t)})
     return tasks
@@ -257,8 +254,8 @@ def open_counts(conn: db.Database) -> dict:
     one = lambda sql: conn.execute(sql).fetchone()[0]  # noqa: E731
     return {
         "chat": one("SELECT COUNT(*) FROM conversations WHERE outcome = 'open'"),
-        "triage": one(f"SELECT COUNT(*) FROM tickets WHERE {REAL} AND status IN ('new', 'triaged')"),
-        "review": one(f"SELECT COUNT(*) FROM tickets WHERE {REAL} AND status IN ('proposed', 'approved')"),
+        "triage": one(f"SELECT COUNT(*) FROM tickets WHERE status IN ('new', 'triaged')"),
+        "review": one(f"SELECT COUNT(*) FROM tickets WHERE status IN ('proposed', 'approved')"),
     }
 
 
@@ -340,7 +337,7 @@ def _load(conn: db.Database) -> dict:
         "events": db.list_events(conn),
         "tickets": rows(
             "SELECT id, status, source, session_id, created_at, updated_at, triage_at, triage_json, decision_json, "
-            f"action_json, action_at, history_json, reply_sent_at FROM tickets WHERE {REAL}"
+            f"action_json, action_at, history_json, reply_sent_at FROM tickets"
         ),
         "grants": rows("SELECT source, days, ts FROM grants ORDER BY ts, id"),
     }

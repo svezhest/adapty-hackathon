@@ -626,7 +626,7 @@ function evidenceRow(line) {
 }
 function money(n) { return '$' + Number(n).toFixed(2); }
 function account(t) {
-  var p = t.profile, tri = t.triage, now = Date.now(), rows = [];
+  var p = t.profile, tri = t.triage, now = Date.parse(t.profile_fetched_at) || Date.now(), rows = [];  // the account as it stood when it was read
   if (t.customer_user_id) rows.push(['customer_user_id', t.customer_user_id]);
   if (t.email) rows.push(['email', t.email]);
   var how = tri && !t.legacy && tri.lookup ? cap(tri.lookup)

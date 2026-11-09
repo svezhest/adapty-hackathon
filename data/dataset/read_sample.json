@@ -1,0 +1,18 @@
+{
+ "reader": "claude-opus-5-5",
+ "how": "22 tickets, random.seed(7), random.sample over the tickets table in stored order. For each: the card's truth against the triage's root cause. hit = the cause matches the truth; partial = the facts are right, the conclusion stops short of the truth.",
+ "note": "Not a person, and not a gold label. The chats were written by a model that knew the truth.",
+ "verdicts": {
+  "f-0005": "hit", "f-0007": "hit", "f-0008": "hit", "f-0009": "hit", "f-0012": "hit", "f-0013": "hit", "f-0020": "hit", "f-0028": "hit",
+  "f-0031": "hit", "f-0042": "hit", "f-0047": "hit", "f-0051": "hit", "f-0054": "hit", "f-0055": "hit", "f-0056": "hit", "f-0065": "hit",
+  "f-0075": "hit", "f-0084": "hit", "f-0086": "hit",
+  "f-0010": "partial", "f-0069": "partial", "f-0071": "partial"
+ },
+ "notes": {
+  "f-0010": "Renewal in flight: says no renewal is recorded and that it may have failed, instead of saying access should come back.",
+  "f-0069": "The same case: calls the first-line assistant's correct reassurance into question.",
+  "f-0071": "A discounted first year: names the regular price, and leaves the discount as likely because the account shows no offer.",
+  "f-0028": "Option 0 opens with 'Tobias here, a real person from the FitBuddy team'. Tobias is the user's own name, and the sender is unknown.",
+  "f-0012": "Option 2 offers 7 free days that it admits start only after Oct 19, 2027."
+ }
+}

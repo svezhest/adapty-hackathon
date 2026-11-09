@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi.testclient import TestClient
 
 from resolve import analytics, config, db
-from resolve.demo_clock import shift_to_now
+from resolve.demo_clock import _shift_json, shift_to_now
 from resolve.web import create_app
 
 
@@ -91,12 +91,13 @@ def test_the_format_of_each_stamp_survives(tmp_path):
     conn, path, _, delta = shifted_copy(tmp_path)
     conn.close()
     after = dump(path)
-    grant, moved = json.loads(before["grants"][0]["response_json"]), json.loads(after["grants"][0]["response_json"])
+    grant = {"timestamp": 1700000000000, "access_levels": [{"purchased_at": "2026-10-01T10:00:00.123456+00:00"}]}
+    moved = _shift_json(grant, delta)
     assert moved["timestamp"] == grant["timestamp"] + int(delta.total_seconds() * 1000)
     old, new = grant["access_levels"][0]["purchased_at"], moved["access_levels"][0]["purchased_at"]
-    assert re.fullmatch(r"\S+\.\d{6}\+00:00", old) and re.fullmatch(r"\S+\.\d{6}\+00:00", new)
+    assert old != new and re.fullmatch(r"\S+\.\d{6}\+00:00", new)
     assert old[19:] == new[19:], "fractions and the zone stay as stored"
-    assert after["tickets"][0]["created_at"].endswith("Z")
+    assert before["tickets"][0]["created_at"].endswith("Z") and after["tickets"][0]["created_at"].endswith("Z")
 
 
 def test_words_are_not_rewritten(tmp_path):
@@ -114,7 +115,7 @@ def test_words_are_not_rewritten(tmp_path):
 def test_a_month_later_the_week_is_full_and_ages_count_up(tmp_path):
     original = db.connect(copy(tmp_path, "before.sqlite"))
     then = analytics.last_event(original)
-    conn, _, now, _ = shifted_copy(tmp_path)
+    conn, _, now, _ = shifted_copy(tmp_path, later=timedelta(days=30))  # whole days: the week's calendar edges stay put
     week = analytics.compute(conn, "7d", 0, now=now)["period"]["current"]
     assert week["chats"]["total"] == analytics.compute(original, "7d", 0, now=then)["period"]["current"]["chats"]["total"] > 0
     tasks = analytics.open_tasks(conn, now)
@@ -138,13 +139,6 @@ def test_a_restart_gives_the_same_picture_relative_to_its_new_now(tmp_path):
     second, _, now_b, _ = shifted_copy(tmp_path, "b.sqlite", A_MONTH_ON + timedelta(days=40, hours=3))
     assert analytics.open_tasks(first, now_a) != [] and [t["age_s"] for t in analytics.open_tasks(first, now_a)] == [t["age_s"] for t in analytics.open_tasks(second, now_b)]
     assert first.execute("SELECT MIN(created_at) FROM tickets").fetchone()[0] < second.execute("SELECT MIN(created_at) FROM tickets").fetchone()[0]
-
-
-def test_the_generated_tail_moves_and_stays_older_than_the_real_tickets(tmp_path):
-    conn, _, _, _ = shifted_copy(tmp_path)
-    newest_tail = conn.execute("SELECT MAX(created_at) FROM tickets WHERE rule = 'generated'").fetchone()[0]
-    oldest_real = conn.execute("SELECT MIN(created_at) FROM tickets WHERE rule != 'generated'").fetchone()[0]
-    assert newest_tail < oldest_real
 
 
 def test_it_never_moves_backwards(tmp_path):

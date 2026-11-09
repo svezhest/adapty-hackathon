@@ -326,7 +326,6 @@ def _weighted_sample(pool: list[dict], count: int, rng: random.Random) -> list[d
         picked.append(choice)
     return picked
 
-GENERATED = "generated"  # `rule` of the demo feed's long tail (scripts/generate_feed.py): shown in Incoming, counted nowhere
 TOUGH_AT_MOST = 0.7  # the best option's confidence at or under which Incoming says the agent isn't sure of any response
 TOUGH_LINE = "A tough one, your call"
 NO_REPLY_LINE = "You've closed it without a reply"

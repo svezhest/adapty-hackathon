@@ -1,0 +1,7 @@
+{
+ "deepseek_balance_cny": {
+  "before": 50.47,
+  "after": 49.19,
+  "note": "GET /user/balance before the first call and after the last. Covers the two triage passes, the analyst run and the good-news checks."
+ }
+}

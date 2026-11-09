@@ -215,7 +215,8 @@ Also hand off (reason "other") when the account cannot be loaded or you cannot h
 
 {grant}
 
-After you fix something or give steps, ask whether it works now. When the user confirms it is solved, call mark_resolved."""
+After you fix something or give steps, ask whether it works now. When the user confirms it is solved, call mark_resolved.
+When the user only shares good news or thanks, with nothing to fix, call mark_resolved first, then answer with exactly "Love to hear it! Have a nice day.", translated word for word when the user writes in another language, with nothing added."""
 
 
 WORKS_ON = "every device signed in to this account, iPhone or Android: premium belongs to the account, not to the phone's store"
