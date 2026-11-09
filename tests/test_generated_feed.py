@@ -14,7 +14,7 @@ from fastapi.testclient import TestClient
 from resolve import analytics, config
 from resolve.api import ticket_summary
 from resolve.models import TriageTicket
-from resolve.tickets import CANCELLED_HANDOFF, GENERATED, TOUGH_AT_MOST, TOUGH_LINE, action_state, action_line
+from resolve.tickets import CANCELLED_HANDOFF, GENERATED, TOUGH_AT_MOST, TOUGH_LINE, action_accent, action_state, action_line
 from resolve.web import create_app
 from scripts import generate_feed
 
@@ -219,6 +219,27 @@ def test_the_kinds():
     assert action_state({"decision": {"rejected": True, "reply": "Hi"}}, "done", None, [])[0] == "finished"
     withdrawn = {"decision": {"rejected": True, "reply": None, "note": f"{CANCELLED_HANDOFF}: changed my mind"}}
     assert action_state(withdrawn, "done", None, [])[0] == "closed"
+
+
+def test_a_person_closing_without_a_reply_is_the_lighter_kind():
+    assert action_state({"decision": {"rejected": True, "reply": None, "note": "spam"}}, "dismissed", None, [])[0] == "closed"
+
+
+def test_the_accent_names_what_the_person_does():
+    assert action_accent("We've generated 3 responses, pick one") == "pick"
+    assert action_accent("We've generated 1 response, take a look") == "take a look"
+    assert action_accent(TOUGH_LINE) == "your call"
+    assert action_accent("You've chosen an option") == "option"
+    assert action_accent("You've chosen an option and edited it") == "edited"
+    assert action_accent("You've written your own reply") == "You've written your own reply"
+    assert action_accent("You've closed it without a reply") is None
+    assert action_accent("Still generating, please wait") is None
+    assert action_accent(None) is None
+
+
+def test_every_accent_in_the_snapshot_is_part_of_its_line(client):
+    for t in client.get("/api/tickets").json():
+        assert t["action_accent"] is None or t["action_accent"] in t["action_title"], t["id"]
 
 
 def test_the_agent_is_at_work_only_until_a_result_or_an_error_exists():

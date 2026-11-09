@@ -48,14 +48,14 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 .act{min-width:0;font-weight:500;color:var(--accent)}
 .row.quiet .act{font-weight:400;color:var(--ink-2)}
 /* the line's four tones: wait, come in, you've got this, done */
-.k-generated .act{color:var(--accent)}
-.k-generated .act::after{content:"";display:inline-block;width:15px;height:15px;margin-left:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-arrow) center/contain no-repeat;mask:var(--ic-arrow) center/contain no-repeat;transition:transform .2s cubic-bezier(.22,.9,.3,1)}
+.acc{font-weight:600;color:var(--accent)}
+.k-generated .act,.k-finished .act{font-weight:400;color:var(--ink-2)}
+.k-generated .act::after{content:"";display:inline-block;width:15px;height:15px;margin-left:6px;vertical-align:-2.5px;background:var(--accent);-webkit-mask:var(--ic-arrow) center/contain no-repeat;mask:var(--ic-arrow) center/contain no-repeat;transition:transform .2s cubic-bezier(.22,.9,.3,1)}
 .row:hover .k-generated .act::after{transform:translateX(4px)}
 .k-tough .act,.k-generating .act{color:var(--warn)}
 .k-failed .act{color:var(--bad)}
-.k-finished .act{font-weight:400;color:var(--ink-2)}
 .k-closed .act{font-weight:400;color:var(--ink-3)}
-.k-tough .act::before,.k-failed .act::before,.k-finished .act::before{content:"";display:inline-block;width:15px;height:15px;margin-right:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-warn) center/contain no-repeat;mask:var(--ic-warn) center/contain no-repeat}
+.k-failed .act::before,.k-finished .act::before{content:"";display:inline-block;width:15px;height:15px;margin-right:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-warn) center/contain no-repeat;mask:var(--ic-warn) center/contain no-repeat}
 .k-finished .act::before{background:var(--ok);-webkit-mask-image:var(--ic-check);mask-image:var(--ic-check)}
 .k-generating .act::before{content:"";display:inline-block;width:8px;height:8px;margin:0 9px 0 4px;vertical-align:1px;border-radius:50%;background:currentColor;animation:waiting 1.2s ease-in-out infinite}
 @keyframes waiting{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
@@ -170,7 +170,7 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 <sc-for list="{{ rows }}" as="t" hint-placeholder-count="6">
 <a href="{{ t.href }}" role="listitem" class="{{ t.cls }}">
 <span class="subj"><sc-for list="{{ t.subj }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span>
-<span class="{{ t.nextCls }}"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
+<span class="{{ t.nextCls }}"><span class="act"><sc-for list="{{ t.cont }}" as="p"><sc-if value="{{ p.acc }}"><span class="acc">{{ p.t }}</span></sc-if><sc-if value="{{ p.hit }}"><mark>{{ p.t }}</mark></sc-if><sc-if value="{{ p.miss }}"><span>{{ p.t }}</span></sc-if></sc-for></span><span class="who" title="{{ t.userFull }}"><sc-if value="{{ t.showDot }}"><span class="{{ t.dotCls }}" title="{{ t.stateWord }}"><span class="sr">{{ t.stateWord }}</span></span></sc-if><span>{{ t.user }}</span><span aria-hidden="true">·</span><span>{{ t.age }}</span></span></span>
 </a>
 </sc-for>
 </div>
@@ -206,14 +206,14 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 var TICKETS = [
   { id: 'f-0019', status: 'triaging', user: 'lumen_771204_33018', subject: 'Charged after free trial', kind: 'generating', action: 'Still generating, please wait', age: '1m', text: 'I never wanted the weekly plan, the trial just charged me this morning without asking.' },
   { id: 'f-0018', status: 'triaging', user: 'lumen_588102_17733', subject: 'Restore purchases does nothing', kind: 'generating', action: 'Still generating, please wait', age: '2m', text: 'New phone, pressed restore, still the free version. Same Google account as before.' },
-  { id: 'f-0013', status: 'ready', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', kind: 'generated', action: "We've generated 3 responses, pick one", age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
+  { id: 'f-0013', status: 'ready', user: 'lumen_443814_02380', subject: 'Wants another free week after compensation', kind: 'generated', action: "We've generated 3 responses, pick one", accent: 'pick', age: '4m', text: 'Hi, the trial thing again, I still feel tricked by the weekly charge. Give me another week for free then. Or a month.' },
   { id: 'f-0017', status: 'triaging', user: 'dusan.p@example.com', subject: 'Lifetime but workouts broken', kind: 'generating', action: 'Still generating, please wait', age: '6m', text: 'Bought lifetime last year, now the strength workouts say Premium only.' },
   { id: 'f-0016', status: 'triaging', user: 'lumen_209331_50127', subject: 'Trial did not start on iPad', kind: 'generating', action: 'Still generating, please wait', age: '9m', text: 'It asked me to pay right away, there was no 7 day trial on my iPad.' },
-  { id: 'f-0012', status: 'ready', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', kind: 'tough', action: "A tough one: the agent isn't sure of any response. You've got this.", age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
-  { id: 'f-0011', status: 'ready', user: 'lumen_120977_44410', subject: 'Paid but still locked', kind: 'generated', action: "We've generated 2 responses, pick one", age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
-  { id: 'f-0010', status: 'ready', user: 'unknown user', subject: 'Where is my money', kind: 'generated', action: "We've generated 3 responses, pick one", age: '1h', text: 'You took money from my card and I do not even know what for.' },
-  { id: 'f-0008', status: 'closed', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', kind: 'finished', action: "You've chosen an option and edited it", age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
-  { id: 'f-0007', status: 'dismissed', user: 'unknown user', subject: 'Test from the feedback form', kind: 'finished', action: "You've closed it without a reply", age: 'Nov 6', text: 'test test 123' }
+  { id: 'f-0012', status: 'ready', user: 'maria.k@example.com', subject: 'Refund for annual plan, threatens chargeback', kind: 'tough', action: 'A tough one, your call', accent: 'your call', age: '18m', text: 'I want my money back for the annual plan or I will dispute it with my bank.' },
+  { id: 'f-0011', status: 'ready', user: 'lumen_120977_44410', subject: 'Paid but still locked', kind: 'generated', action: "We've generated 2 responses, pick one", accent: 'pick', age: '32m', text: 'I paid for monthly an hour ago but premium is still locked.' },
+  { id: 'f-0010', status: 'ready', user: 'unknown user', subject: 'Where is my money', kind: 'generated', action: "We've generated 3 responses, pick one", accent: 'pick', age: '1h', text: 'You took money from my card and I do not even know what for.' },
+  { id: 'f-0008', status: 'closed', user: 'lumen_301455_90021', subject: 'How do I cancel? (Serbian)', kind: 'finished', action: "You've chosen an option and edited it", accent: 'edited', age: 'Nov 6', text: 'Kako da otkažem pretplatu? Ne želim više da plaćam.' },
+  { id: 'f-0007', status: 'dismissed', user: 'unknown user', subject: 'Test from the feedback form', kind: 'closed', action: "You've closed it without a reply", age: 'Nov 6', text: 'test test 123' }
 ];
 var WORD = { ready: 'Waiting for a person', triaging: 'Agent is triaging', closed: 'Closed', dismissed: 'Dismissed' };
 var DOT = { ready: 'dot dot-ready', triaging: 'dot dot-triage', closed: 'dot dot-closed', dismissed: 'dot dot-dismissed' };
@@ -251,11 +251,22 @@ function actionLine(t) {
   return t.triage_error ? 'Triage failed' : 'Still generating, please wait';
 }
 
+// The line with the words that name what the person does picked out.
+function accented(line, word) {
+  var i = word ? line.indexOf(word) : -1;
+  if (i < 0) return plain(line);
+  var out = [];
+  if (i > 0) out.push({ t: line.slice(0, i), hit: false, miss: true, acc: false });
+  out.push({ t: word, hit: false, miss: false, acc: true });
+  if (i + word.length < line.length) out.push({ t: line.slice(i + word.length), hit: false, miss: true, acc: false });
+  return out;
+}
+
 function liveTicket(t) {
   return {
     id: t.id, status: LIVE_STATUS[t.status],
     user: t.customer_user_id || t.email || 'unknown user',
-    subject: t.title, action: actionLine(t), age: API.ago(t.created_at),
+    subject: t.title, action: actionLine(t), accent: t.action_accent, age: API.ago(t.created_at),
     kind: t.action_kind || (t.status === 'new' && !t.top_action ? (t.triage_error ? 'failed' : 'generating') : ''),
     snippet: t.snippet || '', category: t.category || ''
   };
@@ -376,7 +387,7 @@ class Component extends DCLogic {
     };
     var shape = function (t) {
       var subj = (q && (mark(t.subject, q, false) || (live && mark(t.subject, q.split(/\s+/)[0], false)))) || plain(t.subject);
-      var cont = plain(t.action);
+      var cont = accented(t.action, t.accent);
       if (q) cont = live ? snippetMarks(t, q) : mark(t.text, q, true) || mark(t.action, q, false) || plain(t.action);
       return {
         href: live ? 'Ticket.dc.html?id=' + encodeURIComponent(t.id) : 'Ticket.dc.html',

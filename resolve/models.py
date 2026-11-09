@@ -236,7 +236,8 @@ class TicketSummary(BaseModel):
     top_action: Literal[*ACTIONS] | None = None
     top_risk: Literal["low", "medium", "high"] | None = Field(None, description="The risk of the agent's first option")
     action_kind: Literal["generating", "generated", "tough", "finished", "failed", "closed"] | None = Field(None, description="The category of action_title; it sets the line's tone on screen")
-    action_title: str | None = Field(None, description="The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, a warning that the agent isn't sure of any response when the best option's confidence is low, on a closed ticket the person's stored decision ('You've chosen an option'); null while new")
+    action_title: str | None = Field(None, description="The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, 'A tough one, your call' when no option is one the agent is sure of, on a closed ticket the person's stored decision ('You've chosen an option'); null while new")
+    action_accent: str | None = Field(None, description="The part of action_title that names what the person does, drawn in the accent colour")
     triage_error: str | None = Field(None, description="Why Level 1 triage failed; the ticket stays new")
     snippet: str | None = Field(None, description="Only with ?q=: the text around the first match")
 

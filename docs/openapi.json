@@ -3596,7 +3596,19 @@
        }
       ],
       "title": "Action Title",
-      "description": "The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, a warning that the agent isn't sure of any response when the best option's confidence is low, on a closed ticket the person's stored decision ('You've chosen an option'); null while new"
+      "description": "The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, 'A tough one, your call' when no option is one the agent is sure of, on a closed ticket the person's stored decision ('You've chosen an option'); null while new"
+     },
+     "action_accent": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Action Accent",
+      "description": "The part of action_title that names what the person does, drawn in the accent colour"
      },
      "triage_error": {
       "anyOf": [
@@ -3961,7 +3973,19 @@
        }
       ],
       "title": "Action Title",
-      "description": "The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, a warning that the agent isn't sure of any response when the best option's confidence is low, on a closed ticket the person's stored decision ('You've chosen an option'); null while new"
+      "description": "The line under the title in Incoming: 'Still generating, please wait' until a triage result or error exists, 'We've generated 3 responses, pick one' while it waits for a person, 'A tough one, your call' when no option is one the agent is sure of, on a closed ticket the person's stored decision ('You've chosen an option'); null while new"
+     },
+     "action_accent": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Action Accent",
+      "description": "The part of action_title that names what the person does, drawn in the accent colour"
      },
      "triage_error": {
       "anyOf": [

@@ -328,7 +328,8 @@ def _weighted_sample(pool: list[dict], count: int, rng: random.Random) -> list[d
 
 GENERATED = "generated"  # `rule` of the demo feed's long tail (scripts/generate_feed.py): shown in Incoming, counted nowhere
 TOUGH_AT_MOST = 0.7  # the best option's confidence at or under which Incoming says the agent isn't sure of any response
-TOUGH_LINE = "A tough one: the agent isn't sure of any response. You've got this."
+TOUGH_LINE = "A tough one, your call"
+NO_REPLY_LINE = "You've closed it without a reply"
 CANCELLED_HANDOFF = "user cancelled the handoff"  # the start of the note on a ticket the user withdrew in chat
 
 CATEGORY_LABELS = {
@@ -395,7 +396,7 @@ def action_state(ticket: dict, status: str, view: dict | None, options: list[dic
     """(kind, line) under the title in Incoming, from what the triage really produced."""
     if status in ("done", "dismissed"):
         line = closed_line(ticket, options)
-        return ("finished" if line.startswith("You've") else "closed"), line
+        return ("finished" if line.startswith("You've") and line != NO_REPLY_LINE else "closed"), line
     if options:
         best = best_confidence(view, options)
         if best is not None and best <= TOUGH_AT_MOST:
@@ -411,18 +412,35 @@ def action_line(ticket: dict, status: str, view: dict | None, options: list[dict
     return action_state(ticket, status, view, options)[1]
 
 
+def action_accent(line: str | None) -> str | None:
+    """The part of the line that names what the person does: the screen draws it in the accent colour."""
+    if not line:
+        return None
+    if line.endswith("and edited it"):
+        return "edited"
+    if line.endswith("an option"):
+        return "option"
+    if line.endswith("your own reply"):
+        return line
+    if line.endswith("pick one"):
+        return "pick"
+    if line.endswith("take a look"):
+        return "take a look"
+    return "your call" if line == TOUGH_LINE else None
+
+
 def closed_line(ticket: dict, options: list[dict]) -> str:
     """A closed ticket's line, from its stored decision. "You've" only when a person decided."""
     decision = ticket.get("decision") or {}
     if decision.get("rejected"):
         if str(decision.get("note") or "").startswith(CANCELLED_HANDOFF):
             return "The user withdrew the request"
-        return "You've written your own reply" if decision.get("reply") else "You've closed it without a reply"
+        return "You've written your own reply" if decision.get("reply") else NO_REPLY_LINE
     index = decision.get("option")
     if index is None:
         return "Closed without a reply" if ticket.get("status") == "dismissed" else "Closed"
     final = (ticket.get("action") or {}).get("final") or (options[index] if index < len(options) else {})
     if final.get("action") == "no_reply":
-        return "You've closed it without a reply"
+        return NO_REPLY_LINE
     edited = any(v is not None for v in (decision.get("edits") or {}).values())
     return "You've chosen an option and edited it" if edited else "You've chosen an option"
