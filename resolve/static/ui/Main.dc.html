@@ -11,7 +11,7 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&amp;display=swap" rel="stylesheet">
 <link href="./tokens.css" rel="stylesheet">
 <style>
 body{margin:0;background:var(--bg)}
@@ -57,6 +57,8 @@ mark{background:var(--accent-soft);color:var(--accent-2);border-radius:3px;box-s
 .k-closed .act{font-weight:400;color:var(--ink-3)}
 .k-failed .act::before,.k-finished .act::before{content:"";display:inline-block;width:15px;height:15px;margin-right:6px;vertical-align:-2.5px;background:currentColor;-webkit-mask:var(--ic-warn) center/contain no-repeat;mask:var(--ic-warn) center/contain no-repeat}
 .k-finished .act::before{background:var(--ok);-webkit-mask-image:var(--ic-check);mask-image:var(--ic-check)}
+.k-finished.whole .act::before{display:none}
+.whole .acc{font-style:italic}
 .k-generating .act::before{content:"";display:inline-block;width:8px;height:8px;margin:0 9px 0 4px;vertical-align:1px;border-radius:50%;background:currentColor;animation:waiting 1.2s ease-in-out infinite}
 @keyframes waiting{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
 @media (prefers-reduced-motion:reduce){.k-generating .act::before{animation:none}.k-generated .act::after{transition:none}}
@@ -392,7 +394,7 @@ class Component extends DCLogic {
       return {
         href: live ? 'Ticket.dc.html?id=' + encodeURIComponent(t.id) : 'Ticket.dc.html',
         cls: q && t.status !== 'ready' ? 'row quiet' : 'row',
-        nextCls: !q && t.kind ? 'next k-' + t.kind : 'next',
+        nextCls: !q && t.kind ? 'next k-' + t.kind + (t.accent === t.action ? ' whole' : '') : 'next',
         showDot: !!q,
         dotCls: DOT[t.status],
         stateWord: WORD[t.status],
