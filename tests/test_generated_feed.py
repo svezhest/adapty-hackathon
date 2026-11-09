@@ -232,7 +232,8 @@ def test_the_accent_names_what_the_person_does():
     assert action_accent("You've chosen an option") == "option"
     assert action_accent("You've chosen an option and edited it") == "edited"
     assert action_accent("You've written your own reply") == "You've written your own reply"
-    assert action_accent("You've closed it without a reply") is None
+    assert action_accent("You've closed it without a reply") == "closed"
+    assert action_accent("Closed without a reply") is None
     assert action_accent("Still generating, please wait") is None
     assert action_accent(None) is None
 

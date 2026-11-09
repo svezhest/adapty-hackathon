@@ -426,6 +426,8 @@ def action_accent(line: str | None) -> str | None:
         return "pick"
     if line.endswith("take a look"):
         return "take a look"
+    if line == NO_REPLY_LINE:
+        return "closed"
     return "your call" if line == TOUGH_LINE else None
 
 
