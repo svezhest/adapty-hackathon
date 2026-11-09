@@ -23,7 +23,17 @@
   --haze:radial-gradient(900px 420px at 12% -80px,rgba(91,60,240,.11),transparent 70%),radial-gradient(800px 380px at 92% -60px,rgba(124,92,255,.09),transparent 70%),var(--bg);
   --serif:Newsreader,Georgia,'Times New Roman',serif;
   --sans:Inter,system-ui,-apple-system,sans-serif;
+  /* сигнал: уверенность агента как связь телефона: 5G, LTE+, LTE, H+, H, 3G, E, G, а Wi-Fi — человек пишет сам.
+     Знак гравирован: фиолетовый контур, штриховка асфальтом там, где связь есть; метка сети — полая.
+     Знак неподвижен на всех рангах и размерах. Числа нет — знака нет. */
+  --sig-line:var(--accent);   /* контур */
+  --sig-hatch:var(--ink-2);   /* штриховка: тёмно-серый из графиков Analyze */
+  --riso-a:.2; --riso-b:.15;  /* фриз за текстом: сила фиолетового и серого оттиска */
+  --pane:#f6f5fb; --pane-dot:#d9d5ee;  /* точечная подложка: экран, на котором стоит знак */
 }
+::selection{background:var(--accent);color:#fff;text-shadow:none}
+:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,section[style*="background:var(--accent)"])::selection,:is(.btn.nf,.b-user,.b-u,.primary,.save,.btn-dark,.send,section[style*="background:var(--accent)"]) *::selection{background:#fff;color:var(--accent)}  /* on solid purple the selection flips */
+input,textarea,select,button{font-family:inherit}  /* browsers give form controls the system font */
 html{overflow-x:clip;scroll-padding-top:76px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
@@ -88,3 +98,19 @@ html{overflow-x:clip;scroll-padding-top:76px}
 .gstamp:active:not(:disabled){transform:rotate(var(--tilt))}
 .gstamp.on{animation:none}
 }
+
+/* знак сигнала: <span class="sig sig-5g"><svg><use href="#sig-5g"></use></svg></span>, рисунки — в спрайте .sig-sprite на странице (стили линий в нём заданы прямо в спрайте и читают токены ниже).
+   font-size = высота знака; ширину задаёт пропорция ранга. --sig-sw — толщина линии, --sig-label-fill — заливка метки сети (по умолчанию пусто); обе наследуются в спрайт. */
+.sig{--sig-sw:1.6px;flex:0 0 auto;display:inline-block;height:1em;font-size:32px;line-height:0;vertical-align:middle}
+.sig svg{display:block;height:100%;width:auto;overflow:visible}
+.sig-wifi svg{aspect-ratio:172.36/116}
+.sig-5g svg{aspect-ratio:378.79/116}
+.sig-lteplus svg{aspect-ratio:500.9/116}
+.sig-lte svg{aspect-ratio:454.18/116}
+.sig-hplus svg{aspect-ratio:345.05/116}
+.sig-h svg{aspect-ratio:298.33/116}
+.sig-3g svg{aspect-ratio:378.79/116}
+.sig-e svg{aspect-ratio:273.63/116}
+.sig-g svg{aspect-ratio:292.52/116}
+/* подложка: точечная земля под знаком, как экран телефона */
+.pane{position:relative;flex:0 0 auto;border-radius:20px;background-color:var(--pane);background-image:radial-gradient(circle at 1px 1px,var(--pane-dot) 1.2px,transparent 1.6px);background-size:14px 14px;box-shadow:inset 0 0 0 1px var(--accent-line)}
